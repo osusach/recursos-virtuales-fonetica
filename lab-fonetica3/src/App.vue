@@ -1,5 +1,5 @@
 <script setup>
-import Layout from './layout/layout.vue';
+  import Layout from './layout/Layout.vue';
 </script>
 
 <template>
@@ -12,7 +12,6 @@ import Layout from './layout/layout.vue';
 header {
   line-height: 1.5;
 }
-
 .logo {
   display: block;
   margin: 0 auto 2rem;

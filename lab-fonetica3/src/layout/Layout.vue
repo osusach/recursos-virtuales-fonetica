@@ -6,9 +6,9 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="/src/global.css" />
     </head>
-    <body>
+    <body class="min-h-screen max-h-screen flex flex-col">
         <Header />
-        <main>
+        <main class="bg-usach-aqua-1000 flex flex-auto py-10 justify-center align-middle">
             <slot />
         </main>
         <Footer />

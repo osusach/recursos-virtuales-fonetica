@@ -1,11 +1,9 @@
 <template>
     <button>
-        <slot />
+        {{ title }}
     </button>
 </template>
 
 <script setup>
-const print = () => {
-    console.log('hola');
-}
+    defineProps(['title'])
 </script>

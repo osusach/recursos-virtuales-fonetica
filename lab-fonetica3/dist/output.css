@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'BebasNeuePro Regular';
+
+  src: url('../fonts/Bebas Neue Pro Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'BebasNeuePro Bold';
+
+  src: url('../fonts/Bebas Neue Pro Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Regular';
+
+  src: url('../fonts/HelveticaNeueLTProLt.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Medium';
+
+  src: url('../fonts/HelveticaNeueLTProRoman.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Bold';
+
+  src: url('../fonts/HelveticaNeueLTProBd.otf') format('opentype');
+}

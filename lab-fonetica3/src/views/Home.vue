@@ -1,0 +1,3 @@
+<template>
+    HOLA MUNDO
+</template>

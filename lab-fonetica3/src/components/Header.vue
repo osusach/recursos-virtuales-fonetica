@@ -10,28 +10,15 @@ import { ref } from 'vue';
 
 let mostrar = ref(true);
 
-const clase = ref('boton');
-const clase2 = ref('boton3');
+const clase = ref('bg-blue-500');
+const clase2 = ref('text-xl');
 
 const print = (num) => {
-    clase.value = 'boton2';
-    clase2.value = 'boton4';
+    clase.value = 'bg-red-500';
+    clase2.value = 'text-2xl';
     console.log(num);
 }
 </script>
 
 <style>
-    .boton {
-        background-color: red;
-    }
-    .boton2 {
-        background-color: blue;
-    }
-    .boton3 {
-        font-size: x-small;
-    }
-    .boton4 {
-        font-size: x-large;
-    }
-
 </style>

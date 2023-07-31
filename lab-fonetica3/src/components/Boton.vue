@@ -1,5 +1,5 @@
 <template>
-    <button>
+    <button class="bg-amber-500">
         {{ title }}
     </button>
 </template>

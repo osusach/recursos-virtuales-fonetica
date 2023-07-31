@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
     font-family: 'BebasNeuePro Regular';
     src: url('../fonts/Bebas Neue Pro Regular.otf') format('opentype');

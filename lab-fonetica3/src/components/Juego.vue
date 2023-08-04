@@ -1,16 +1,16 @@
 <template>
     <div class="flex flex-col text-5xl h-fit px-10 py-10 text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg">
-        <div class="flex flex-row p-10">
+        <div class="flex flex-row p-10 gap-10">
             <a> {{ countPregunta }}/{{ totalPreguntas }}</a>
-            <button class="text-sm align-middle" @click="siguientePregunta"> siguiente pregunta </button>
+            <Boton title="siguiente pregunta" @click="siguientePregunta"></Boton>
         </div>
-        <div>
+        <div class="flex flex-col p-10 gap-10">
             <p class="">pregunta: {{ pregunta }}?</p>
-            <div v-for="respuesta in respuestas">
-                <Boton :title="respuesta.text" @click="checkAnswer(respuesta.valor)"></Boton>
+            <div class="flex flex-row gap-x-10">
+                <Boton v-for="respuesta in respuestas" :title="respuesta.text" @click="checkAnswer(respuesta.valor)"></Boton>
             </div>
-            <a v-if="mostrar">cierto</a>
-            <a v-if="!mostrar">mal</a>
+            <a v-if="mostrar && correcto">cierto</a>
+            <a v-if="mostrar && !correcto">mal</a>
         </div>
     </div>
 </template>
@@ -18,35 +18,59 @@
 <script setup>
     import Boton from './Boton.vue'
     import { ref } from 'vue'
-    let mostrar = ref(false)
+    // variables juego
+    let pregunta
+    let respuestaCorrecta
+    let mostrar
+    let correcto
+    let respuestas
+
+    const getQuestion = () => {
+        const data = {
+            pregunta: "Que numero es 2?",
+            respuesta: 2,
+            tipo: 1,
+            dificultad: 1,
+        }
+        return data
+    }
+
+    const setQuestion = () => {
+        const data = getQuestion()
+        pregunta = data.pregunta
+        respuestaCorrecta = data.respuesta
+        mostrar = ref(false)
+        correcto = ref(false)
+        // cambiar por funcion que use la lista correcta segun tipo y dificultad
+        respuestas = [
+            { text: "resp 1", valor: 1 },
+            { text: "resp 2", valor: 2 },
+            { text: "resp 3", valor: 3 },
+            { text: "resp 4", valor: 4 },
+        ]
+        
+    }
+
     let countPregunta = ref(0)
     let totalPreguntas = ref(6)
-    let pregunta = ref(2)
-    let correctAnswer = 2
-    const respuestas = [
-        { text: "resp 1", valor: 1 },
-        { text: "resp 2", valor: 2 },
-        { text: "resp 3", valor: 3 },
-        { text: "resp 4", valor: 4 },
-    ]
-
+    setQuestion()
     const checkAnswer = (answer) => {
-        if (answer === correctAnswer)
+        if (answer === respuestaCorrecta)
         {
             console.log(true);
-            mostrar.value = true
-            return;
+            correcto.value = true
+        } else {
+            console.log(false);
+            correcto.value = false
         }
-        console.log(false);
-        mostrar.value = false
+        mostrar.value = true
     }
+    
     const siguientePregunta = () => {
         if (countPregunta === totalPreguntas)
             return;
 
-        countPregunta.value = countPregunta.value + 1
-        pregunta.value = pregunta.value + 1 % 4
-        correctAnswer = pregunta.value
+        setQuestion()
         mostrar.value = false
     }
 </script>

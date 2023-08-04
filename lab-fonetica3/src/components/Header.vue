@@ -1,5 +1,5 @@
 <template>
-    <Boton :class="[clase, clase2]" v-if="mostrar" v-for="num in [1, 2, 3, 4, 5]" @click="print(num)">
+    <Boton :class="[clase, clase2]" v-if="mostrar" @click="print(num)">
         {{ num }}
     </Boton>
 </template>

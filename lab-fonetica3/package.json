@@ -10,6 +10,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "flowbite": "^1.8.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },

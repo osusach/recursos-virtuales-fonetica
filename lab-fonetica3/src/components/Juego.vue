@@ -2,12 +2,12 @@
     <div class="flex flex-col text-5xl h-fit px-10 py-10 text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg">
         <div class="flex flex-row p-10 gap-10">
             <a> {{ countPregunta }}/{{ totalPreguntas }}</a>
-            <Boton title="siguiente pregunta" @click="siguientePregunta"></Boton>
+            <Boton label="siguiente pregunta" @click="siguientePregunta"></Boton>
         </div>
         <div class="flex flex-col p-10 gap-10">
             <p class="">pregunta: {{ pregunta }}?</p>
             <div class="flex flex-row gap-x-10">
-                <Boton v-for="respuesta in respuestas" :title="respuesta.text" @click="checkAnswer(respuesta.valor)"></Boton>
+                <Boton v-for="respuesta in respuestas" :label="respuesta.text" @click="checkAnswer(respuesta.valor)"></Boton>
             </div>
             <a v-if="mostrar && correcto">cierto</a>
             <a v-if="mostrar && !correcto">mal</a>
@@ -24,6 +24,26 @@
     let mostrar
     let correcto
     let respuestas
+
+    const checkAnswer = (answer) => {
+        if (answer === respuestaCorrecta)
+        {
+            console.log(true);
+            correcto.value = true
+        } else {
+            console.log(false);
+            correcto.value = false
+        }
+        mostrar.value = true
+    }
+    
+    const siguientePregunta = () => {
+        if (countPregunta === totalPreguntas)
+            return;
+
+        setQuestion()
+        mostrar.value = false
+    }
 
     const getQuestion = () => {
         const data = {
@@ -54,25 +74,6 @@
     let countPregunta = ref(0)
     let totalPreguntas = ref(6)
     setQuestion()
-    const checkAnswer = (answer) => {
-        if (answer === respuestaCorrecta)
-        {
-            console.log(true);
-            correcto.value = true
-        } else {
-            console.log(false);
-            correcto.value = false
-        }
-        mostrar.value = true
-    }
-    
-    const siguientePregunta = () => {
-        if (countPregunta === totalPreguntas)
-            return;
-
-        setQuestion()
-        mostrar.value = false
-    }
 </script>
 
 

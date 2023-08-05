@@ -1,14 +1,12 @@
 <template>
-    <body class="min-h-screen max-h-screen flex flex-col">
-        <Header />
+    <Header title="Recursos Virtuales para el Lenguaje"></Header>
         <main class="bg-usach-aqua-1000 flex flex-auto py-10 justify-center align-middle">
-            <slot />
+            <slot></slot>
         </main>
-        <Footer />
-    </body>
+    <Footer></Footer>
 </template>
 
 <script setup>
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
+    import Header from '../components/Header.vue';
+    import Footer from '../components/Footer.vue';
 </script>

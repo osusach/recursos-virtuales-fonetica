@@ -1,24 +1,12 @@
 <template>
-    <Boton :class="[clase, clase2]" v-if="mostrar" @click="print(num)">
-        {{ num }}
-    </Boton>
+    <header className="bg-usach-aqua-900 p-2 gap-10 flex h-48">
+        <div className=" mx-36 flex flex-row">
+            <button className="w-1/3">
+                <a href="/" className="">
+                    <img src="/Usach SB.png" alt="Logo Usach" className=" w-full h-full object-contain"/>
+                </a>
+            </button>
+            <h1 className="m-auto text-5xl font-usach-bebas-title text-white align-middle">Recursos Virtuales para el aprendizaje del Lenguaje</h1>
+        </div>
+    </header>
 </template>
-
-<script setup>
-import Boton from './Boton.vue';
-import { ref } from 'vue';
-
-let mostrar = ref(true);
-
-const clase = ref('bg-blue-500');
-const clase2 = ref('text-xl');
-
-const print = (num) => {
-    clase.value = 'bg-red-500';
-    clase2.value = 'text-2xl';
-    console.log(num);
-}
-</script>
-
-<style>
-</style>

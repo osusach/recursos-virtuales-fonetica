@@ -14,7 +14,7 @@
                 Medio
             </a>
         </button>
-        <button :onclick="onClick" type="submit" class="rounded-lg bg-usach-rouge-700 hover:bg-usach-rouge-800 text-xl text-white my-2 drop-shadow p-2">
+        <button :onclick="onClick" type="submit" class="rounded-lg bg-usach-ultra-800 hover:bg-usach-ultra-900 text-xl text-white my-2 drop-shadow p-2">
             <a className="font-usach-helvetica-medium px-max" :href="href">
                 Avanzado
             </a>

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <Layout class="min-h-screen">
+  <Layout>
     <router-view />
   </Layout>
 </template>

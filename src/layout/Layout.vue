@@ -1,5 +1,5 @@
 <template>
-    <Header title="Recursos Virtuales para el Lenguaje"></Header>
+    <Header></Header>
     <main class="bg-usach-aqua-200 flex flex-auto py-10 justify-center align-middle">
         <router-view></router-view>
     </main>

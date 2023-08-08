@@ -1,5 +1,5 @@
 <template>
-    <Juego/>
+    <Juego :tipo="2" :dificultad="1"/>
 </template>
 
 <script setup>

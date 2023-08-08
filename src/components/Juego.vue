@@ -7,7 +7,7 @@
         <div class="flex flex-col p-10 gap-10">
             <p class="">pregunta: {{ pregunta }}?</p>
             <div class="flex flex-row gap-x-10">
-                <Boton v-if="mostrarBotones" v-for="respuesta in respuestas" :label="respuesta.text" @click="checkAnswer(respuesta.valor)"></Boton>
+                    <Boton v-if="mostrarBotones" v-for="respuesta in respuestas" :label="respuesta.text" @click="checkAnswer(respuesta.valor)"></Boton>
                 <div v-if="mostrarSlider">slider</div>
             </div>
             <a v-if="mostrar && correcto">cierto</a>
@@ -19,6 +19,12 @@
 <script setup>
     import Boton from './Boton.vue'
     import { ref } from 'vue'
+
+    const props = defineProps({
+        tipo: Number,
+        dificultad: Number
+    })
+
     // variables juego
     let pregunta
     let respuestaCorrecta
@@ -138,7 +144,8 @@
 
     let countPregunta = ref(0)
     let totalPreguntas = ref(6)
-    setQuestion(3, 1)
+    console.log(props.dificultad)
+    setQuestion(props.tipo, props.dificultad)
 </script>
 
 

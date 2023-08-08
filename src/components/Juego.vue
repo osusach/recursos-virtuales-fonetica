@@ -7,7 +7,8 @@
         <div class="flex flex-col p-10 gap-10">
             <p class="">pregunta: {{ pregunta }}?</p>
             <div class="flex flex-row gap-x-10">
-                <Boton v-for="respuesta in respuestas" :label="respuesta.text" @click="checkAnswer(respuesta.valor)"></Boton>
+                <Boton v-if="mostrarBotones" v-for="respuesta in respuestas" :label="respuesta.text" @click="checkAnswer(respuesta.valor)"></Boton>
+                <div v-if="mostrarSlider">slider</div>
             </div>
             <a v-if="mostrar && correcto">cierto</a>
             <a v-if="mostrar && !correcto">mal</a>
@@ -22,6 +23,8 @@
     let pregunta
     let respuestaCorrecta
     let mostrar
+    let mostrarBotones
+    let mostrarSlider
     let correcto
     let respuestas
 
@@ -55,25 +58,87 @@
         return data
     }
 
-    const setQuestion = () => {
+    const setQuestion = (tipo, dificultad) => {
         const data = getQuestion()
         pregunta = data.pregunta
         respuestaCorrecta = data.respuesta
         mostrar = ref(false)
         correcto = ref(false)
+        mostrarBotones = ref(false)
+        mostrarSlider = ref(false)
         // cambiar por funcion que use la lista correcta segun tipo y dificultad
-        respuestas = [
-            { text: "resp 1", valor: 1 },
-            { text: "resp 2", valor: 2 },
-            { text: "resp 3", valor: 3 },
-            { text: "resp 4", valor: 4 },
+        respuestas = generarRespuestas(tipo, dificultad)
+    }
+
+    // tipo: 1 = pindaro, 2 = rima, 3 = cat_acentual
+    const generarRespuestas = (tipo, dificultad) => {
+        const respRima = [
+            { text: "Si", valor: 1 },
+            { text: "No", valor: 2 },
+            { text: "Consonante", valor: 3 },
+            { text: "Asonante", valor: 4 },
+            { text: "Sin rima", valor: 5 },
         ]
+        const respCatAcentual = [
+            { text: "Grave", valor: 1 },
+            { text: "Aguda", valor: 2 },
+            { text: "Esdrujula", valor: 3 },
+            { text: "Monosilabo tónico", valor: 4 },
+            { text: "Monosilabo átono", valor: 5 },
+            { text: "Bisilabos átono", valor: 6 },
+        ]
+        let respuestas = []
         
+        if (tipo === 1)
+        {
+            mostrarSlider.value = true
+        }
+        else
+        {
+            mostrarBotones.value = true
+        }
+
+        if (tipo === 2 && dificultad === 1)
+        {
+            respRima.forEach(element => {
+                if (element.valor <= 2)
+                    respuestas.push(element)
+            });
+        }
+        if (tipo === 2 && dificultad > 1)
+        {
+            respRima.forEach(element => {
+                if (element.valor > 2)
+                    respuestas.push(element)
+            });
+        }
+        if (tipo === 3 && dificultad === 1)
+        {
+            respCatAcentual.forEach(element => {
+                if (element.valor <= 3)
+                    respuestas.push(element)
+            });
+        }
+        if (tipo === 3 && dificultad === 2)
+        {
+            respCatAcentual.forEach(element => {
+                if (element.valor <= 5)
+                    respuestas.push(element)
+            });
+        }
+        if (tipo === 3 && dificultad === 3)
+        {
+            respCatAcentual.forEach(element => {
+                if (element.valor <= 6)
+                    respuestas.push(element)
+            });
+        }
+        return respuestas
     }
 
     let countPregunta = ref(0)
     let totalPreguntas = ref(6)
-    setQuestion()
+    setQuestion(3, 1)
 </script>
 
 

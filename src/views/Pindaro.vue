@@ -1,7 +1,7 @@
 <template>
-    <Juego></Juego>
+    <Juego/>
 </template>
 
-<script>
+<script setup>
     import Juego from "../components/Juego.vue"
 </script>

@@ -48,7 +48,5 @@
 </template>
 
 <script setup>
-    import Boton from "../components/Boton.vue";
-    import Carta from "../components/Carta.vue";
     import CartaJuego from "../components/CartaJuego.vue";
 </script>

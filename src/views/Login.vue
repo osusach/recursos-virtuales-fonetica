@@ -1,27 +1,17 @@
-
 <template>
-  <Layout title="Lab. Fonetica">
-    <form class="flex flex-col text-5xl text-white p-10 bg-usach-aqua-700 rounded-md w-4/12 justify-center">
-      <h1 class="text-3xl font-usach-bebas-title text-center pb-4">
-        Iniciar Sesión
+  <form class="m-auto grid xl:grid-cols-1 gap-10 p-10 w-[30%]">
+    <div class="flex flex-col text-5xl h-fit px-10 py-10 text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg [&>button]:">
+      <h1 class="text-3xl mb-5 font-usach-bebas-title">
+        ¡Bienvenido!
       </h1>
       <Input Label="Correo" forLabel="email" type="text" placeholder="pindaro@usach.cl"/>
-  
-      <Input Label="Contraseña" forLabel="password" type="password" placeholder="•••••••••"/>
-  
-      <div class="flex justify-center">
-        <button type="submit" class="text-white bg-usach-daisy-800 hover:bg-usach-daisy-900 
-              focus:ring-4 focus:outline-none font-medium rounded-lg text-sm 
-              sm:w-auto py-2.5 px-3.5 text-center">
-          Iniciar Sesión
-        </button>
-      </div>
-  
-    </form>
-  </Layout>
+      <Input Label="Contraseña" forLabel="password" type="password" placeholder="Contraseña"/>
+      <Boton label="Iniciar Sesión" href="/"/>
+    </div>
+  </form>
 </template>
 
 <script setup>
-  import Layout from "../layouts/Layout";
-  import Input from "../components/Input";
+  import Input from "../components/Input.vue"
+  import Boton from "../components/Boton.vue"
 </script>

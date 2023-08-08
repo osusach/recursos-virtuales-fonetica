@@ -1,5 +1,5 @@
 <template>
-    <button :onclick="onClick" class="rounded-lg bg-usach-terra-700 hover:bg-usach-terra-800 text-lg text-white my-2 drop-shadow p-2">
+    <button :onclick="onClick" type="submit" class="rounded-lg bg-usach-terra-700 hover:bg-usach-terra-800 text-lg text-white my-2 drop-shadow p-2">
         <a className="font-usach-helvetica-medium px-max" :href="href">
             {{ label }}
         </a>

@@ -1,10 +1,7 @@
 <template>
-    <Layout title="Recursos Virtuales para el Lenguaje">
-        <Juego></Juego>
-    </Layout>
+    <Juego></Juego>
 </template>
 
 <script>
-    import Layout from "../layouts/Layout";
-    import Juego from "../components/Juego"
+    import Juego from "../components/Juego.vue"
 </script>

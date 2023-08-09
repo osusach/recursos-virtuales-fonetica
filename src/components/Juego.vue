@@ -2,12 +2,12 @@
     <div class="flex flex-col text-5xl h-fit px-10 py-10 text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg">
         <div class="flex flex-row p-10 gap-10">
             <a> {{ countPregunta }}/{{ totalPreguntas }}</a>
-            <Boton label="siguiente pregunta" @click="siguientePregunta"></Boton>
+            <Boton label="siguiente pregunta" @click="siguientePregunta" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"></Boton>
         </div>
         <div class="flex flex-col p-10 gap-10">
             <p class="">pregunta: {{ pregunta }}?</p>
             <div class="flex flex-row gap-x-10">
-                    <Boton v-if="mostrarBotones" v-for="respuesta in respuestas" :label="respuesta.text" @click="checkAnswer(respuesta.valor)"></Boton>
+                    <Boton v-if="mostrarBotones" v-for="respuesta in respuestas" :label="respuesta.text" @click="checkAnswer(respuesta.valor)" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"></Boton>
                 <div v-if="mostrarSlider">slider</div>
             </div>
             <a v-if="mostrar && correcto">cierto</a>
@@ -21,8 +21,8 @@
     import { ref } from 'vue'
 
     const props = defineProps({
-        tipo: Number,
-        dificultad: Number
+        tipo: String,
+        dificultad: String
     })
 
     // variables juego
@@ -73,7 +73,7 @@
         mostrarBotones = ref(false)
         mostrarSlider = ref(false)
         // cambiar por funcion que use la lista correcta segun tipo y dificultad
-        respuestas = generarRespuestas(tipo, dificultad)
+        respuestas = generarRespuestas(parseInt(tipo), parseInt(dificultad))
     }
 
     // tipo: 1 = pindaro, 2 = rima, 3 = cat_acentual
@@ -144,14 +144,6 @@
 
     let countPregunta = ref(0)
     let totalPreguntas = ref(6)
-    console.log(props.dificultad)
+    console.log(props.tipo, props.dificultad)
     setQuestion(props.tipo, props.dificultad)
 </script>
-
-
-<style>
-    .bg-usach-aqua-800 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(50 181 173 / var(--tw-bg-opacity));
-}
-</style>

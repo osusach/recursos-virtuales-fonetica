@@ -1,17 +1,3 @@
-import React from "react";
-
-interface Props {
-    href: string;
-    label: string;
-    type?: string;
-}
-  
-export default function BotonJuego({ label, href, type }: Props) {
-    return (
-        
-    );
-}
-
 <template>
     <button :onclick="onClick" class="rounded-lg bg-usach-daisy-800 hover:bg-usach-ultra-800 text-5xl text-white my-3 drop-shadow p-4 px-8">
         <a :href="href">{{label}}</a>

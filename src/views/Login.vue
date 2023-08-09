@@ -1,5 +1,5 @@
 <template>
-  <form class="m-auto grid xl:grid-cols-1 gap-10 p-10 w-[70%]">
+  <form class="m-auto grid xl:grid-cols-1 gap-10 p-10 min-w-[35%]">
     <div class="flex flex-col text-5xl h-fit px-10 py-10 text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg [&>button]:">
       <h1 class="text-3xl mb-5 font-usach-bebas-title">
         ¡Bienvenido!

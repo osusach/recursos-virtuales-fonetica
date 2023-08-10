@@ -6,7 +6,7 @@
       </h1>
       <Input Label="Correo" forLabel="email" type="text" placeholder="pindaro@usach.cl"/>
       <Input Label="Contraseña" forLabel="password" type="password" placeholder="Contraseña"/>
-      <Boton label="Iniciar Sesión" href="/" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
+      <Boton label="Iniciar Sesión" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
     </div>
   </form>
 </template>

@@ -6,9 +6,14 @@
             <p>{{ palabra }}</p>
     
             <p>Opciones</p>
-            <div v-for="opcion in opciones">
-                <input type="radio" :value="opcion" v-model="respuesta">
-                <label>{{ opcion }}</label>
+            <div v-for="opcion in opciones" class="flex space-x-2">
+                <input type="radio" :id=" 'id-'+opcion" :value="opcion" v-model="respuesta" class="hidden"/>
+                <label :for="'id-'+opcion" class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out" 
+                :class="{   
+                    'bg-indigo-500 text-white': respuesta === opcion,
+                    'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion }">
+                    {{ opcion }}
+                </label>
             </div>
     
             <div>
@@ -20,7 +25,7 @@
             <div>
                 preguntas
             </div>
-            <button v-for="num in [1,2,3,4,5,6,7,8,9,10]" @click="changeQuestion(num)" class="p-3">
+            <button v-for="num in [1,2,3,4,5,6,7,8,9,10]" @click="changeQuestion(num)" class="p-3 border">
                 {{ num }}
             </button>
             <button @click="() => {Fin = Fin === 'Terminar' ? 'Terminado' : 'Terminar'}">
@@ -57,6 +62,9 @@
             i.value += 1
             palabra.value = palabras.value[i.value - 1]
             nextTextVerify()
+            
+            console.log(i.value)
+            console.log(respuesta.value)
         }
     }
 

@@ -6,7 +6,14 @@
       </h1>
       <Input Label="Correo" forLabel="email" type="text" placeholder="pindaro@usach.cl"/>
       <Input Label="Contraseña" forLabel="password" type="password" placeholder="Contraseña"/>
-      <Boton label="Iniciar Sesión" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
+      <Boton label="Iniciar Sesión" href="/" @click="goToOtherView" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
+      <div className="font-usach-helvetica-medium rounded-lg  p-4 text-lg">
+        ¿No tienes cuenta?<Enlaces href="/Register">Regístrate</Enlaces>
+      </div>
+      <div className="font-usach-helvetica-medium rounded-lg  px-6 text-lg">
+        <label>¿No Quieres Registrarte?</label>
+      </div>
+      <Boton label="Invitado" href="/Home" @click="goToOtherView" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
     </div>
   </form>
 </template>
@@ -14,4 +21,15 @@
 <script setup>
   import Input from "../components/Input.vue"
   import Boton from "../components/Boton.vue"
+  import Enlaces from "../components/Enlaces.vue"
+</script>
+
+<script>
+export default {
+  methods: {
+    goToOtherView() {
+      this.$router.push('/Home');
+    },
+  },
+};
 </script>

@@ -1,19 +1,20 @@
 <template>
-    <div class="flex">
-        <div class="bg-usach-aqua-700">
+    <div class="grid grid-cols-2">
+        <div class="rounded-lg bg-usach-aqua-100 p-10">
             <h1>Pregunta {{ i }}.</h1>
-            <p>Cuantas silabas tiene esta palabra:</p>
-            <p>{{ palabra }}</p>
-    
-            <p>Opciones</p>
-            <div v-for="opcion in opciones" class="flex space-x-2">
-                <input type="radio" :id=" 'id-'+opcion" :value="opcion" v-model="respuesta" class="hidden"/>
-                <label :for="'id-'+opcion" class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out" 
-                :class="{   
-                    'bg-indigo-500 text-white': respuesta === opcion,
-                    'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion }">
-                    {{ opcion }}
-                </label>
+            <label class="bg-usach-cloudy-700 text-5xl w-1/2">{{ palabra }}</label>
+            
+            <p class="text-center text-xl">Cuantas silabas tiene esta palabra:</p>
+            <div class="flex flex-row p-5 rounded-lg bg-usach-daisy-800">
+                <div v-for="opcion in opciones" class="flex space-x-2">
+                    <input type="radio" :id=" 'id-'+opcion" :value="opcion" v-model="respuesta" class="hidden"/>
+                    <label :for="'id-'+opcion" class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out" 
+                    :class="{   
+                        'bg-indigo-500 text-white': respuesta === opcion,
+                        'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion }">
+                        {{ 'asdasdasd '+ opcion }}
+                    </label>
+                </div>
             </div>
     
             <div>
@@ -21,13 +22,15 @@
                 <button @click="nextQuestion"> {{ nextText }} </button>
             </div>
         </div>
-        <div class="bg-usach-terra-700">
+        <div class="rounded-lg bg-usach-rouge-600 w-fit h-fit p-5">
             <div>
                 preguntas
             </div>
-            <button v-for="num in [1,2,3,4,5,6,7,8,9,10]" @click="changeQuestion(num)" class="p-3 border">
-                {{ num }}
-            </button>
+            <div class="grid grid-cols-3 gap-5">
+                <button v-for="num in [1,2,3,4,5,6,7,8,9,10]" @click="changeQuestion(num)" class="border rounded-lg p-3 bg-usach-rouge-100">
+                    {{ num }}
+                </button>
+            </div>
             <button @click="() => {Fin = Fin === 'Terminar' ? 'Terminado' : 'Terminar'}">
                 {{ Fin }}
             </button>

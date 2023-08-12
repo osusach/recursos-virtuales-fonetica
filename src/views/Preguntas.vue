@@ -49,7 +49,8 @@
     const palabras = ref(['hola', 'adiós', 'casa', 'perro', 'gato', 'ratón', 'pájaro', 'pato', 'camello', 'elefante'])
     const palabra = ref(palabras.value[i.value - 1])
     const opciones = ref(['1', '2', '3', '4'])
-    const respuesta = ref('')
+    let respuesta = ref('')
+    let respuestas = ref(Array.apply(null, Array(4)).map(function () {return null}))
     const nextText = ref('Siguiente')
     
     const nextTextVerify = () => {
@@ -62,13 +63,16 @@
     }
 
     const nextQuestion = () => {
+        console.log("-----------")
+        console.log("i =" + i.value)
+        console.log("palabra =" + palabra.value)
+        console.log("respuesta =" + respuesta.value)
+        console.log("respuestas =" + respuestas.value)
+        respuestas.value[i.value - 1] = respuesta.value
         if (i.value < 10) {
             i.value += 1
             palabra.value = palabras.value[i.value - 1]
             nextTextVerify()
-            
-            console.log(i.value)
-            console.log(respuesta.value)
         }
     }
 
@@ -85,9 +89,4 @@
         palabra.value = palabras.value[i.value - 1]
         nextTextVerify()
     }
-
-    console.log(i.value)
-    console.log(palabra.value)
-    console.log(opciones.value)
-    console.log(respuesta.value)
 </script>

@@ -1,0 +1,10 @@
+- [] Diseño vertical/horizontal
+- [] Base de datos palabras
+- [] Base de datos usuarios + leaderboard
+- [] Leaderboard
+- [] Juegos
+  - [] recibir preguntas de base de datos
+  - [] almacenar puntaje
+  - [] mostrar buenas/malas c/corrección, s/corrección, % errores (dificultad)
+  - [] hacer slider bonito
+- [] Herramienta edición base de datos

@@ -31,8 +31,8 @@
                 <button v-for="num in Array.from({length: cantPregs}, (v, i) => i)" @click="changeQuestion(num + 1)"
                 class="rounded-lg p-3  pt-4 text-lg"
                 :class="{
-                    'bg-usach-terra-600': respuestas[num] === '',
-                    'bg-usach-rouge-600': respuestas[num] !== '' }">
+                    'bg-usach-terra-600': store.respuestas[num] === '',
+                    'bg-usach-rouge-600': store.respuestas[num] !== '' }">
                     {{ num + 1 }}
                 </button>
             </div>
@@ -45,6 +45,8 @@
 
 <script setup>
     import { ref } from 'vue'
+    import { reactive } from 'vue'
+    import { store } from '../store.js'
 
     // TESTEO
     const Fin = ref('Terminar')
@@ -54,22 +56,22 @@
     const palabra = ref(palabras.value[i.value - 1])
     const opciones = ref(['1', '2', '3', '4'])
     let respuesta = ref('')
-    let respuestas = ref(Array(cantPregs).fill(""))
+    store.respuestas = Array(cantPregs).fill("") // capaz que se esta sobreescribiendo el valor
     const nextText = ref('Siguiente')
     
     const saveAnswer = () => {
         // no borrar respuesta al navegar
         if (respuesta.value !== '')
         {
-            respuestas.value[i.value - 1] = respuesta.value
+            store.respuestas[i.value - 1] = respuesta.value
         }
         console.log("-----------")
         console.log("i =" + i.value)
         console.log("palabra =" + palabra.value)
-        console.log("respuesta =" + respuesta.value)
-        console.log("respuestas =" + respuestas.value)
+        console.log("respuesta =" + respuesta)
+        console.log("respuestas =" + store.respuestas)
         console.log("respuestas[i] =")
-        console.log(respuestas.value[i.value - 1])
+        console.log(store.respuestas[i.value - 1])
     }
     const nextTextVerify = () => {
         if (i.value == cantPregs) {

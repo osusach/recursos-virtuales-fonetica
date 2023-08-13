@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-1 gap-5">
+    <div class="grid grid-cols-5 gap-5">
         <div v-for="i in Array.from({length: cantPregs}, (v, i) => i)" class="bg-usach-ultra-600 rounded-lg p-5">
             <p> pregunta {{ i + 1 }}: {{ palabras[i] }} </p>
             <p> Correcta {{ respCorrecta[i] }} </p>

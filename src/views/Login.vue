@@ -13,23 +13,20 @@
       <div className="font-usach-helvetica-medium rounded-lg  px-6 text-lg">
         <label>¿No Quieres Registrarte?</label>
       </div>
-      <Boton label="Invitado" href="/Home" @click="goToOtherView" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
+      <Boton label="Invitado" @click="goToOtherView" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
     </div>
   </form>
 </template>
 
 <script setup>
+  import { useRouter } from "vue-router";
   import Input from "../components/Input.vue"
   import Boton from "../components/Boton.vue"
   import Enlaces from "../components/Enlaces.vue"
-</script>
 
-<script>
-export default {
-  methods: {
-    goToOtherView() {
-      this.$router.push('/Home');
-    },
-  },
-};
+  const router = useRouter()
+
+  const goToOtherView = () => {
+    router.push("/home")
+  }
 </script>

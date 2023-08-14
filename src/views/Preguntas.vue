@@ -1,22 +1,23 @@
 <template>
     <div class="grid">
         <div class="flex flex-col">
-            <div class="flex flex-row h-14 rounded-lg bg-usach-daisy-800 align-middle items-center">
-                <div class="flex static bg-usach-daisy-300 h-3 w-full rounded-xl mr-1 ml-6 justify-center items-center font-usach-bebas-title">
+            <div class="flex flex-row h-14 rounded-lg bg-usach-ultra-800 align-middle items-center">
+                <div class="flex static bg-usach-ultra-300 h-3 w-full rounded-xl mr-1 ml-6 justify-center items-center font-usach-bebas-title">
                     <button v-for="num in Array.from({ length: cantPregs }, (v, i) => i)" @click="changeQuestion(num + 1)"
                     class="mx-2 rounded-full h-7 w-10 text-lg" :class="{
-                        'bg-usach-daisy-300': store.respuestas[num] === '',
-                        'bg-usach-aqua-800 text-slate-100': store.respuestas[num] !== ''
+                        'bg-usach-ultra-300 font-usach-bebas-body': store.respuestas[num] === '',
+                        'bg-usach-terra-700 text-slate-100': store.respuestas[num] !== ''
                     }">
                         {{ num + 1 }}
                     </button>
                 </div>
-                <button class=" font-usach-bebas-title mx-3" @click="endQuiz">
+                
+                <button class=" font-usach-bebas-title mx-3 bg-usach-terra-700 rounded-lg p-1 text-white" @click="endQuiz">
                     {{ Fin }}
                 </button>
             </div>
             <div class="m-auto flex flex-col rounded-lg bg-usach-ultra-900 p-10 text-center font-usach-helvetica-body text-white items-center">
-                <h1 class=" font-usach-helvetica-bold text-lg">Pregunta {{ i + '/' + cantPregs }}</h1>
+                <div class=" font-usach-helvetica-bold text-lg">Pregunta {{ i + '/' + cantPregs }}</div>
                 <div class="bg-usach-ultra-600 text-7xl p-3 rounded-lg my-5 font-usach-helvetica-bold">
                     <p class=" pt-4">{{ palabra }}</p>
                 </div>
@@ -27,7 +28,7 @@
                         <label :for="'answer-' + opcion"
                             class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out pt-3"
                             :class="{
-                                ' bg-usach-daisy-800 text-white': respuesta === opcion,
+                                ' bg-usach-aqua-800 text-white': respuesta === opcion,
                                 'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion
                             }">
                             {{ 'Alternativa ' + opcion }}
@@ -36,8 +37,8 @@
                 </div>
 
                 <div class="flex flex-row justify-center gap-4 font-usach-bebas-body">
-                    <button v-if="i > 1" @click="prevQuestion" class="bg-usach-daisy-800 rounded-lg p-2">Atrás</button>
-                    <button @click="nextQuestion" class="bg-usach-daisy-800 rounded-lg p-2"> {{ nextText }} </button>
+                    <button v-if="i > 1" @click="prevQuestion" class="bg-usach-aqua-800 rounded-lg p-2">Atrás</button>
+                    <button @click="nextQuestion" class="bg-usach-aqua-800 rounded-lg p-2"> {{ nextText }} </button>
                 </div>
             </div>
         </div>

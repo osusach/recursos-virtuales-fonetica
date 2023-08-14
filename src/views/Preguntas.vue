@@ -1,7 +1,7 @@
 <template>
-    <div class="grid">
-        <div class="flex flex-col">
-            <div class="flex flex-row h-14 rounded-lg bg-usach-ultra-800 align-middle items-center">
+    <div class="grid items-center">
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row h-14 rounded-lg bg-usach-ultra-900 align-middle items-center">
                 <div class="flex static bg-usach-ultra-300 h-3 w-full rounded-xl mr-1 ml-6 justify-center items-center font-usach-bebas-title">
                     <button v-for="num in Array.from({ length: cantPregs }, (v, i) => i)" @click="changeQuestion(num + 1)"
                     class="mx-2 rounded-full h-7 w-10 text-lg" :class="{
@@ -12,11 +12,11 @@
                     </button>
                 </div>
                 
-                <button class=" font-usach-bebas-title mx-3 bg-usach-terra-700 rounded-lg p-1 text-white" @click="endQuiz">
+                <button class=" font-usach-bebas-title mx-3 bg-usach-terra-700 rounded-lg p-1 text-white text-lg" @click="endQuiz">
                     {{ Fin }}
                 </button>
             </div>
-            <div class="m-auto flex flex-col rounded-lg bg-usach-ultra-900 p-10 text-center font-usach-helvetica-body text-white items-center">
+            <div class=" flex flex-col rounded-lg bg-usach-ultra-900 p-10 text-center font-usach-helvetica-body text-white items-center">
                 <div class=" font-usach-helvetica-bold text-lg">Pregunta {{ i + '/' + cantPregs }}</div>
                 <div class="bg-usach-ultra-600 text-7xl p-3 rounded-lg my-5 font-usach-helvetica-bold">
                     <p class=" pt-4">{{ palabra }}</p>

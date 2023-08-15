@@ -5,8 +5,8 @@
                 <div class="flex static bg-usach-ultra-300 h-3 w-full rounded-xl mr-1 ml-6 justify-center items-center font-usach-bebas-title">
                     <button v-for="num in Array.from({ length: cantPregs }, (v, i) => i)" @click="changeQuestion(num + 1)"
                     class="mx-2 rounded-full h-7 w-10 text-lg" :class="{
-                        'bg-usach-ultra-300 font-usach-bebas-body': store.respuestas[num] === '',
-                        'bg-usach-terra-700 text-slate-100': store.respuestas[num] !== ''
+                        'bg-usach-ultra-300 font-usach-bebas-body': store.respuestas[num] === undefined,
+                        'bg-usach-terra-700 text-slate-100': store.respuestas[num] !== undefined
                     }">
                         {{ num + 1 }}
                     </button>

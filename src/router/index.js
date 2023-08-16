@@ -44,5 +44,10 @@ export default createRouter({
             name: 'Correccion',
             component: () => import('../views/Correccion.vue')
         }
+        , {
+            path: '/juegos',
+            name: 'Juegos',
+            component: () => import('../components/Carousel_index.vue')
+        }
     ]
 })

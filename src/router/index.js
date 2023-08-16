@@ -20,6 +20,14 @@ export default createRouter({
             name: 'Pindaro',
             component: () => import('../views/Pindaro.vue')
         }, {
+            path: '/rima',
+            name: 'Rima',
+            component: () => import('../views/Rima.vue')
+        }, {
+            path: '/cat-acentual',
+            name: 'Cat-acentual',
+            component: () => import('../views/Cat-acentual.vue')
+        }, {
             path: '/dificultad',
             name: 'Dificultad',
             component: () => import('../views/Dificultad.vue')

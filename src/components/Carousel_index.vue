@@ -21,31 +21,45 @@
           </div>
         </div>
         <label id="sub2" class="font-usach-bebas-title">En este juego debes contar la cantidad de sílabas que tiene cada palabra y seleccionar la respuesta correcta</label>
-        <Boton label="Jugar" id="boton1" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
-      </div>
-    </div>
-    <div class="slide" :class="{ active: currentIndex === 1 }">
-      <div class="Slide2"></div>
-    </div>
-    <div class="slide" :class="{ active: currentIndex === 2 }">
-      <div class="Slide3"></div>
+		<router-link to="/dificultad" @click="setJuego(1)"> 
+			<Boton label="Pindaro Jugar" id="boton1" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
+		</router-link>
+	</div>
+</div>
+<div class="slide" :class="{ active: currentIndex === 1 }">
+	<div class="Slide2">
+		<router-link to="/dificultad" @click="setJuego(2)">
+			<Boton label="Rima Jugar" id="boton1" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
+        </router-link>
+	</div>
+</div>
+<div class="slide" :class="{ active: currentIndex === 2 }">
+	<div class="Slide3"></div>
+		<router-link to="/dificultad" @click="setJuego(3)">
+			<Boton label="Categoría Acentual Jugar" id="boton1" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
+		</router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-  import Boton from "../components/Boton.vue"
-  import { ref } from 'vue';
+	import { store } from '../store.js'
+	import Boton from "../components/Boton.vue"
+	import { ref } from 'vue';
+	store.juego = 0
+	const currentIndex = ref(0);
 
-  const currentIndex = ref(0);
+	const prevSlide = () => {
+		currentIndex.value = (currentIndex.value - 1 + 3) % 3;
+	};
 
-  const prevSlide = () => {
-    currentIndex.value = (currentIndex.value - 1 + 3) % 3;
-  };
+	const nextSlide = () => {
+		currentIndex.value = (currentIndex.value + 1) % 3;
+	};
 
-  const nextSlide = () => {
-    currentIndex.value = (currentIndex.value + 1) % 3;
-  };
+	const setJuego = (num) => {
+		store.juego = num;
+	};
 </script>
 
   

@@ -21,7 +21,7 @@
                 <div class="bg-usach-ultra-600 text-7xl p-3 rounded-lg my-5 font-usach-helvetica-bold">
                     <p class=" pt-4">{{ palabra }}</p>
                 </div>
-                <p class="text-center text-xl">¿Cuántas sílabas tiene esta palabra?</p>
+                <p class="text-center text-xl">¿A qué categoría acentual pertenece esta palabra?</p>
                 <div class="flex flex-row p-5 rounded-lg bg-usach-ultra-600 mt-3 mb-7">
                     <div v-for="opcion in opciones" class="flex space-x-2">
                         <input type="radio" :id="'answer-' + opcion" :value="opcion" v-model="respuesta" class="hidden" />

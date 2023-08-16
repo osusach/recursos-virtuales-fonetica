@@ -1,9 +1,7 @@
 <template>
-	<Leaderboard></Leaderboard>
-    <Slider></Slider>
+    <Slide></Slide>
 </template>
 
 <script setup>
-    import Leaderboard from "../components/Leaderboard.vue";
-    import Slider from "../components/Slider.vue";
+    import Slide from "../components/Carousel_index.vue";
 </script>

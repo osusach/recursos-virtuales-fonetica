@@ -18,7 +18,7 @@
             <div v-for="number in 5" :key="number" class="cuadrados">
             {{ number }}
             </div>
-          </div>
+          </div> 
         </div>
         <label id="sub2" class="font-usach-bebas-title">En este juego debes contar la cantidad de sílabas que tiene cada palabra y seleccionar la respuesta correcta</label>
 		<router-link to="/dificultad" @click="setJuego(1)"> 
@@ -126,44 +126,60 @@
 .Slide1 h1{
   display: flex;
   position: absolute;
+  text-align: center;
+  justify-content: center;
   top: 8%;
-  left: 45%;
+  left: 50%;
   color: white;
   font-size: 45px;
+  transform: translate(-50%, 0);
 }
 
-#title1{
+#title1 {
   display: flex;
   position: absolute;
-  top: 20%;
-  left: 41.5%;
+  justify-content: center;
+  align-items: center;
+  top: 20%; 
+  left: 50%;
   color: white;
   font-size: 80px;
+  transform: translate(-50%, 0);
 }
+
 
 #sub1{
   display: flex;
   position: absolute;
+  text-align: center;
+  justify-content: center;
   top: 43%;
-  left: 35.5%;
+  left: 50%;
   color: white;
   font-size: 20px;
+  transform: translate(-50%, 0);
 }
 
 #sub2{
   display: flex;
   position: absolute;
+  text-align: center;
+  justify-content: center;
   top: 75%;
-  left: 21.5%;
+  left: 50%;
   color: white;
   font-size: 20px;
+  transform: translate(-50%, 0);
 }
 
 .container-c {
   display: flex;
   position: absolute;
+  text-align: center;
+  justify-content: center;
   top: 53%;
-  left: 21.6%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 .cuadrados {
@@ -183,8 +199,10 @@
 #boton1{
   display: flex;
   position: absolute;
-  top: 84%;
-  left: 46%;
+  justify-content: center;
+  top: 88%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 .Slide2 {

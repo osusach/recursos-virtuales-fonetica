@@ -49,49 +49,46 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { store } from '../store.js'
+import axios from 'axios'
 
 const router = useRouter()
 console.log('store.juego')
 console.log(store.juego)
 console.log('store.dificultad')
 console.log(store.dificultad)
-// TESTEO
+
+// Constantes
 const Fin = ref('Terminar')
 const cantPregs = 10
 const i = ref(1)
-const palabras = ref(['hola', 'adiós', 'casa', 'perro', 'gato', 'ratón', 'pájaro', 'pato', 'camello', 'elefante'])
-const palabra = ref(palabras.value[i.value - 1])
-const opciones = []
 
-const respCatAcentual = [
-            { text: "Grave", valor: 1 },
-            { text: "Aguda", valor: 2 },
-            { text: "Esdrujula", valor: 3 },
-            { text: "Monosilabo tónico", valor: 4 },
-            { text: "Monosilabo átono", valor: 5 },
-            { text: "Bisilabos átono", valor: 6 },
-        ]
+let palabra = ref('')
+let opciones = ref([])
 
-respCatAcentual.forEach(element => {
-        if (element.valor <= 6)
-            opciones.push(element.text)
-    });
-
+const response = await axios.get('https://pindaro.pindarousach.workers.dev/acentual/start/1')
+const apiResponse = response.data
+console.log('apiResponse')
+console.log(apiResponse)
 let respuesta = ref('')
 const nextText = ref('Siguiente')
 
+
+const changeQuestionApi = () => {
+    console.log('i.value')
+    console.log(i.value)
+    console.log(question)
+    let question = apiResponse[i.value - 1]
+    palabra.value = question['word']
+    opciones.value = []
+    question['answers'].forEach(answer => { opciones.value.push(answer['answer']) })
+    console.log(palabra.value)
+    console.log(opciones.value)
+}
 const saveAnswer = () => {
     // no borrar respuesta al navegar
     if (respuesta.value !== '') {
         store.respuestas[i.value - 1] = respuesta.value
     }
-    console.log("-----------")
-    console.log("i =" + i.value)
-    console.log("palabra =" + palabra.value)
-    console.log("respuesta =" + respuesta)
-    console.log("respuestas =" + store.respuestas)
-    console.log("respuestas[i] =")
-    console.log(store.respuestas[i.value - 1])
 }
 const nextTextVerify = () => {
     if (i.value == cantPregs) {
@@ -106,7 +103,7 @@ const nextQuestion = () => {
     saveAnswer()
     if (i.value < cantPregs) {
         i.value += 1
-        palabra.value = palabras.value[i.value - 1]
+        changeQuestionApi()
         nextTextVerify()
     } else {
         endQuiz()
@@ -117,7 +114,7 @@ const prevQuestion = () => {
     saveAnswer()
     if (i.value > 1) {
         i.value -= 1
-        palabra.value = palabras.value[i.value - 1]
+        changeQuestionApi()
         nextTextVerify()
     }
 }
@@ -125,7 +122,7 @@ const prevQuestion = () => {
 const changeQuestion = (num) => {
     saveAnswer()
     i.value = num
-    palabra.value = palabras.value[i.value - 1]
+    changeQuestionApi()
     nextTextVerify()
 }
 
@@ -133,4 +130,8 @@ const endQuiz = () => {
     saveAnswer()
     router.push('/correccion')
 }
+
+// Primera iteración
+changeQuestionApi()
+
 </script>

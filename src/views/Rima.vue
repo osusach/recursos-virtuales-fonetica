@@ -36,7 +36,7 @@
                                 ' bg-usach-aqua-800 text-white': respuesta === opcion,
                                 'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion
                             }">
-                            {{ 'Alternativa ' + opcion }}
+                            {{ opcion }}
                         </label>
                     </div>
                 </div>
@@ -66,7 +66,20 @@ const cantPregs = 10
 const i = ref(1)
 const palabras = ref(['hola', 'adiós', 'casa', 'perro', 'gato', 'ratón', 'pájaro', 'pato', 'camello', 'elefante'])
 const palabra = ref(palabras.value[i.value - 1])
-const opciones = ref(['1', '2', '3', '4'])
+const respRima = [
+            { text: "Si", valor: 1 },
+            { text: "No", valor: 2 },
+            { text: "Consonante", valor: 3 },
+            { text: "Asonante", valor: 4 },
+            { text: "Sin rima", valor: 5 },
+        ]
+const opciones = []
+
+respRima.forEach(element => {
+                if (element.valor > 2)
+                    opciones.push(element.text)
+            })
+
 let respuesta = ref('')
 const nextText = ref('Siguiente')
 

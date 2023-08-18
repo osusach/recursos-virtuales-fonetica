@@ -23,7 +23,7 @@
                 </div>
                 <p class="text-center text-xl">¿Cuántas sílabas tiene esta palabra?</p>
                 
-                <input type="range" v-model="respuesta" min="0" max="10" step="1">
+                <input type="range" v-model="respuesta" min="0" max="10" step="1" class="bg-transparent">
                     <p>Valor actual: {{ respuesta }}</p>
 
                 <div class="flex flex-row justify-center gap-4 font-usach-bebas-body">

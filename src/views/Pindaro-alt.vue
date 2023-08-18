@@ -61,22 +61,7 @@ const cantPregs = 10
 const i = ref(1)
 const palabras = ref(['hola', 'adiós', 'casa', 'perro', 'gato', 'ratón', 'pájaro', 'pato', 'camello', 'elefante'])
 const palabra = ref(palabras.value[i.value - 1])
-const opciones = []
-
-const respCatAcentual = [
-            { text: "Grave", valor: 1 },
-            { text: "Aguda", valor: 2 },
-            { text: "Esdrujula", valor: 3 },
-            { text: "Monosilabo tónico", valor: 4 },
-            { text: "Monosilabo átono", valor: 5 },
-            { text: "Bisilabos átono", valor: 6 },
-        ]
-
-respCatAcentual.forEach(element => {
-        if (element.valor <= 6)
-            opciones.push(element.text)
-    });
-
+const opciones = ref(['1', '2', '3', '4'])
 let respuesta = ref('')
 const nextText = ref('Siguiente')
 

@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-y-2 text-center bg-usach-aqua-300 rounded-lg p-5 w-1/4 font-usach-bebas-title">
-        <p class=" font-usach-bebas-title text-3xl">Corección</p>
+        <p class=" font-usach-bebas-title text-3xl">Corrección</p>
         <div v-for="i in Array.from({length: cantPregs}, (v, i) => i)" class="flex flex-row justify-between items-center bg-usach-aqua-800 rounded-lg py-4 px-4 gap-x-3"
             :class="{
                         'bg-usach-aqua-800': store.respuestas[i] === respCorrecta[i],

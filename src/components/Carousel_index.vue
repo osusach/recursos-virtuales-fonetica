@@ -1,5 +1,14 @@
 <template>
   <div class="slider">
+    <div class="navegacion-puntos">
+    <div
+      v-for="(slide, index) in 3"
+      :key="index"
+      class="punto"
+      :class="{ active: currentIndex === index }"
+      @click="goToSlide(index)"
+    ></div>
+    </div>
     <div class="navegacion px-6">
       <button class="icon-button prev-button" @click="prevSlide">
         <i class="fa-solid fa-chevron-left"></i>
@@ -96,6 +105,10 @@
 		localStorage.setItem('juego', num)
 	};
 	
+  const goToSlide = (index) => {
+  currentIndex.value = index;
+  };
+
 </script>
 
   
@@ -150,6 +163,30 @@
 .prev-button:hover,
 .next-button:hover {
   background-color: rgba(185, 185, 185, 0.8);
+}
+
+.navegacion-puntos {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  left: 50%;
+  top: 92%;
+  margin-top: 20px;
+  z-index: 1;
+  transform: translate(-50%, 0);
+}
+
+.punto {
+  width: 10px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.punto.active {
+  background-color: white; 
 }
 
 .Slide1 {

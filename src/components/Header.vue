@@ -1,5 +1,5 @@
 <template>
-    <header className="bg-usach-aqua-900 flex items-center p-4">
+    <header className="bg-usach-aqua-900 flex items-center p-1">
         
         <button className="flex-none">
             <router-link to="/">

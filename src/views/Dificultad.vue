@@ -1,11 +1,11 @@
 <template>
-    <form class="m-auto grid xl:grid-cols-1 gap-10 p-10 w-[70%]">
+    <form class="m-auto grid xl:grid-cols-1 gap-10 p-10 min-w-[35%]">
       	<div class="text-5xl h-fit text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg">
-		  	<div class="flex flex-col py-10 justify-center items-center">
+		  	<div class="flex flex-col p-10 justify-center items-center">
 			  	<h1 class="text-3xl mb-5 font-usach-bebas-title">
 				  	Selecciona una dificultad
 				</h1>
-				<div class="flex flex-col w-1/3">
+				<div class="flex flex-col w-full">
 					<router-link :to='ruta'>
 						<Boton label="Básico" type="submit" @click="setDificultad(1)" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"></Boton>
 					</router-link>

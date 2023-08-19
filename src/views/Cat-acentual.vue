@@ -76,14 +76,15 @@ const nextText = ref('Siguiente')
 const changeQuestionApi = () => {
     console.log('i.value')
     console.log(i.value)
-    console.log(question)
     let question = apiResponse[i.value - 1]
+    console.log(question)
     palabra.value = question['word']
-    opciones.value = []
+    opciones = ref([])
     question['answers'].forEach(answer => { opciones.value.push(answer['answer']) })
     console.log(palabra.value)
     console.log(opciones.value)
 }
+
 const saveAnswer = () => {
     // no borrar respuesta al navegar
     if (respuesta.value !== '') {

@@ -18,7 +18,11 @@
                 <p class=" font-usach-bebas-body text-xl"> Correcta: {{ respCorrecta[i] }} </p>
             </div>
         </div>
-        <button class=" bg-usach-terra-700 mt-4 rounded-lg font-usach-bebas-title text-2xl p-3">Terminar</button>
+        <router-link to="/home" @click="onClick" class="bg-usach-terra-700 mt-4 rounded-lg font-usach-bebas-title text-2xl p-3 hover:bg-usach-terra-800">
+            <button>
+                Terminar
+            </button>
+		</router-link>
     </div>
 </template>
 

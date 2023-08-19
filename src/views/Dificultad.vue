@@ -2,6 +2,7 @@
     <form class="m-auto grid xl:grid-cols-1 gap-10 p-10 min-w-[35%]">
       	<div class="text-5xl h-fit text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg">
 		  	<div class="flex flex-col p-10 justify-center items-center">
+				<p>Juego Actual: {{ nombreJuego }}</p>
 			  	<h1 class="text-3xl mb-5 font-usach-bebas-title">
 				  	Selecciona una dificultad
 				</h1>
@@ -23,26 +24,30 @@
   
 <script setup>
 	import Boton from "../components/Boton.vue"
-	import { store } from '../store.js'
 	import { ref } from 'vue'
 
-	store.dificultad = 0
-  	let ruta = ref('/error')
-	const setDificultad = (num) => {
-		store.dificultad = num
-		switch (store.juego) {
+	const juego = Number(localStorage.getItem('juego'))
+	let ruta = ref('/home')
+	let nombreJuego = ref('')
+
+	switch (juego) {
 			case 1:
 				ruta.value = '/pindaro'
+				nombreJuego = 'Píndaro'
 				break;
 			case 2:
 				ruta.value = '/rima'
+				nombreJuego = 'Rima'
 				break;
 			case 3:
 				ruta.value = '/cat-acentual'
+				nombreJuego = 'Categoría Acentual'
 				break;
-		
 			default:
 				break;
-		}
+	}
+
+	const setDificultad = (num) => {
+		localStorage.setItem('dificultad', num)
 	}
 </script>

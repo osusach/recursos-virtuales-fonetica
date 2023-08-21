@@ -88,7 +88,7 @@ const changeQuestionApi = () => {
 // get a db
 onMounted(async () => {
   try {
-    const response = await axios.get('https://pindaro.pindarousach.workers.dev/rima/start/1')  
+    const response = await axios.get('https://pindaro.pindarousach.workers.dev/rima/start/' + store.dificultad)  
     apiResponse = response.data
     changeQuestionApi()
   } catch (error) {

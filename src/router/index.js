@@ -32,9 +32,9 @@ export default createRouter({
             name: 'Dificultad',
             component: () => import('../views/Dificultad.vue')
         }, {
-            path: '/pindaro',
-            name: 'Pindaro',
-            component: () => import('../views/Pindaro.vue')
+            path: '/pindaro-alt',
+            name: 'Pindaro Alternativo',
+            component: () => import('../views/Pindaro-alt.vue')
         }, {
             path: '/preguntas',
             name: 'Preguntas',

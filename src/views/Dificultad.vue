@@ -21,6 +21,7 @@
 <script setup>
 	import Boton from "../components/Boton.vue"
 	import { ref } from 'vue'
+	import { store } from '../store.js'
 
 	const juego = Number(localStorage.getItem('juego'))
 	let ruta = ref('/home')

@@ -3,7 +3,7 @@
 - [ ] Base de datos usuarios + leaderboard
 - [ ] Leaderboard
 - [ ] Juegos
-  - [ ] recibir preguntas de base de datos
+  - [x] recibir preguntas de base de datos
   - [ ] almacenar puntaje
   - [ ] mostrar buenas/malas c/corrección, s/corrección, % errores (dificultad)
   - [ ] diseño final corrección

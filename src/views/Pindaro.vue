@@ -53,8 +53,8 @@ const cantPregs = 10
 const i = ref(1)
 const loading = ref(true)
 
+store.respuestas = []
 let palabra = ref('')
-
 let apiResponse = null
 
 const changeQuestionApi = () => {
@@ -68,15 +68,19 @@ const changeQuestionApi = () => {
 // get a db
 onMounted(async () => {
     try {
-        const response = await axios.get('https://pindaro.pindarousach.workers.dev/pindaro/start/1')  
+        const response = await axios.get('https://pindaro.pindarousach.workers.dev/silabas/start/' + store.dificultad)  
         apiResponse = response.data
+        store.preguntas = []
+        apiResponse.forEach(element => {
+            store.preguntas.push(element['word'])
+        });
         changeQuestionApi()
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 })
 
-let respuesta = ref(1)
+let respuesta = ref(5)
 const nextText = ref('Siguiente')
 
 
@@ -92,7 +96,7 @@ const nextTextVerify = () => {
     } else {
         nextText.value = 'Siguiente'
     }
-    respuesta.value = ''
+    respuesta.value = 5
 }
 
 const nextQuestion = () => {

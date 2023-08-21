@@ -72,7 +72,7 @@ const changeQuestionApi = () => {
     if (apiResponse === null)
         { return }
     let question = apiResponse[i.value - 1]
-    palabra.value = question['words']
+    palabra.value = question['word']
     opciones = ref([])
     question['answers'].forEach(answer => { opciones.value.push(answer['answer']) })
     if (loading) { loading.value = false }
@@ -81,7 +81,7 @@ const changeQuestionApi = () => {
 // get a db
 onMounted(async () => {
   try {
-    const response = await axios.get('https://pindaro.pindarousach.workers.dev/rima/start/1')  
+const response = await axios.get('https://pindaro.pindarousach.workers.dev/silabas/start/' + store.dificultad)  
     apiResponse = response.data
     changeQuestionApi()
   } catch (error) {

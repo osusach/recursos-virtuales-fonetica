@@ -2,7 +2,7 @@
     <div v-if="!loading">
         <div class="grid items-center">
             <div class="flex flex-col gap-4">
-                <div class="flex flex-row h-14 rounded-lg bg-usach-ultra-900 align-middle items-center">
+                <div class="hidden sm:flex flex-row h-14 w-fit rounded-lg bg-usach-ultra-900 align-middle items-center">
                     <div class="flex static bg-usach-ultra-300 h-3 w-full rounded-xl mr-1 ml-6 justify-center items-center font-usach-bebas-title">
                         <button v-for="num in Array.from({ length: cantPregs }, (v, i) => i)" @click="changeQuestion(num + 1)"
                         class="mx-2 rounded-full h-7 w-10 text-lg" :class="{
@@ -13,7 +13,7 @@
                         </button>
                     </div>
                     
-                    <button class=" font-usach-bebas-title mx-3 bg-usach-terra-700 rounded-lg p-1 text-white text-lg" @click="endQuiz">
+                    <button class="font-usach-bebas-title mx-3 bg-usach-terra-700 rounded-lg p-1 text-white text-lg" @click="endQuiz">
                         {{ Fin }}
                     </button>
                 </div>
@@ -60,6 +60,7 @@ let apiResponse = null
 const changeQuestionApi = () => {
     if (apiResponse === null)
         { return }
+        
     let question = apiResponse[i.value - 1]
     palabra.value = question['word']
     if (loading) { loading.value = false }

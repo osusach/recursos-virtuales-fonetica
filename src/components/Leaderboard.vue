@@ -1,6 +1,9 @@
 <template>
-    <div class="rounded-lg bg-usach-daisy-700 p-5">
-        <label id="title" class="block font-bold mb-3">Tabla de Puntuaciones {{ label }}</label>
+    <div class="rounded-lg bg-usach-daisy-700 p-3 w-96 ">
+        <label id="title" class="block font-bold py-6 pb-7 mx-16 mb-2">
+            Tabla de puntuaciones<br>
+            {{ label }}
+        </label>
         <div class="max-h-80 overflow-y-auto rounded-lg border border-gray-300"> 
             <table id="table" class="table-auto min-w-full border-collapse bg-white w-full">
                 <thead>
@@ -34,8 +37,8 @@ const props = defineProps({
 const getLeaderboard = (tipo) => {
 	// axios.get(dbHttp)
     return [ 
-        { nombre: "schlawg", score: 25}, 
-        { nombre: "juaquin", score: 2},
+        { nombre: "schlawgaaaaaaa", score: 25}, 
+        { nombre: "ignacio", score: 2},
         { nombre: "juaquin", score: 2},
         { nombre: "juaquin", score: 2},
         { nombre: "juaquin", score: 2},
@@ -47,7 +50,6 @@ const getLeaderboard = (tipo) => {
         { nombre: "schlawg", score: 25}, 
         { nombre: "schlawg", score: 25}, 
         { nombre: "schlawg", score: 25}, 
-
     ]
 }
 

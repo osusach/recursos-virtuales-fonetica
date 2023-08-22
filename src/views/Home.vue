@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col gap-10">
         <Slide></Slide>
-        <div class="grid grid-flow-col gap-5">
+        <div class="flex flex-col lg:flex-row items-center gap-5">
             <Leaderboard label="Píndaro"></Leaderboard>
-            <Leaderboard></Leaderboard>
-            <Leaderboard></Leaderboard>
+            <Leaderboard label="Rima"></Leaderboard>
+            <Leaderboard label="Categoría acentual"></Leaderboard>
         </div>
     </div>
 </template>

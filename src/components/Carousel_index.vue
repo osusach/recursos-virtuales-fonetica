@@ -19,28 +19,34 @@
     </div>
     <div class="slide" :class="{ active: currentIndex === 0 }">
       <div class="Slide1 flex flex-col rounded-lg gap-2 p-10 text-center font-usach-helvetica-body text-white items-center">
-        <div class=" font-usach-helvetica-bold bg-usach-terra-700 mb-4 p-3 pt-2 rounded-lg text-5xl">Píndaro</div>
-        <p class="text-6xl font-usach-helvetica-bold bg-usach-aqua-600 rounded-lg p-3 pt-1"> plátano</p>
-          <div class="flex flex-row p-3 rounded-lg">
-              <div v-for="num in 5" class="flex space-x-2 mx-1">
-                  <p class="px-4 text-2xl font-usach-bebas-title py-2 border rounded-lg bg-usach-daisy-700">
-                    	{{ num }}
-                  </p>
-              </div>
-          </div>
-          <div class=" font-usach-helvetica-body bg-usach-aqua-600 p-3 rounded-lg text-xl w-2/3">
-            En este juego debes contar la cantidad de sílabas que tiene cada palabra y seleccionar la alternativa correcta.</div>
-          <router-link to="/dificultad" @click="setJuego(1)">
-            <button @click="onClick" class="default-button bg-usach-ultra-800 font-usach-bebas-body text-2xl hover:bg-usach-ultra-900">
-              <a class="font-usach-helvetica-medium px-max">Jugar</a>
-            </button>
-		      </router-link>
-	    </div>
+        <div class=" font-usach-helvetica-bold bg-usach-terra-700 m-4 p-3 rounded-lg text-5xl">Píndaro</div>
+        <div class=" font-usach-helvetica-body bg-usach-aqua-600 p-3 rounded-lg text-xl w-2/3">
+          En este juego debes contar la cantidad de sílabas que tiene cada palabra y seleccionar la alternativa correcta.
+        </div>
+		<div class="bg-usach-aqua-300 rounded-lg">
+			<p class="text-6xl font-usach-helvetica-bold bg-usach-aqua-600 rounded-lg p-3 pt-1"> plátano</p>
+				<div class="flex flex-row p-3 rounded-lg">
+					<div v-for="num in 5" class="flex space-x-2 mx-1">
+						<p class="px-4 text-2xl font-usach-bebas-title py-2 border rounded-lg bg-usach-daisy-700">
+								{{ num }}
+						</p>
+					</div>
+				</div>
+			</div>
+			<router-link to="/dificultad" @click="setJuego(1)">
+				<button @click="onClick" class="default-button bg-usach-ultra-800 font-usach-bebas-body text-2xl hover:bg-usach-ultra-900">
+					<a class="font-usach-helvetica-medium px-max">Jugar</a>
+				</button>
+			</router-link>
+		</div>
   </div>
 
   <div class="slide" :class="{ active: currentIndex === 1 }">
     <div class="Slide2 flex flex-col rounded-lg gap-2 p-10 text-center font-usach-helvetica-body text-white items-center">
-      <div class=" font-usach-helvetica-bold bg-usach-terra-700 mb-4 p-3 pt-5 rounded-lg text-5xl">Rimas</div>
+      <div class=" font-usach-helvetica-bold bg-usach-terra-700 m-4 p-3 rounded-lg text-5xl">Rimas</div>
+      <div class=" font-usach-helvetica-body bg-usach-ultra-600 p-3 rounded-lg text-xl w-2/3">
+            En este juego debes identificar si hay rima entre las dos palabras. Si la hay, de qué tipo.
+      </div>
       <div class="flex flex-row gap-20">
         <p class="text-6xl font-usach-helvetica-bold p-3 bg-usach-ultra-600 rounded-lg"> canción</p>
         <p class="text-6xl font-usach-helvetica-bold p-3 bg-usach-ultra-600 rounded-lg"> función</p>
@@ -49,9 +55,6 @@
           <div v-for="rima in rimas" class="flex space-x-2 mx-1">
               <p class="px-4 text-2xl font-usach-bebas-title py-2 border rounded-lg bg-usach-daisy-700">{{ rima }}</p>
           </div>
-      </div>
-      <div class=" font-usach-helvetica-body bg-usach-ultra-600 p-3 rounded-lg text-xl w-2/3">
-            En este juego debes identificar el tipo de rima que existe entre las dos palabras y seleccionar la alternativa correcta.
       </div>
       <router-link to="/dificultad" @click="setJuego(2)">
             <button @click="onClick" class="default-button bg-usach-aqua-800 font-usach-bebas-body text-2xl hover:bg-usach-aqua-900">
@@ -63,7 +66,10 @@
 
   <div class="slide" :class="{ active: currentIndex === 2 }">
 	  <div class="Slide3 bg-usach-terra-900 flex flex-col rounded-lg gap-2 p-10 text-center font-usach-helvetica-body text-white items-center">
-      <div class=" font-usach-helvetica-bold bg-usach-daisy-900 mb-4 p-3 pt-5 rounded-lg text-5xl">Categoría Acentual</div>
+      <div class=" font-usach-helvetica-bold bg-usach-daisy-900 m-4 p-3 rounded-lg text-5xl">Categoría acentual</div>
+      <div class=" font-usach-helvetica-body bg-usach-terra-700 p-3 rounded-lg text-xl w-2/3">
+        En este juego debes identificar el tipo de acentuación de la palabra y seleccionar la opción correcta.
+      </div>
       <div class="flex flex-row gap-20">
         <p class="text-6xl font-usach-helvetica-bold p-3 bg-usach-cloudy-400 rounded-lg">elefante</p>
       </div>
@@ -71,9 +77,6 @@
         <div v-for="rima in categoria" class="flex space-x-2 mx-1">
           <p class="px-4 text-2xl font-usach-bebas-title py-2 border rounded-lg bg-usach-daisy-900">{{ rima }}</p>
         </div>
-      </div>
-      <div class=" font-usach-helvetica-body bg-usach-terra-700 p-3 rounded-lg text-xl w-2/3">
-        En este juego debes identificar el tipo de acentuación de la palabra y seleccionar la opción correcta.
       </div>
       <router-link to="/dificultad" @click="setJuego(3)">
         <button @click="onClick" class="default-button bg-usach-aqua-800 font-usach-bebas-body text-2xl hover:bg-usach-aqua-900">

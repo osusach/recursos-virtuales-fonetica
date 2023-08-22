@@ -11,7 +11,7 @@
         ¿No tienes cuenta?<Enlaces to="/Register">Regístrate</Enlaces>
       </div>
       <div className="font-usach-helvetica-medium rounded-lg  px-6 text-lg">
-        <label>¿No Quieres Registrarte?</label>
+        <label>¿Prefieres no registrarte aún?</label>
       </div>
       <Boton label="Invitado" @click="goToOtherView" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
     </div>

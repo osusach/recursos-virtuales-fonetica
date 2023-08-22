@@ -8,7 +8,7 @@
             </router-link>
         </button>
         <div class="flex-grow text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-usach-bebas-title text-white ">Recursos Virtuales para el aprendizaje del Lenguaje</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-usach-bebas-title text-white ">Recursos virtuales para el aprendizaje del lenguaje</h1>
         </div>
     </header>
 </template>

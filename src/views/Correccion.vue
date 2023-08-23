@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-y-2 text-center bg-usach-aqua-300 rounded-lg p-5 w-[80%] md:w-[50%] font-usach-bebas-title">
+    <div class="flex flex-col gap-y-2 text-center bg-usach-aqua-300 rounded-lg p-5 md:w-[60%] sm:w-[80%] lg:w-[40%] xl:w-[30%] font-usach-bebas-title">
         <p class=" font-usach-bebas-title text-3xl">Corrección</p>
         <div v-for="i in Array.from({length: cantPregs}, (v, i) => i)" class="flex flex-row justify-between items-center bg-usach-aqua-800 rounded-lg py-4 px-4 gap-x-3"
             :class="{
@@ -13,8 +13,11 @@
                     }">P{{ i + 1 }}</p>
                 <p class=" font-usach-bebas-body text-xl text-left">{{ preguntas[i] }} </p>
             </div>
-            <div class="flex flex-row w-1/2 justify-between px-3 rounded-lg">
-                <p class=" font-usach-bebas-body text-xl" v-if="facil"> Respuesta: {{ respuestas[i] }} </p>
+            <div class="flex flex-col text-center   ">
+                <p class=" font-usach-bebas-title text-xl rounded-lg" :class="{
+                    'bg-usach-aqua-500 px-3': respuestas[i] === respCorrecta[i],
+                    'bg-usach-rouge-500 px-3': respuestas[i] !== respCorrecta[i]
+                }"> Tu respuesta: {{ respuestas[i] }} </p>
                 <p class=" font-usach-bebas-body text-xl"> Correcta: {{ respCorrecta[i] }} </p>
             </div>
         </div>

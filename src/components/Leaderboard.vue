@@ -1,25 +1,20 @@
 <template>
-    <div class="rounded-lg bg-usach-daisy-700 p-3 w-96 ">
-        <label id="title" class="block font-bold py-6 pb-7 mx-16 mb-2">
-            Tabla de puntuaciones<br>
-            {{ label }}
-        </label>
-        <div class="max-h-80 overflow-y-auto rounded-lg border border-gray-300"> 
-            <table id="table" class="table-auto min-w-full border-collapse bg-white w-full">
-                <thead>
-                    <tr>
-                        <th> Nombre </th>
-                        <th> Puntaje </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, index) in items" :key="index">
-                        <td>{{ item.nombre }}</td>
-                        <td>{{ item.score }}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="rounded-xl border-usach-industrial-900 bg-usach-industrial-900 border overflow-hidden h-fit">
+        <div class="px-5 py-4 text-white text-xl text-center">
+            <h1 class="inline-block ml-1">Tabla de puntuaciones <br> {{ label }}</h1>
         </div>
+        <ol class="body text-base text-white h-80 overflow-scroll">
+            <li v-for="(item, index) in items" :key="index" 
+                class="p-4 flex justify-between"
+                :class="{
+                    
+                    'bg-usach-rouge-500': index % 2 === 0,
+                    'bg-usach-rouge-800': index % 2 === 1 }">
+                <mark class="bg-transparent text-white"> {{ index+1 }}. </mark>
+                <p> {{ item['nombre'] }} </p>
+                <p> {{ item['score'] }} </p>
+            </li>
+        </ol>
     </div>
 </template>
 
@@ -37,50 +32,16 @@ const props = defineProps({
 const getLeaderboard = (tipo) => {
 	// axios.get(dbHttp)
     return [ 
-        { nombre: "schlawgaaaaaaa", score: 25}, 
-        { nombre: "ignacio", score: 2},
-        { nombre: "juaquin", score: 2},
-        { nombre: "juaquin", score: 2},
-        { nombre: "juaquin", score: 2},
-        { nombre: "juaquin", score: 2}, 
-        { nombre: "juaquin", score: 2},
-        { nombre: "juaquin", score: 2},
-        { nombre: "juaquin", score: 2},
-        { nombre: "schlawg", score: 25}, 
-        { nombre: "schlawg", score: 25}, 
-        { nombre: "schlawg", score: 25}, 
-        { nombre: "schlawg", score: 25}, 
+    { nombre: "ignacio", score: 2},
+    { nombre: "juaquin", score: 3},
+    { nombre: "maria123", score: 15},
+    { nombre: "alex89", score: 10},
+    { nombre: "leticia", score: 8},
+    { nombre: "juanito", score: 6},
+    { nombre: "pedro45", score: 4},
+    { nombre: "carla77", score: 1},
     ]
 }
 
 items = getLeaderboard(1)
 </script>
-
-
-<style>
-#title{
-    display: flex;
-    position: relative;
-    background-color: white;
-    border-radius: 10px;
-    height: 5vh;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-}
-th {
-	position: sticky;
-	top: 0;
-    --tw-bg-opacity: 1;
-    background-color: rgb(199 221 244 / var(--tw-bg-opacity));
-}
-th, td {
-	padding-top: 0.5rem/* 8px */;
-    padding-bottom: 0.5rem/* 8px */;
-	padding-left: 1rem/* 16px */;
-    padding-right: 1rem/* 16px */;
-	--tw-border-opacity: 1;
-    border-color: rgb(209 213 219 / var(--tw-border-opacity));
-	border-width: 1px;
-}
-</style>

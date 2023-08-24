@@ -99,7 +99,6 @@
   const rimas = ref(['asonante', 'consonante', 'no hay rima'])
   const categoria = ref(['aguda', 'grave', 'esdrújula'])
 	import { ref } from 'vue';
-  import PindaroCarrusel from "../components/PindaroCarrusel.vue"
 
 
 	const setJuego = (num) => {

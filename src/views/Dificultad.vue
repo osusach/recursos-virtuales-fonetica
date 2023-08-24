@@ -21,9 +21,11 @@
 <script setup>
 	import Boton from "../components/Boton.vue"
 	import { ref } from 'vue'
-	import { store } from '../store.js'
+	import { useRouter } from 'vue-router'
 
-	const juego = Number(localStorage.getItem('juego'))
+	const router = useRouter()
+
+	const juego = Number(router.currentRoute.value.params.id)
 	let ruta = ref('/home')
 	let nombreJuego = ref('')
 

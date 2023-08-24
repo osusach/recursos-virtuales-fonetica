@@ -20,7 +20,7 @@
             </div>
           </div>
           <div class="w-full bg-usach-ultra-800 rounded-lg text-center">
-            <router-link to="/dificultad" @click="setJuego(1)">
+            <router-link to='/dificultad/1' @click="setJuego(1)">
               <button class="p-2 w-full rounded-lg bg-usach-ultra-800 text-2xl hover:bg-usach-ultra-900">
                 <a class="font-usach-helvetica-body w-full">Jugar</a>
               </button>
@@ -52,7 +52,7 @@
             </div>
           </div>
           <div class="w-full bg-usach-terra-800 rounded-lg text-center">
-            <router-link to="/dificultad" @click="setJuego(2)">
+            <router-link to="/dificultad/2" @click="setJuego(2)">
               <button class="p-2 w-full rounded-lg text-2xl hover:bg-usach-terra-900">
                 <a class="font-usach-helvetica-body w-full">Jugar</a>
               </button>
@@ -82,7 +82,7 @@
             </div>
           </div>
           <div class="w-full bg-usach-aqua-800 rounded-lg text-center">
-            <router-link to="/dificultad" @click="setJuego(3)">
+            <router-link to="/dificultad/3" @click="setJuego(3)">
               <button class="p-2 w-full rounded-lg bg-usach-terra-700 text-2xl hover:bg-usach-terra-800">
                 <a class="font-usach-helvetica-body w-full">Jugar</a>
               </button>

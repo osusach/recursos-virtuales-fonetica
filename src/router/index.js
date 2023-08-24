@@ -28,7 +28,7 @@ export default createRouter({
             name: 'Cat-acentual',
             component: () => import('../views/Cat-acentual.vue')
         }, {
-            path: '/dificultad',
+            path: '/dificultad/:id',
             name: 'Dificultad',
             component: () => import('../views/Dificultad.vue')
         }, {

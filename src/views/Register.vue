@@ -4,19 +4,19 @@
         <h1 class="text-3xl mb-5 font-usach-bebas-title">Registro</h1>
         <Input Label="Usuario" forLabel="user" type="text" placeholder="Usuario"/>
         <Input Label="Correo" forLabel="email" type="text" placeholder="Correo"/>
-        <select v-model="selectedFirst" class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg text-usach-industrial-1000 border-white text-sm 
+        <select v-model="selectedFirst" class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg text-usach-industrial-1000 bg-white border-white text-sm 
                                     focus:ring-usach-terra-700 focus:border-usach-terra-700" name="languages" id="lang">
           <option disabled value="">Nivel educativo</option>
           <option value="basica">Enseñanza Básica</option>
           <option value="media">Enseñanza Media</option>
           <option value="sup">Educación Superior</option>
         </select>
-        <select v-if="selectedFirst == 'basica'" v-model="selectedSec" class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg text-usach-industrial-1000 border-white text-sm 
+        <select v-if="selectedFirst == 'basica'" v-model="selectedSec" class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm 
                                     focus:ring-usach-terra-700 focus:border-usach-terra-700" name="languages" id="lang">
           <option disabled value="">Grado</option>
           <option v-for="nivel in 8" value="nivel">{{ nivel + '° Básico' }}</option>
         </select>
-        <select v-if="selectedFirst == 'media'" v-model="selectedSec" class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg text-usach-industrial-1000 border-white text-sm 
+        <select v-if="selectedFirst == 'media'" v-model="selectedSec" class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm 
                                     focus:ring-usach-terra-700 focus:border-usach-terra-700" name="languages" id="lang">
           <option disabled value="">Grado</option>
           <option v-for="nivel in 4" value="nivel">{{ nivel + '° Medio' }}</option>

@@ -98,7 +98,7 @@
   <script setup>
   const rimas = ref(['asonante', 'consonante', 'no hay rima'])
   const categoria = ref(['aguda', 'grave', 'esdrújula'])
-	import { ref } from 'vue';
+	import { ref } from 'vue'
 
 
 	const setJuego = (num) => {

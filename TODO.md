@@ -7,5 +7,4 @@
   - [ ] almacenar puntaje
   - [ ] mostrar buenas/malas c/corrección, s/corrección, % errores (dificultad)
   - [ ] diseño final corrección
-  - [ ] hacer slider bonito
 - [ ] Herramienta edición base de datos

@@ -34,7 +34,7 @@ export default createRouter({
         }, {
             path: '/pindaro-alt',
             name: 'Pindaro Alternativo',
-            component: () => import('../views/Pindaro-alt.vue')
+            component: () => import('../views/Pindaro-slider.vue')
         }, {
             path: '/preguntas',
             name: 'Preguntas',

@@ -2,7 +2,7 @@
     <div v-if="!loading">
         <div class="grid items-center">
             <div class="flex flex-col gap-4">
-                <div class="flex flex-row h-14 rounded-lg bg-usach-ultra-900 align-middle items-center">
+                <div class="hidden sm:flex flex-row h-14 w-fit rounded-lg bg-usach-ultra-900 align-middle items-center">
                     <div class="flex static bg-usach-ultra-300 h-3 w-full rounded-xl mr-1 ml-6 justify-center items-center font-usach-bebas-title">
                         <button v-for="num in Array.from({ length: cantPregs }, (v, i) => i)" @click="changeQuestion(num + 1)"
                         class="mx-2 rounded-full h-7 w-10 text-lg" :class="{
@@ -13,7 +13,7 @@
                         </button>
                     </div>
                     
-                    <button class=" font-usach-bebas-title mx-3 bg-usach-terra-700 rounded-lg p-1 text-white text-lg" @click="endQuiz">
+                    <button class="font-usach-bebas-title mx-3 bg-usach-terra-700 rounded-lg p-1 text-white text-lg" @click="endQuiz">
                         {{ Fin }}
                     </button>
                 </div>
@@ -22,20 +22,10 @@
                     <div class="bg-usach-ultra-600 text-7xl p-3 rounded-lg my-5 font-usach-helvetica-bold">
                         <p class=" pt-4">{{ palabra }}</p>
                     </div>
-                    <p class="text-center text-xl">¿A qué categoría acentual pertenece esta palabra?</p>
-                    <div class="flex flex-row p-5 rounded-lg bg-usach-ultra-600 mt-3 mb-7">
-                        <div v-for="opcion in opciones" class="flex space-x-2">
-                            <input type="radio" :id="'answer-' + opcion" :value="opcion" v-model="respuesta" class="hidden" />
-                            <label :for="'answer-' + opcion"
-                                class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out pt-3"
-                                :class="{
-                                    ' bg-usach-aqua-800 text-white': respuesta === opcion,
-                                    'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion
-                                }">
-                                {{ opcion }}
-                            </label>
-                        </div>
-                    </div>
+                    <p class="text-center text-xl">¿Cuántas sílabas tiene esta palabra?</p>
+                    
+                    <input type="range" v-model="respuesta" min="0" max="10" step="1" class="bg-transparent">
+                        <p>Valor actual: {{ respuesta }}</p>
 
                     <div class="flex flex-row justify-center gap-4 font-usach-bebas-body">
                         <button v-if="i > 1" @click="prevQuestion" class="bg-usach-aqua-800 rounded-lg p-2">Atrás</button>
@@ -63,33 +53,36 @@ const cantPregs = 10
 const i = ref(1)
 const loading = ref(true)
 
+store.respuestas = []
 let palabra = ref('')
-let opciones = ref([])
-
 let apiResponse = null
 
 const changeQuestionApi = () => {
     if (apiResponse === null)
         { return }
+        
     let question = apiResponse[i.value - 1]
     palabra.value = question['word']
-    opciones = ref([])
-    question['answers'].forEach(answer => { opciones.value.push(answer['answer']) })
     if (loading) { loading.value = false }
 }
 
 // get a db
 onMounted(async () => {
-  try {
-const response = await axios.get('https://pindaro.pindarousach.workers.dev/silabas/start/' + store.dificultad)  
-    apiResponse = response.data
-    changeQuestionApi()
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+    try {
+        const response = await axios.get('https://pindaro.pindarousach.workers.dev/silabas/start/' + store.dificultad)  
+        apiResponse = response.data
+        console.log(apiResponse)
+        store.preguntas = []
+        apiResponse.forEach(element => {
+            store.preguntas.push(element['word'])
+        });
+        changeQuestionApi()
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 })
 
-let respuesta = ref('')
+let respuesta = ref(5)
 const nextText = ref('Siguiente')
 
 
@@ -105,7 +98,7 @@ const nextTextVerify = () => {
     } else {
         nextText.value = 'Siguiente'
     }
-    respuesta.value = ''
+    respuesta.value = 5
 }
 
 const nextQuestion = () => {

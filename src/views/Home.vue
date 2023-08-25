@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-10 items-center">
         <CarouselAlt></CarouselAlt>
-        <div class="flex flex-col lg:flex-row items-center gap-5">
+        <div class="flex flex-col w-full justify-between lg:flex-row items-center gap-5">
             <Leaderboard label="Píndaro"></Leaderboard>
             <Leaderboard label="Rima"></Leaderboard>
             <Leaderboard label="Categoría acentual"></Leaderboard>

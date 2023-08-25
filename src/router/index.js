@@ -35,6 +35,10 @@ export default createRouter({
             path: '/correccion',
             name: 'Correccion',
             component: () => import('../views/Correccion.vue')
+        }, {
+            path: '/agregar-preguntas',
+            name: 'AgregarPreguntas',
+            component: () => import('../views/AgregarPreguntas.vue')
         }
     ]
 })

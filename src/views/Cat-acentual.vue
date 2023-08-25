@@ -68,7 +68,7 @@ let respuesta = ref(-1)
 
 let respuestas = []
 let apiResponse = null
-let dificultad = Number(localStorage.getItem('dificultad')) - 1
+let dificultad = Number(localStorage.getItem('dificultad'))
 
 const changeQuestionApi = () => {
     if (apiResponse === null)
@@ -136,7 +136,7 @@ const changeQuestion = (num) => {
     nextTextVerify()
 }
 
-const endQuiz = () => {
+ const endQuiz = async () => {
     saveAnswer()
     const data = {
         "sessionId": apiResponse.sessionId,
@@ -144,19 +144,21 @@ const endQuiz = () => {
     }
 
     for (let index = 0; index < cantPregs; index++) {
-        const resp = { "questionId": apiResponse.questions[index].id, "answer":  Number(respuestas[index]) } 
+        let answerValue = respuestas[index] !== undefined ? Number(respuestas[index]) : 0
+        const resp = { "questionId": apiResponse.questions[index].id, "answer": answerValue } 
         data.answers.push(resp)
     }
     console.log(data);
 
-    axios.post(url + '/silabas/submit', data)
+    await axios.post(url + '/acentual/submit', data)
     .then(response => {
+        store.correccion = response.data
         console.log('Respuesta del servidor:', response.data);
     })
     .catch(error => {
         console.error('Error en la solicitud:', error);
     });
-    // router.push('/correccion')
+    router.push('/correccion/3')
 }
 </script>
 

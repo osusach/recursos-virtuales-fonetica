@@ -72,7 +72,7 @@ let opciones = ref([])
 let nextText = ref('Siguiente')
 let respuesta = ref(-1)
 
-let dificultad = Number(localStorage.getItem('dificultad')) - 1
+let dificultad = Number(localStorage.getItem('dificultad'))
 let respuestas = []
 let apiResponse = null
 
@@ -90,7 +90,6 @@ const changeQuestionApi = () => {
 // get a db
 onMounted(async () => {
     try {
-        console.log(dificultad);
         const response = await axios.get(url + '/rimas/start/' + dificultad)  
         apiResponse = response.data
         console.log(apiResponse);
@@ -143,27 +142,26 @@ const changeQuestion = (num) => {
     nextTextVerify()
 }
 
-const endQuiz = () => {
+const endQuiz = async () => {
     saveAnswer()
     const data = {
         "sessionId": apiResponse.sessionId,
         "answers": []
     }
-    console.log(respuestas);
     for (let index = 0; index < cantPregs; index++) {
-        const resp = { "questionId": apiResponse.questions[index].id, "answer":  Number(respuestas[index]) } 
+        let answerValue = respuestas[index] !== undefined ? Number(respuestas[index]) : 0
+        const resp = { "questionId": apiResponse.questions[index].id, "answer": answerValue } 
         data.answers.push(resp)
     }
-    console.log(data);
-
-    axios.post(url + '/silabas/submit', data)
+    await axios.post(url + '/rimas/submit', data)
     .then(response => {
+        store.correccion = response.data
         console.log('Respuesta del servidor:', response.data);
     })
     .catch(error => {
         console.error('Error en la solicitud:', error);
     });
-    // router.push('/correccion')
+    router.push('/correccion/2')
 }
 </script>
 

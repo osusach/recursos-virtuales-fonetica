@@ -40,7 +40,7 @@ export default createRouter({
             name: 'Preguntas',
             component: () => import('../views/Preguntas.vue')
         }, {
-            path: '/correccion',
+            path: '/correccion/:id',
             name: 'Correccion',
             component: () => import('../views/Correccion.vue')
         }, {

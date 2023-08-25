@@ -1,10 +1,10 @@
 <template>
-    <div class="flex flex-col rounded-lg w-[30%] bg-usach-industrial-900">
+    <div class="overflow-hidden flex flex-col rounded-lg w-[30%] bg-usach-industrial-900">
         <div class="flex flex-row px-5 py-3 pt-4 text-white text-xl justify-center gap-3">
             <img src="crown_8.svg" class="h-5 invert">
             <h1 class="font-usach-helvetica-bold">{{ label }}</h1>
         </div>
-        <ol class=" text-white">
+        <ol class="text-white">
             <li v-for="(item, index) in items" :key="index"
                 class="px-3 py-3 flex flex-row justify-between font-usach-helvetica-body"
                 :class="{

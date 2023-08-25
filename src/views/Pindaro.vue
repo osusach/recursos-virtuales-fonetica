@@ -17,8 +17,8 @@
         </div>
         <div class="flex flex-col rounded-lg bg-usach-ultra-900 p-10 text-center font-usach-helvetica-body text-white items-center">
             <div class=" font-usach-helvetica-bold text-lg">Pregunta {{ i + '/' + cantPregs }}</div>
-            <div class="bg-usach-ultra-600 text-7xl p-3 rounded-lg my-5 font-usach-helvetica-bold">
-                <p class="pt-4">{{ palabra }}</p>
+            <div class="bg-usach-ultra-600  p-3 rounded-lg my-5">
+                <p class="pt-4 text-7xl font-usach-helvetica-bold">{{ palabra }}</p>
             </div>
             <p class="text-center text-xl">¿Cuántas sílabas tiene esta palabra?</p>
             <div class="preguntas">
@@ -65,7 +65,7 @@ let opciones = ref([])
 let nextText = ref('Siguiente')
 let respuesta = ref(-1)
 
-let dificultad = Number(localStorage.getItem('dificultad')) - 1
+let dificultad = Number(localStorage.getItem('dificultad'))
 let respuestas = []
 let apiResponse = null
 
@@ -135,7 +135,7 @@ const changeQuestion = (num) => {
     nextTextVerify()
 }
 
-const endQuiz = () => {
+const endQuiz = async () => {
     saveAnswer()
     const data = {
         "sessionId": apiResponse.sessionId,
@@ -143,19 +143,21 @@ const endQuiz = () => {
     }
 
     for (let index = 0; index < cantPregs; index++) {
-        const resp = { "questionId": apiResponse.questions[index].id, "answer":  Number(respuestas[index]) } 
+        let answerValue = respuestas[index] !== undefined ? Number(respuestas[index]) : 0
+        const resp = { "questionId": apiResponse.questions[index].id, "answer": answerValue } 
         data.answers.push(resp)
     }
     console.log(data);
 
-    axios.post(url + '/silabas/submit', data)
+    await axios.post(url + '/silabas/submit', data)
     .then(response => {
+        store.correccion = response.data
         console.log('Respuesta del servidor:', response.data);
     })
     .catch(error => {
         console.error('Error en la solicitud:', error);
     });
-    // router.push('/correccion')
+    router.push('/correccion/1')
 }
 </script>
 <style>

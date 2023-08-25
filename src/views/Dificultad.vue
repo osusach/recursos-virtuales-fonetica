@@ -6,13 +6,13 @@
 		</h1>
 		<div class="flex flex-col w-full">
 			<router-link :to='ruta'>
-				<Boton label="Básico" type="submit" @click="setDificultad(1)" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl w-64"></Boton>
+				<Boton label="Básico" type="submit" @click="setDificultad(0)" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl w-64"></Boton>
 			</router-link>
 			<router-link :to='ruta'>
-				<Boton label="Medio" type="submit" @click="setDificultad(2)" class="bg-usach-terra-700 hover:bg-usach-terra-900 text-xl w-64"></Boton>
+				<Boton label="Medio" type="submit" @click="setDificultad(1)" class="bg-usach-terra-700 hover:bg-usach-terra-900 text-xl w-64"></Boton>
 			</router-link>
 			<router-link :to='ruta'>
-				<Boton label="Avanzado" type="submit" @click="setDificultad(3)" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl w-64"></Boton>
+				<Boton label="Avanzado" type="submit" @click="setDificultad(2)" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl w-64"></Boton>
 			</router-link>
 		</div>
 	</div>

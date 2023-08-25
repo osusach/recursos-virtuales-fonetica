@@ -1,5 +1,5 @@
 <template>
-    <a :href="href" className="font-usach-helvetica-bold rounded-lg  p-4 text-lg">
+    <a :href="to" className="font-usach-helvetica-bold rounded-lg  p-4 text-lg">
       <slot></slot>
     </a>
   </template>

@@ -10,7 +10,8 @@
         label: String,
         type: {
             type: String,
-            required: false
+            required: false,
+            default: 'button'
         },
         onClick:  {
             type: Function,

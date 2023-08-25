@@ -1,48 +1,46 @@
 <template>
-    <div class="grid grid-cols-2">
-        <div
-            class="m-auto flex flex-col rounded-lg bg-usach-ultra-900 p-10 text-center font-usach-helvetica-body text-white items-center">
-            <h1 class=" font-usach-helvetica-bold text-lg">Pregunta {{ i + '/' + cantPregs }}</h1>
-            <div class="bg-usach-ultra-600 text-7xl p-3 rounded-lg my-5 font-usach-helvetica-bold">
-                <p class=" pt-4">{{ palabra }}</p>
-            </div>
-            <p class="text-center text-xl">¿Cuántas sílabas tiene esta palabra?</p>
-            <div class="flex flex-row p-5 rounded-lg bg-usach-ultra-600 mt-3 mb-7">
-                <div v-for="opcion in opciones" class="flex space-x-2">
-                    <input type="radio" :id="'answer-' + opcion" :value="opcion" v-model="respuesta" class="hidden" />
-                    <label :for="'answer-' + opcion"
-                        class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out pt-3"
-                        :class="{
-                            ' bg-usach-daisy-800 text-white': respuesta === opcion,
-                            'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion
-                        }">
-                        {{ 'Alternativa ' + opcion }}
-                    </label>
-                </div>
-            </div>
-
-            <div class="flex flex-row justify-center gap-4">
-                <button v-if="i > 1" @click="prevQuestion" class="bg-usach-cloudy-800 rounded-lg p-2">Atrás</button>
-                <button @click="nextQuestion" class="bg-usach-cloudy-800 rounded-lg p-2"> {{ nextText }} </button>
-            </div>
-        </div>
-        <div
-            class="m-auto flex-col rounded-lg bg-usach-terra-800 w-fit h-fit p-5 font-usach-helvetica-body text-white items-center">
-            <div class="text-center mb-3">
-                <p class=" font-usach-helvetica-bold text-white text-lg">Preguntas</p>
-            </div>
-            <div class="grid grid-cols-3 gap-3 font-usach-helvetica-bold">
-                <button v-for="num in Array.from({ length: cantPregs }, (v, i) => i)" @click="changeQuestion(num + 1)"
-                    class="rounded-lg p-3  pt-4 text-lg" :class="{
-                        'bg-usach-terra-600': store.respuestas[num] === '',
-                        'bg-usach-rouge-600': store.respuestas[num] !== ''
+    <div class="grid items-center">
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-row h-14 rounded-lg bg-usach-ultra-900 align-middle items-center">
+                <div class="flex static bg-usach-ultra-300 h-3 w-full rounded-xl mr-1 ml-6 justify-center items-center font-usach-bebas-title">
+                    <button v-for="num in Array.from({ length: cantPregs }, (v, i) => i)" @click="changeQuestion(num + 1)"
+                    class="mx-2 rounded-full h-7 w-10 text-lg" :class="{
+                        'bg-usach-ultra-300 font-usach-bebas-body': store.respuestas[num] === undefined,
+                        'bg-usach-terra-700 text-slate-100': store.respuestas[num] !== undefined
                     }">
-                    {{ num + 1 }}
+                        {{ num + 1 }}
+                    </button>
+                </div>
+                
+                <button class=" font-usach-bebas-title mx-3 bg-usach-terra-700 rounded-lg p-1 text-white text-lg" @click="endQuiz">
+                    {{ Fin }}
                 </button>
             </div>
-            <button @click="endQuiz">
-                {{ Fin }}
-            </button>
+            <div class=" flex flex-col rounded-lg bg-usach-ultra-900 p-10 text-center font-usach-helvetica-body text-white items-center">
+                <div class=" font-usach-helvetica-bold text-lg">Pregunta {{ i + '/' + cantPregs }}</div>
+                <div class="bg-usach-ultra-600 text-7xl p-3 rounded-lg my-5 font-usach-helvetica-bold">
+                    <p class=" pt-4">{{ palabra }}</p>
+                </div>
+                <p class="text-center text-xl">¿Cuántas sílabas tiene esta palabra?</p>
+                <div class="flex flex-row p-5 rounded-lg bg-usach-ultra-600 mt-3 mb-7">
+                    <div v-for="opcion in opciones" class="flex space-x-2">
+                        <input type="radio" :id="'answer-' + opcion" :value="opcion" v-model="respuesta" class="hidden" />
+                        <label :for="'answer-' + opcion"
+                            class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out pt-3"
+                            :class="{
+                                ' bg-usach-aqua-800 text-white': respuesta === opcion,
+                                'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion
+                            }">
+                            {{ 'Alternativa ' + opcion }}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex flex-row justify-center gap-4 font-usach-bebas-body">
+                    <button v-if="i > 1" @click="prevQuestion" class="bg-usach-aqua-800 rounded-lg p-2">Atrás</button>
+                    <button @click="nextQuestion" class="bg-usach-aqua-800 rounded-lg p-2"> {{ nextText }} </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -53,7 +51,10 @@ import { useRouter } from 'vue-router'
 import { store } from '../store.js'
 
 const router = useRouter()
-
+console.log('store.juego')
+console.log(store.juego)
+console.log('store.dificultad')
+console.log(store.dificultad)
 // TESTEO
 const Fin = ref('Terminar')
 const cantPregs = 10

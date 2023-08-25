@@ -1,6 +1,6 @@
 <template>
   <form class="m-auto grid xl:grid-cols-1 gap-10 p-10 min-w-[35%]">
-    <div class="flex flex-col text-5xl h-fit px-10 py-10 text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg [&>button]:">
+    <div class="flex flex-col text-5xl h-fit p-10 text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg [&>button]:">
       <h1 class="text-3xl mb-5 font-usach-bebas-title">
         ¡Bienvenido!
       </h1>
@@ -8,10 +8,10 @@
       <Input Label="Contraseña" forLabel="password" type="password" placeholder="Contraseña"/>
       <Boton label="Iniciar Sesión" href="/" @click="goToOtherView" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
       <div className="font-usach-helvetica-medium rounded-lg  p-4 text-lg">
-        ¿No tienes cuenta?<Enlaces href="/Register">Regístrate</Enlaces>
+        ¿No tienes cuenta?<Enlaces to="/Register">Regístrate</Enlaces>
       </div>
       <div className="font-usach-helvetica-medium rounded-lg  px-6 text-lg">
-        <label>¿No Quieres Registrarte?</label>
+        <label>¿Prefieres no registrarte aún?</label>
       </div>
       <Boton label="Invitado" @click="goToOtherView" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
     </div>

@@ -3,8 +3,8 @@
 - [ ] Base de datos usuarios + leaderboard
 - [ ] Leaderboard
 - [ ] Juegos
-  - [ ] recibir preguntas de base de datos
+  - [x] recibir preguntas de base de datos
   - [ ] almacenar puntaje
   - [ ] mostrar buenas/malas c/corrección, s/corrección, % errores (dificultad)
-  - [ ] hacer slider bonito
+  - [ ] diseño final corrección
 - [ ] Herramienta edición base de datos

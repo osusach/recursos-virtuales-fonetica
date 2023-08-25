@@ -17,15 +17,15 @@
         </div>
         <div class="flex flex-col rounded-lg bg-usach-ultra-900 p-10 text-center font-usach-helvetica-body text-white items-center">
             <div class=" font-usach-helvetica-bold text-lg">Pregunta {{ i + '/' + cantPregs }}</div>
-            <div class="bg-usach-ultra-600 text-7xl p-3 rounded-lg my-5 font-usach-helvetica-bold">
-                <p class="pt-4">{{ palabra }}</p>
+            <div class="bg-usach-ultra-600 p-3 rounded-lg my-5 font-usach-helvetica-bold">
+                <p class="text-3xl sm:text-5xl max-w-[20ch]"> {{ frase[0] }} <b class="bg-usach-cloudy-900 rounded-md px-2"> {{ palabra }} </b> {{ frase[1] }}</p>
             </div>
-            <p class="text-center text-xl">¿Cuántas sílabas tiene esta palabra?</p>
+            <p class="text-center text-xl">¿A qué categoría acentual pertenece esta palabra?</p>
             <div class="preguntas">
                 <div v-for="opcion in opciones" class="flex">
                     <input type="radio" :id="'answer-' + opcion.answer" :value="opcion.value" v-model="respuesta" class="hidden" />
                     <label :for="'answer-' + opcion.answer"
-                        class="min-w-[6ch] px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out pt-3"
+                        class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out"
                         :class="{
                             ' bg-usach-aqua-800 text-white': respuesta === opcion.value,
                             'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion.value
@@ -61,19 +61,21 @@ const loading = ref(true)
 const url = 'https://pindaro.pindarousach.workers.dev'
 
 let palabra = ref('')
+let frase = ref([])
 let opciones = ref([])
 let nextText = ref('Siguiente')
 let respuesta = ref(-1)
 
-let dificultad = Number(localStorage.getItem('dificultad')) - 1
 let respuestas = []
 let apiResponse = null
+let dificultad = Number(localStorage.getItem('dificultad')) - 1
 
 const changeQuestionApi = () => {
     if (apiResponse === null)
         { return }
     let question = apiResponse.questions[i.value - 1]
-    palabra.value = question['word']
+    palabra.value = question.word
+    frase.value = question.phrase.split(palabra.value)
     opciones.value = question.options
     opciones.value.sort((a, b) => a.value - b.value)
     if (loading) { loading.value = false }
@@ -81,15 +83,14 @@ const changeQuestionApi = () => {
 
 // get a db
 onMounted(async () => {
-    try {
-        
-        const response = await axios.get(url + '/silabas/start/' + (dificultad < 1 ? 0 : 1))  
-        apiResponse = response.data
-        console.log((dificultad < 1 ? 0 : 1));
-        changeQuestionApi()
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
+  try {
+    const response = await axios.get(url + '/acentual/start/' + dificultad)  
+    apiResponse = response.data
+    console.log(apiResponse);
+    changeQuestionApi()
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 })
 
 const saveAnswer = () => {
@@ -158,6 +159,7 @@ const endQuiz = () => {
     // router.push('/correccion')
 }
 </script>
+
 <style>
 @import '../assets/juegos.css';
 </style>

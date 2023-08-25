@@ -20,13 +20,21 @@ export default createRouter({
             name: 'Pindaro',
             component: () => import('../views/Pindaro.vue')
         }, {
-            path: '/dificultad',
+            path: '/rima',
+            name: 'Rima',
+            component: () => import('../views/Rima.vue')
+        }, {
+            path: '/cat-acentual',
+            name: 'Cat-acentual',
+            component: () => import('../views/Cat-acentual.vue')
+        }, {
+            path: '/dificultad/:id',
             name: 'Dificultad',
             component: () => import('../views/Dificultad.vue')
         }, {
-            path: '/pindaro',
-            name: 'Pindaro',
-            component: () => import('../views/Pindaro.vue')
+            path: '/pindaro-alt',
+            name: 'Pindaro Alternativo',
+            component: () => import('../views/Pindaro-slider.vue')
         }, {
             path: '/preguntas',
             name: 'Preguntas',
@@ -39,6 +47,11 @@ export default createRouter({
             path: '/agregar-preguntas',
             name: 'AgregarPreguntas',
             component: () => import('../views/AgregarPreguntas.vue')
+        }
+        , {
+            path: '/juegos',
+            name: 'Juegos',
+            component: () => import('../components/Carousel_index.vue')
         }
     ]
 })

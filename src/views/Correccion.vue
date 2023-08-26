@@ -19,7 +19,7 @@
                 <p class=" font-usach-bebas-title text-xl rounded-lg" :class="{
                     'bg-usach-aqua-500 px-3': item.answer === item.userAnswer,
                     'bg-usach-rouge-500 px-3': item.answer !== item.userAnswer
-                }"> Tu respuesta: {{ item.userAnswer }} </p>
+                }"> {{ item.userAnswer ? 'Tu respuesta:' + item.userAnswer : 'Sin Respuesta'}} </p>
                 <p class=" font-usach-bebas-body text-xl"> Correcta: {{ item.answer }} </p>
             </div>
         </div>

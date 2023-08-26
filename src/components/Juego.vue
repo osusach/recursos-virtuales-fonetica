@@ -1,149 +1,176 @@
 <template>
-    <div class="flex flex-col text-5xl h-fit px-10 py-10 text-white text-center font-usach-helvetica-body bg-usach-aqua-800 rounded-lg">
-        <div class="flex flex-row p-10 gap-10">
-            <a> {{ countPregunta }}/{{ totalPreguntas }}</a>
-            <Boton label="siguiente pregunta" @click="siguientePregunta" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"></Boton>
-        </div>
-        <div class="flex flex-col p-10 gap-10">
-            <p class="">pregunta: {{ pregunta }}?</p>
-            <div class="flex flex-row gap-x-10">
-                    <Boton v-if="mostrarBotones" v-for="respuesta in respuestas" :label="respuesta.text" @click="checkAnswer(respuesta.valor)" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"></Boton>
-                <div v-if="mostrarSlider">slider</div>
+    <div v-if="!loading" class="w-full sm:w-fit flex flex-col gap-4">
+        <div class="hidden sm:flex flex-row h-14 rounded-lg bg-usach-ultra-900 align-middle items-center">
+            <div class="flex static bg-usach-ultra-300 h-3 w-full rounded-xl mr-1 ml-6 justify-center items-center font-usach-bebas-title">
+                <button v-for="num in Array.from({ length: cantPregs }, (v, i) => i)" @click="changeQuestion(num + 1)"
+                class="mx-2 rounded-full h-7 w-10 text-lg" :class="{
+                    'bg-usach-ultra-300 font-usach-bebas-body': respuestas[num] === undefined,
+                    'bg-usach-terra-700 text-slate-100': respuestas[num] !== undefined
+                }">
+                    {{ num + 1 }}
+                </button>
             </div>
-            <a v-if="mostrar && correcto">cierto</a>
-            <a v-if="mostrar && !correcto">mal</a>
+            
+            <button class="font-usach-bebas-title mx-3 bg-usach-terra-700 rounded-lg p-1 text-white text-lg" @click="endQuiz">
+                {{ Fin }}
+            </button>
+        </div>
+        <div class="flex flex-col rounded-lg bg-usach-ultra-900 p-10 text-center text-white items-center">
+            <div class=" font-usach-helvetica-bold text-lg">
+                Pregunta {{ i + '/' + cantPregs }}
+            </div>
+
+            <div v-html="pregunta"></div>
+
+            <p class="text-center text-xl">{{ props.title }}</p>
+
+            <div class="preguntas">
+                <div v-for="opcion in opciones" class="flex">
+                    <button :value="opcion.value" @click="respuesta = opcion.value"
+                        class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out"
+                        :class="{
+                            ' bg-usach-aqua-800 text-white': respuesta === opcion.value,
+                            'bg-gray-200 text-gray-700 hover:bg-gray-300': respuesta !== opcion.value
+                        }">
+                        {{ opcion.answer }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-2xl flex flex-row justify-center gap-4 font-usach-bebas-body">
+                <button v-if="i > 1" @click="prevQuestion" class="nav-buttons">Atrás</button>
+                <button @click="nextQuestion" class="nav-buttons"> {{ nextText }} </button>
+            </div>
         </div>
     </div>
+    <Loading v-if="loading"/>
 </template>
 
 <script setup>
-    import Boton from './Boton.vue'
-    import { ref } from 'vue'
+import Loading from '../components/Loading.vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { store } from '../store.js'
+import axios from 'axios'
 
-    const props = defineProps({
-        tipo: String,
-        dificultad: String
+
+const props = defineProps({
+        title: String,
+        idJuego: String, // con Number manda error grr
+        urlJuego: String,
+        func: Function
     })
 
-    // variables juego
-    let pregunta
-    let respuestaCorrecta
-    let mostrar
-    let mostrarBotones
-    let mostrarSlider
-    let correcto
-    let respuestas
+const router = useRouter()
 
-    const checkAnswer = (answer) => {
-        if (answer === respuestaCorrecta)
-        {
-            console.log(true);
-            correcto.value = true
-        } else {
-            console.log(false);
-            correcto.value = false
-        }
-        mostrar.value = true
+// Constantes
+const Fin = ref('Terminar')
+const i = ref(1)
+const loading = ref(true)
+const url = 'https://pindaro.pindarousach.workers.dev/'
+
+let opciones = ref([])
+let nextText = ref('Siguiente')
+let respuesta = ref(-1)
+
+let respuestas = []
+let apiResponse = null
+let dificultad = Number(localStorage.getItem('dificultad'))
+let pregunta = ref('<p></p>')
+let cantPregs = 10
+
+const changeQuestionApi = () => {
+    if (apiResponse === null)
+        { return }
+    let question = apiResponse.questions[i.value - 1]
+    opciones.value = question.options
+    opciones.value.sort((a, b) => a.value - b.value)
+    if (loading) { loading.value = false }
+    pregunta.value = props.func(question)
+}
+
+// get a db
+onMounted(async () => {
+  try {
+    const response = await axios.get(url + props.urlJuego + '/start/' + dificultad)  
+    apiResponse = response.data
+    console.log(apiResponse);
+    changeQuestionApi()
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+})
+
+const saveAnswer = () => {
+    // no borrar respuesta al navegar
+    if (respuesta.value !== -1) {
+        respuestas[i.value - 1] = respuesta.value
     }
-    
-    const siguientePregunta = () => {
-        if (countPregunta === totalPreguntas)
-            return;
+}
 
-        setQuestion()
-        mostrar.value = false
+const nextTextVerify = () => {
+    if (i.value == cantPregs) {
+        nextText.value = 'Terminar'
+    } else {
+        nextText.value = 'Siguiente'
     }
+    respuesta.value = -1
+}
 
-    const getQuestion = () => {
-        const data = {
-            pregunta: "Que numero es 2?",
-            respuesta: 2,
-            tipo: 1,
-            dificultad: 1,
-        }
-        return data
+const nextQuestion = () => {
+    saveAnswer()
+    if (i.value < cantPregs) {
+        i.value += 1
+        changeQuestionApi()
+        nextTextVerify()
+    } else {
+        endQuiz()
     }
+}
 
-    const setQuestion = (tipo, dificultad) => {
-        const data = getQuestion()
-        pregunta = data.pregunta
-        respuestaCorrecta = data.respuesta
-        mostrar = ref(false)
-        correcto = ref(false)
-        mostrarBotones = ref(false)
-        mostrarSlider = ref(false)
-        // cambiar por funcion que use la lista correcta segun tipo y dificultad
-        respuestas = generarRespuestas(parseInt(tipo), parseInt(dificultad))
+const prevQuestion = () => {
+    saveAnswer()
+    if (i.value > 1) {
+        i.value -= 1
+        changeQuestionApi()
+        nextTextVerify()
     }
+}
 
-    // tipo: 1 = pindaro, 2 = rima, 3 = cat_acentual
-    const generarRespuestas = (tipo, dificultad) => {
-        const respRima = [
-            { text: "Si", valor: 1 },
-            { text: "No", valor: 2 },
-            { text: "Consonante", valor: 3 },
-            { text: "Asonante", valor: 4 },
-            { text: "Sin rima", valor: 5 },
-        ]
-        const respCatAcentual = [
-            { text: "Grave", valor: 1 },
-            { text: "Aguda", valor: 2 },
-            { text: "Esdrujula", valor: 3 },
-            { text: "Monosilabo tónico", valor: 4 },
-            { text: "Monosilabo átono", valor: 5 },
-            { text: "Bisilabos átono", valor: 6 },
-        ]
-        let respuestas = []
-        
-        if (tipo === 1)
-        {
-            mostrarSlider.value = true
-        }
-        else
-        {
-            mostrarBotones.value = true
-        }
+const changeQuestion = (num) => {
+    saveAnswer()
+    i.value = num
+    changeQuestionApi()
+    nextTextVerify()
+}
 
-        if (tipo === 2 && dificultad === 1)
-        {
-            respRima.forEach(element => {
-                if (element.valor <= 2)
-                    respuestas.push(element)
-            });
-        }
-        if (tipo === 2 && dificultad > 1)
-        {
-            respRima.forEach(element => {
-                if (element.valor > 2)
-                    respuestas.push(element)
-            });
-        }
-        if (tipo === 3 && dificultad === 1)
-        {
-            respCatAcentual.forEach(element => {
-                if (element.valor <= 3)
-                    respuestas.push(element)
-            });
-        }
-        if (tipo === 3 && dificultad === 2)
-        {
-            respCatAcentual.forEach(element => {
-                if (element.valor <= 5)
-                    respuestas.push(element)
-            });
-        }
-        if (tipo === 3 && dificultad === 3)
-        {
-            respCatAcentual.forEach(element => {
-                if (element.valor <= 6)
-                    respuestas.push(element)
-            });
-        }
-        return respuestas
+ const endQuiz = async () => {
+    saveAnswer()
+    const data = {
+        "sessionId": apiResponse.sessionId,
+        "answers": []
     }
 
-    let countPregunta = ref(0)
-    let totalPreguntas = ref(6)
-    console.log(props.tipo, props.dificultad)
-    setQuestion(props.tipo, props.dificultad)
+    for (let index = 0; index < cantPregs; index++) {
+        let answerValue = respuestas[index] !== undefined ? Number(respuestas[index]) : 0
+        const resp = { "questionId": apiResponse.questions[index].id, "answer": answerValue } 
+        data.answers.push(resp)
+    }
+    console.log(data);
+
+    await axios.post(url + props.urlJuego +'/submit', data)
+    .then(response => {
+        store.correccion = response.data
+        console.log('Respuesta del servidor:', response.data);
+    })
+    .catch(error => {
+        console.error('Error en la solicitud:', error);
+    });
+    loading.value = true
+    router.push('/correccion/' + props.idJuego)
+}
 </script>
+
+<style>
+@import '../assets/juegos.css';
+</style>

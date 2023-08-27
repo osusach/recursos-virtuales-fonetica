@@ -5,7 +5,7 @@
         <div class=" bg-usach-aqua-800 h-full w-full flex flex-col px-24 py-5 justify-end gap-10 items-center text-white">
           <div class="flex flex-row gap-20 h-[65%] justify-center items-center">
             <div class="flex flex-col gap-2 w-[40%]">
-              <p class=" bg-usach-daisy-700 text-4xl font-usach-helvetica-bold pt-2 px-2 rounded-lg w-fit">Píndaro</p>
+              <p class=" bg-usach-daisy-700 text-4xl font-usach-helvetica-bold pt-2 px-2 rounded-lg w-fit texto-sombra">Píndaro</p>
               <p class=" font-usach-helvetica-body rounded-lg text-lg">
                 En este juego debes contar la cantidad de sílabas que tiene cada palabra y seleccionar la alternativa correcta.</p>
             </div>
@@ -106,3 +106,9 @@
 	};
 
 </script>
+
+<style>
+.texto-sombra{
+	border: 25px ridge #ff6550;
+}
+</style>

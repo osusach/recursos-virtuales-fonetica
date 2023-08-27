@@ -2,7 +2,7 @@
     @apply bg-usach-aqua-800 rounded-lg py-1 px-2
 }
 .preguntas {
-    @apply flex p-5 rounded-lg bg-usach-ultra-600 mt-3 mb-7 gap-3 items-center
+    @apply flex flex-wrap rounded-lg bg-usach-ultra-600 mt-3 mb-7 gap-3 items-center p-3 sm:p-5
 
 }
 @media (min-width: 640px) {

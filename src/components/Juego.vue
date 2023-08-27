@@ -15,7 +15,7 @@
                 {{ Fin }}
             </button>
         </div>
-        <div class="flex flex-col rounded-lg bg-usach-ultra-900 p-10 text-center text-white items-center">
+        <div class="flex flex-col rounded-lg bg-usach-ultra-900 p-5 md:p-10 text-center text-white items-center">
             <div class=" font-usach-helvetica-bold text-lg">
                 Pregunta {{ i + '/' + cantPregs }}
             </div>

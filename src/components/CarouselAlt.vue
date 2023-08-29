@@ -106,9 +106,3 @@
 	};
 
 </script>
-
-<style>
-.texto-sombra{
-	border: 25px ridge #ff6550;
-}
-</style>

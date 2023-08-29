@@ -8,7 +8,7 @@
       <Input Label="Contraseña" forLabel="password" type="password" placeholder="Contraseña"/>
       <Boton label="Iniciar Sesión" href="/" @click="goToOtherView" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
       <div className="font-usach-helvetica-medium rounded-lg  p-4 text-lg">
-        ¿No tienes cuenta?<Enlaces to="/Register">Regístrate</Enlaces>
+        ¿No tienes cuenta?<Enlaces to="/register">Regístrate</Enlaces>
       </div>
       <div className="font-usach-helvetica-medium rounded-lg  px-6 text-lg">
         <label>¿Prefieres no registrarte aún?</label>

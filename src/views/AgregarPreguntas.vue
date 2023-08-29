@@ -18,8 +18,8 @@
                     <ul class="w-full text-center overflow-scroll">
                         <li v-for="pregunta in preguntas[selectedGame]" class="flex flex-row py-1 gap-2">
                             <p class="w-[75%]"> {{ pregunta }} </p>
-                            <button @click="setAction(false, pregunta)" class="bg-usach-terra-600 rounded-md px-1"> <img class="h-5" src="edit.svg"> </button>
-                            <button @click="removeQuestion(pregunta)" class="bg-usach-rouge-600 rounded-md px-1"> <img class="h-5" src="delete.svg"> </button>
+                            <button @click="setAction(false, pregunta)" class="bg-usach-terra-600 rounded-md px-1"> <img class="h-5" src="/edit.svg"> </button>
+                            <button @click="removeQuestion(pregunta)" class="bg-usach-rouge-600 rounded-md px-1"> <img class="h-5" src="/delete.svg"> </button>
                         </li>
                     </ul>
             </div>

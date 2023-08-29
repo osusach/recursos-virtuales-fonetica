@@ -3,8 +3,8 @@
         
         <button className="flex-none">
             <router-link to="/">
-                <img src="/Usach SB.png" alt="Logo Usach" className="logo-sb hidden lg:block"/>
-                <img src="/Usach PB.png" alt="Logo Usach" className="logo-pb lg:hidden block"/>
+                <img src="/UsachSB.png" alt="Logo Usach" className="logo-sb hidden lg:block"/>
+                <img src="/UsachPB.png" alt="Logo Usach" className="logo-pb lg:hidden block"/>
             </router-link>
         </button>
         <div class="flex-grow text-center">

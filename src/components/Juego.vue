@@ -26,7 +26,7 @@
 
             <div class="preguntas">
                 <div v-for="opcion in opciones" class="flex">
-                    <button :value="opcion.value" @click="respuesta = opcion.value"
+                    <button :value="opcion.value" @click="saveAnswer(opcion.value)"
                         class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out"
                         :class="{
                             ' bg-usach-aqua-800 text-white': respuesta === opcion.value,
@@ -101,11 +101,15 @@ onMounted(async () => {
   }
 })
 
-const saveAnswer = () => {
+const saveAnswer = (opcion) => {
+    respuesta.value = opcion
     // no borrar respuesta al navegar
-    if (respuesta.value !== -1) {
+    if (respuesta !== -1) {
         respuestas[i.value - 1] = respuesta.value
     }
+    console.log(respuesta);
+    console.log(opcion);
+    console.log(respuestas[i.value - 1]);
 }
 
 const nextTextVerify = () => {
@@ -118,7 +122,6 @@ const nextTextVerify = () => {
 }
 
 const nextQuestion = () => {
-    saveAnswer()
     if (i.value < cantPregs) {
         i.value += 1
         changeQuestionApi()
@@ -129,7 +132,6 @@ const nextQuestion = () => {
 }
 
 const prevQuestion = () => {
-    saveAnswer()
     if (i.value > 1) {
         i.value -= 1
         changeQuestionApi()
@@ -138,14 +140,12 @@ const prevQuestion = () => {
 }
 
 const changeQuestion = (num) => {
-    saveAnswer()
     i.value = num
     changeQuestionApi()
     nextTextVerify()
 }
 
  const endQuiz = async () => {
-    saveAnswer()
     const data = {
         "sessionId": apiResponse.sessionId,
         "answers": []

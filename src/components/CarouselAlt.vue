@@ -99,7 +99,7 @@
   </v-sheet>
 </template>
   
-  <script setup>
+<script setup>
 	const setJuego = (num) => {
 		localStorage.setItem('juego', num)
 	};

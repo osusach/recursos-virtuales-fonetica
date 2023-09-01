@@ -73,11 +73,3 @@
 	}
 
 </script>
-
-<style>
-p {
-    font-family: BebasNeuePro Regular, sans-serif;
-    font-size: 1.25rem/* 20px */;
-    line-height: 1.75rem/* 28px */;
-}
-</style>

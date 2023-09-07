@@ -67,7 +67,7 @@ const router = useRouter()
 const Fin = ref('Terminar')
 const i = ref(1)
 const loading = ref(true)
-const url = 'https://pindaro.pindarousach.workers.dev/'
+const url = 'https://pindarosql.pindarousach.workers.dev/'
 
 let opciones = ref([])
 let nextText = ref('Siguiente')
@@ -82,8 +82,10 @@ let cantPregs = 10
 const changeQuestionApi = () => {
     if (apiResponse === null)
         { return }
-    let question = apiResponse.questions[i.value - 1]
+    let question = apiResponse.payload.game.questions[i.value - 1]    
+    console.log(apiResponse)
     opciones.value = question.options
+    console.log(JSON.stringify(opciones.value))
     opciones.value.sort((a, b) => a.value - b.value)
     if (loading) { loading.value = false }
     pregunta.value = props.func(question)
@@ -147,13 +149,15 @@ const changeQuestion = (num) => {
 
  const endQuiz = async () => {
     const data = {
-        "sessionId": apiResponse.sessionId,
+        "email": null,
+        "password": null,
+        "session_id": apiResponse.payload.game.session_id,
         "answers": []
     }
 
     for (let index = 0; index < cantPregs; index++) {
         let answerValue = respuestas[index] !== undefined ? Number(respuestas[index]) : 0
-        const resp = { "questionId": apiResponse.questions[index].id, "answer": answerValue } 
+        const resp = { "question_id": apiResponse.payload.game.questions[index].id, "answer": answerValue }
         data.answers.push(resp)
     }
     console.log(data);

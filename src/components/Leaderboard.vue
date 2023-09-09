@@ -5,7 +5,7 @@
             <h1 class="font-usach-helvetica-bold">{{ label }}</h1>
         </div>
         <ol class="text-white">
-            <li v-for="(item, index) in items" :key="index"
+            <li v-for="(item, index) in props.scoreList" :key="index"
                 class="px-3 py-3 flex flex-row justify-between font-usach-helvetica-body"
                 :class="{
                     'bg-usach-terra-600': index === 0,
@@ -14,7 +14,8 @@
                     'bg-usach-terra-900': index === 3,
                     'bg-usach-terra-1000': index === 4}">
                 <p class="bg-transparent text-white font-usach-helvetica-body"> {{ index+1 }}. </p>
-                <p class=" font-usach-helvetica-bold"> {{ item['nombre'] }} </p>
+                <p class=" font-usach-helvetica-bold"> {{ item['name'] }} </p>
+                <p class=" font-usach-helvetica-bold"> {{ item['answer_time'] }} </p>
                 <p> {{ item['score'] }} </p>
             </li>
         </ol>
@@ -28,20 +29,6 @@ let items = ref([])
 
 const props = defineProps({
         label: String,
-		dbHttp: String
+        scoreList: Array
     })
-
-
-const getLeaderboard = (tipo) => {
-	// axios.get(dbHttp)
-    return [ 
-    { nombre: "ignacio", score: 2},
-    { nombre: "juaquin", score: 3},
-    { nombre: "maria123", score: 15},
-    { nombre: "alex89", score: 10},
-    { nombre: "leticia", score: 8},
-    ]
-}
-
-items = getLeaderboard(1)
 </script>

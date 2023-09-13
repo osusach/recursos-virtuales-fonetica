@@ -12,28 +12,28 @@
 <script setup>
 import Leaderboard from "../components/Leaderboard.vue"
 import CarouselAlt from "../components/CarouselAlt.vue"
-import { onMounted } from "vue"
+import { ref, onMounted } from "vue"
 import axios from 'axios'
+import { store } from "../store.js";
 
 let apiResponse
-let listaAcentual
-let listaRima
-let listaPindaro
+let listaAcentual = ref(null)
+let listaRima = ref(null)
+let listaPindaro = ref(null)
 const url = 'https://pindarosql.pindarousach.workers.dev'
 
 // get a db
 onMounted(async () => {
-  try {
-    const response = await axios.get(url + '/scores/leaderboards')
-    console.log(response);
-    apiResponse = response.data.payload
+	try {
+		const response = await axios.get(url + '/scores/leaderboards')
+		apiResponse = response.data.payload
+		
+		listaAcentual.value = apiResponse.acentualLeaderboard.leaderboard
+		listaRima.value = apiResponse.rimasLeaderboard.leaderboard
+		listaPindaro.value = apiResponse.silabaLeaderboard.leaderboard
 
-    listaAcentual = apiResponse.acentualLeaderboard.leaderboard
-    listaRima = apiResponse.rimasLeaderboard.leaderboard
-    listaPindaro = apiResponse.silabaLeaderboard.leaderboard
-    console.log(apiResponse);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+	} catch (error) {
+		console.error('Error fetching data:', error)
+	}
 })
 </script>

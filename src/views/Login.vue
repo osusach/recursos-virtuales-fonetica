@@ -6,27 +6,51 @@
       </h1>
       <Input Label="Correo" forLabel="email" type="text" placeholder="pindaro@usach.cl"/>
       <Input Label="Contraseña" forLabel="password" type="password" placeholder="Contraseña"/>
-      <Boton label="Iniciar Sesión" href="/" @click="goToOtherView" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
+      <Boton label="Iniciar Sesión" href="/" @click="loginFunc()" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
       <div className="font-usach-helvetica-medium rounded-lg  p-4 text-lg">
         ¿No tienes cuenta?<Enlaces to="/register">Regístrate</Enlaces>
       </div>
       <div className="font-usach-helvetica-medium rounded-lg  px-6 text-lg">
         <label>¿Prefieres no registrarte aún?</label>
       </div>
-      <Boton label="Invitado" @click="goToOtherView" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
+      <Boton label="Invitado" @click="guestFunc()" class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"/>
     </div>
   </form>
 </template>
 
 <script setup>
-  import { useRouter } from "vue-router";
-  import Input from "../components/Input.vue"
-  import Boton from "../components/Boton.vue"
-  import Enlaces from "../components/Enlaces.vue"
+import { useRouter } from "vue-router";
+import Input from "../components/Input.vue"
+import Boton from "../components/Boton.vue"
+import Enlaces from "../components/Enlaces.vue"
+import axios from 'axios'
+import { store } from "../store";
 
-  const router = useRouter()
+const router = useRouter()
+const url = 'https://pindarosql.pindarousach.workers.dev'
 
-  const goToOtherView = () => {
-    router.push("/home")
-  }
+const guestFunc = () => {
+	router.push("/home")
+}
+
+const loginFunc = async () => {
+	const data = {
+		"email" : email.value,
+		"password" : password.value
+	}
+
+    await axios.post(url + '/users/login', data)
+    .then(response => {
+        console.log('Respuesta del servidor:', response.data)
+		store.email = data.email
+		store.password = data.password
+		store.user = data.name
+		store.curso = data.course
+		router.push("/home")
+    })
+    .catch(error => {
+        console.error('Error en la solicitud:', error)
+
+    })
+}
 </script>

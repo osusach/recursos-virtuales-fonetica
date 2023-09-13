@@ -147,10 +147,10 @@ const changeQuestion = (num) => {
     nextTextVerify()
 }
 
- const endQuiz = async () => {
+const endQuiz = async () => {
     const data = {
-        "email": null,
-        "password": null,
+        "email": store.email,
+        "password": store.password,
         "session_id": apiResponse.payload.game.session_id,
         "answers": []
     }

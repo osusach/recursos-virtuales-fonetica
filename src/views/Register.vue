@@ -14,26 +14,48 @@
         <select v-if="selectedFirst == 'basica'" v-model="selectedSec" class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm 
                                     focus:ring-usach-terra-700 focus:border-usach-terra-700" name="languages" id="lang">
           <option disabled value="">Grado</option>
-          <option v-for="nivel in 8" value="nivel">{{ nivel + '° Básico' }}</option>
+          <option v-for="nivel in 8" :value="nivel">{{ nivel + '° Básico' }}</option>
         </select>
         <select v-if="selectedFirst == 'media'" v-model="selectedSec" class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm 
                                     focus:ring-usach-terra-700 focus:border-usach-terra-700" name="languages" id="lang">
           <option disabled value="">Grado</option>
-          <option v-for="nivel in 4" value="nivel">{{ nivel + '° Medio' }}</option>
+          <option v-for="nivel in 4" :value="nivel">{{ nivel + '° Medio' }}</option>
         </select>
         <Input Label="Contraseña" forLabel="password" type="password" placeholder="Contraseña"/>
         <Input Label="Confirme Contraseña" forLabel="confirm_password" type="password" placeholder="Repetir contraseña"/>
-        <Boton label="Registrarse" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
+        <Boton label="Registrarse" @click="registerFunc()" class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"/>
         
       </div>
     </form>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  import Input from "../components/Input.vue"
-  import Boton from "../components/Boton.vue"
+import { ref } from 'vue'
+import Input from "../components/Input.vue"
+import Boton from "../components/Boton.vue"
+import axios from 'axios'
+import { router } from 'vue-router'
 
-  const selectedFirst = ref('')
-  const selectedSec = ref('')
+const selectedFirst = ref('')
+const selectedSec = ref('')
+const url = 'https://pindarosql.pindarousach.workers.dev'
+
+const registerFunc = async () => {
+	const data = {
+		"email" : email.value,
+		"password" : password.value,
+		"course" : String(selectedSec.value + selectedFirst.value),
+		"name" : user.value
+	}
+	console.log(data)
+
+    await axios.post(url + '/users/register', data)
+    .then(response => {
+        console.log('Respuesta del servidor:', response.data)
+		router.push('/home')
+    })
+    .catch(error => {
+        console.error('Error en la solicitud:', error)
+    });
+}
 </script>

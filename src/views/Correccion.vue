@@ -4,8 +4,8 @@
         <p>{{ nombreJuego }}</p>
         <p>puntaje {{ puntaje }}</p>
         <p>{{ percentage }}%</p>
-        <div class="bg-usach-cloudy-200 h-2 w-[100%]">
-          <div :class="`bg-usach-terra-700 h-2 w-[${percentage}px]`"></div>
+        <div class="bg-usach-cloudy-200 h-20 w-[100%]">
+          <div class="bg-usach-terra-700 h-20" :style="{ width: percentage + '%' }"></div>
         </div>
         <div v-for="(item, index) in correccion" class="flex flex-row place-content-between bg-usach-aqua-800 rounded-lg py-2 px-4 gap-x-5"
             :class="{
@@ -42,14 +42,14 @@
 	const router = useRouter()
 
     const juego = Number(router.currentRoute.value.params.id)
-    const puntaje = store.correccion.payload.score
-    const correccion = store.correccion.payload.corrections
-    var percentage = store.correccion.payload.percentage
+    const data = store.correccion.payload
+    const puntaje = data.score
+    const correccion = data.corrections
+    var percentage = data.correct * 100 / data.total
     const dificultad = Number(localStorage.getItem('dificultad'))
 
     console.log(correccion)
     console.log(percentage)
-    percentage = 85
     let nombreJuego = 'error'
     let textFunc = () => { return 'error' }
 

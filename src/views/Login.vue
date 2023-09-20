@@ -25,6 +25,7 @@ import Boton from "../components/Boton.vue"
 import Enlaces from "../components/Enlaces.vue"
 import axios from 'axios'
 import { store } from "../store";
+import { ref } from "vue";
 
 const router = useRouter()
 const url = 'https://pindarosql.pindarousach.workers.dev'
@@ -42,11 +43,12 @@ const loginFunc = async () => {
     await axios.post(url + '/users/login', data)
     .then(response => {
         console.log('Respuesta del servidor:', response.data)
-		store.email = data.email
-		store.password = data.password
-		store.user = data.name
-		store.curso = data.course
-		router.push("/home")
+		const resp = response.data.payload.user[0]
+        store.email = resp.email
+        store.password = resp.password
+        store.user = resp.name
+        store.curso = resp.course
+        router.push("/home")
     })
     .catch(error => {
         console.error('Error en la solicitud:', error)

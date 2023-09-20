@@ -10,8 +10,17 @@
         <div class="flex-grow text-center">
             <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-usach-bebas-title text-white ">Recursos virtuales para el aprendizaje del lenguaje</h1>
         </div>
+        <h2>
+            USUARIO: {{ store.user }}
+        </h2>
+        <p>LOGOUT</p>
     </header>
 </template>
+
+<script setup>
+import { store } from '../store.js'
+console.log(store);
+</script>
 
 <style>
 .logo-pb{

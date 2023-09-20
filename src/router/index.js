@@ -53,5 +53,10 @@ export default createRouter({
             name: 'Juegos',
             component: () => import('../components/Carousel_index.vue')
         }
+        , {
+            path: '/usuario',
+            name: 'Usuario',
+            component: () => import('../views/Usuario.vue')
+        }
     ]
 })

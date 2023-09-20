@@ -3,6 +3,10 @@
         <p class=" font-usach-bebas-title text-3xl">Corrección</p>
         <p>{{ nombreJuego }}</p>
         <p>puntaje {{ puntaje }}</p>
+        <p>{{ percentage }}%</p>
+        <div class="bg-usach-cloudy-200 h-2 w-[100%]">
+          <div :class="`bg-usach-terra-700 h-2 w-[${percentage}px]`"></div>
+        </div>
         <div v-for="(item, index) in correccion" class="flex flex-row place-content-between bg-usach-aqua-800 rounded-lg py-2 px-4 gap-x-5"
             :class="{
                         'bg-usach-aqua-800': item.is_correct === true,
@@ -20,7 +24,7 @@
                     'bg-usach-aqua-500 px-3': item.is_correct === true,
                     'bg-usach-rouge-500 px-3': item.is_correct !== true
                 }"> {{ item.user_answer ? 'Tu respuesta: ' + item.user_answer : 'Sin Respuesta'}} </p>
-                <p class=" font-usach-bebas-body text-xl"> Correcta: {{ item.acentual_answer }} </p>
+                <p v-if="dificultad < 1" class=" font-usach-bebas-body text-xl"> Correcta: {{ item.acentual_answer }} </p>
             </div>
         </div>
         <router-link to="/home" class="bg-usach-terra-700 mt-4 rounded-lg font-usach-bebas-title text-2xl p-3 hover:bg-usach-terra-800">
@@ -40,9 +44,12 @@
     const juego = Number(router.currentRoute.value.params.id)
     const puntaje = store.correccion.payload.score
     const correccion = store.correccion.payload.corrections
+    var percentage = store.correccion.payload.percentage
     const dificultad = Number(localStorage.getItem('dificultad'))
-    console.log(correccion)
 
+    console.log(correccion)
+    console.log(percentage)
+    percentage = 85
     let nombreJuego = 'error'
     let textFunc = () => { return 'error' }
 

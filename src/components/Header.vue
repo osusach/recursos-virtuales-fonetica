@@ -13,13 +13,23 @@
         <h2>
             USUARIO: {{ store.user }}
         </h2>
-        <p>LOGOUT</p>
+        <button @click="logout">LOGOUT</button>
     </header>
 </template>
 
 <script setup>
 import { store } from '../store.js'
+import { useRouter } from 'vue-router'
 console.log(store);
+const router = useRouter()
+
+const logout = () => {
+  store.user = "Invitado"
+  store.email = null
+  store.curso = null
+  store.password = null
+  router.push("/home")
+}
 </script>
 
 <style>

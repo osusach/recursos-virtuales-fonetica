@@ -34,11 +34,12 @@ import { ref } from 'vue'
 import Input from "../components/Input.vue"
 import Boton from "../components/Boton.vue"
 import axios from 'axios'
-import { router } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const selectedFirst = ref('')
 const selectedSec = ref('')
 const url = 'https://pindarosql.pindarousach.workers.dev'
+const router = useRouter()
 
 const registerFunc = async () => {
 	const data = {
@@ -52,7 +53,7 @@ const registerFunc = async () => {
     await axios.post(url + '/users/register', data)
     .then(response => {
         console.log('Respuesta del servidor:', response.data)
-		router.push('/home')
+		    router.push('/home')
     })
     .catch(error => {
         console.error('Error en la solicitud:', error)

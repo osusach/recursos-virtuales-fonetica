@@ -90,7 +90,7 @@ const registerFunc = async () => {
 		"name" : user.value
 	}
 	console.log(data)
-	return
+
     await axios.post(url + '/users/register', data)
     .then(response => {
         console.log('Respuesta del servidor:', response.data)

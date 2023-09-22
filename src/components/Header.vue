@@ -3,17 +3,19 @@
         
         <button className="flex-none">
             <router-link to="/">
-                <img src="/UsachSB.png" alt="Logo Usach" className="logo-sb hidden lg:block"/>
-                <img src="/UsachPB.png" alt="Logo Usach" className="logo-pb lg:hidden block"/>
+                <img src="/UsachSB.png" alt="Logo Usach" className="logo-sb hidden xl:block"/>
+                <img src="/UsachPB.png" alt="Logo Usach" className="logo-pb xl:hidden block"/>
             </router-link>
         </button>
         <div class="flex-grow text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-usach-bebas-title text-white ">Recursos virtuales para el aprendizaje del lenguaje</h1>
+            <h1 className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-usach-bebas-title text-white ">Recursos virtuales para el aprendizaje del lenguaje</h1>
         </div>
-        <h2>
-            USUARIO: {{ store.user }}
-        </h2>
-        <button @click="logout">LOGOUT</button>
+        <div class="flex flex-row gap-2 font-usach-bebas-body items-center align-middle text-2xl mx-5 px-4 bg-usach-aqua-700 p-2 rounded-lg text-white">
+            <div><p>{{ store.user }}</p></div>
+            <div v-if="store.user !== 'Invitado'" class="flex flex-row align-middle items-center justify-center">
+                <svg width="1" height="25" class=" fill-white"><rect width="400" height="100" /></svg>
+                <button @click="logout" class="align-middle pl-2"><img src="logout.svg" class="h-6 invert fill-usach-terra-900" /></button></div>
+        </div>
     </header>
 </template>
 
@@ -28,7 +30,7 @@ const logout = () => {
   store.email = null
   store.curso = null
   store.password = null
-  router.push("/home")
+  router.push("/")
 }
 </script>
 

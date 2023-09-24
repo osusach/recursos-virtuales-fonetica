@@ -11,7 +11,10 @@
             <h1 className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-usach-bebas-title text-white ">Recursos virtuales para el aprendizaje del lenguaje</h1>
         </div>
         <div class="flex flex-row gap-2 font-usach-bebas-body items-center align-middle text-2xl mx-5 px-4 bg-usach-aqua-700 p-2 rounded-lg text-white">
-            <div><p>{{ store.user }}</p></div>
+            <router-link to="/usuario" class="flex flex-row items-baseline gap-2">
+                <img class="invert" width="16" height="16" src="https://img.icons8.com/tiny-glyph/16/user.png" alt="user"/>
+                <p> {{ store.user }}</p>
+            </router-link>
             <div class="flex flex-row align-middle items-center justify-center">
                 <svg width="1" height="25" class="fill-white"><rect width="400" height="100" /></svg>
                 <button @click="logout" class="align-middle pl-2"><img src="/logout.svg" class="h-6 invert fill-usach-terra-900"/></button>

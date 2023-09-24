@@ -1,10 +1,13 @@
 - [ ] Diseño vertical/horizontal
-- [ ] Base de datos palabras
-- [ ] Base de datos usuarios + leaderboard
-- [ ] Leaderboard
+- [x] Base de datos palabras
+- [x] Base de datos usuarios + leaderboard
+- [x] Leaderboard
 - [ ] Juegos
+  - [ ] arreglar rima 
   - [x] recibir preguntas de base de datos
-  - [ ] almacenar puntaje
+  - [x] almacenar puntaje
   - [ ] mostrar buenas/malas c/corrección, s/corrección, % errores (dificultad)
   - [ ] diseño final corrección
 - [ ] Herramienta edición base de datos
+- [ ] Página de usuario
+- [ ] Historial de partidas usuario gráfico

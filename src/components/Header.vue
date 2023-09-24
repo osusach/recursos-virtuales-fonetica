@@ -12,9 +12,10 @@
         </div>
         <div class="flex flex-row gap-2 font-usach-bebas-body items-center align-middle text-2xl mx-5 px-4 bg-usach-aqua-700 p-2 rounded-lg text-white">
             <div><p>{{ store.user }}</p></div>
-            <div v-if="store.user !== 'Invitado'" class="flex flex-row align-middle items-center justify-center">
-                <svg width="1" height="25" class=" fill-white"><rect width="400" height="100" /></svg>
-                <button @click="logout" class="align-middle pl-2"><img src="/logout.svg" class="h-6 invert fill-usach-terra-900" /></button></div>
+            <div class="flex flex-row align-middle items-center justify-center">
+                <svg width="1" height="25" class="fill-white"><rect width="400" height="100" /></svg>
+                <button @click="logout" class="align-middle pl-2"><img src="/logout.svg" class="h-6 invert fill-usach-terra-900"/></button>
+            </div>
         </div>
     </header>
 </template>

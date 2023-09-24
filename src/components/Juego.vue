@@ -177,4 +177,14 @@ const endQuiz = async () => {
 
 <style>
 @import '../assets/juegos.css';
+.cat-text {
+    font-size: 1.875rem;
+    line-height: 2.5rem;
+}
+@media (min-width: 640px){
+    .cat-text {
+        font-size: 3rem;
+        line-height: 4.3rem;
+    }
+}
 </style>

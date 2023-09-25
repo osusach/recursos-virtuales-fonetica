@@ -1,7 +1,10 @@
 <template>
-	<div class="m-auto flex flex-col p-10 justify-center items-center text-center font-usach-helvetica-bold bg-usach-aqua-800 rounded-lg text-white">
-		<p class="mb-9 text-2xl">Juego Actual: {{ nombreJuego }}</p>
-		<h1 class="text-3xl mb-1">
+	<div class="m-auto flex flex-col p-7 justify-center items-center text-center text-lg font-usach-helvetica-body bg-usach-aqua-800 rounded-lg text-white">
+		<div class="flex flex-row gap-2 mb-5">
+			<p>Juego actual: </p>
+			<p class="font-usach-helvetica-bold">{{ nombreJuego }}</p>
+		</div>
+		<h1 class="text-xl mb-1">
 			Selecciona una dificultad
 		</h1>
 		<div class="flex flex-col w-full">

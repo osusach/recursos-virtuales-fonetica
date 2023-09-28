@@ -1,6 +1,6 @@
 <template>
     <footer class="flex flex-col bg-usach-aqua-900 text-white p-3">
-        <div class="flex flex-row">
+        <div class="flex flex-row flex-wrap">
             <div class="m-auto flex flex-col">
                 <img src="/acreditacion.png"  />
             </div>

@@ -1,24 +1,27 @@
 <template>
-    <header className="bg-usach-aqua-900 flex items-center p-1">
-        
-        <button className="flex-none">
-            <router-link to="/">
-                <img src="/UsachSB.png" alt="Logo Usach" className="logo-sb hidden xl:block"/>
-                <img src="/UsachPB.png" alt="Logo Usach" className="logo-pb xl:hidden block"/>
-            </router-link>
-        </button>
-        <div class="flex-grow text-center">
-            <h1 className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-usach-bebas-title text-white ">Recursos virtuales para el aprendizaje del lenguaje</h1>
-        </div>
-        <div class="flex flex-row gap-2 font-usach-bebas-body items-center align-middle text-2xl mx-5 px-4 bg-usach-aqua-700 p-2 rounded-lg text-white">
-            <router-link to="/usuario" class="flex flex-row items-baseline gap-2">
-                <img class="invert" width="16" height="16" src="https://img.icons8.com/tiny-glyph/16/user.png" alt="user"/>
-                <p> {{ store.user }}</p>
-            </router-link>
-            <div class="flex flex-row align-middle items-center justify-center">
-                <svg width="1" height="25" class="fill-white"><rect width="400" height="100" /></svg>
-                <button @click="logout" class="align-middle pl-2"><img src="/logout.svg" class="h-6 invert fill-usach-terra-900"/></button>
+    <header className="bg-usach-aqua-900 flex flex-wrap items-center p-1">
+        <div class="flex items-center">
+            <button className="flex-none">
+                <router-link to="/">
+                    <img src="/UsachSB.png" alt="Logo Usach" className="logo-sb hidden xl:block"/>
+                    <img src="/UsachPB.png" alt="Logo Usach" className="logo-pb xl:hidden block"/>
+                </router-link>
+            </button>
+            <div class="flex-grow text-center">
+                <h1 className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-usach-bebas-title text-white">
+                    Recursos virtuales para el aprendizaje del lenguaje
+                </h1>
             </div>
+        </div>
+        <div class="flex flex-row gap-2 items-center align-middle mx-5 px-4 bg-usach-aqua-700 p-2 rounded-lg w-[150px] flex-shrink-0">
+            <router-link to="/usuario" class="flex flex-row items-baseline gap-2 flex-shrink-0">
+                <img class="invert" width="16" height="16" src="https://img.icons8.com/tiny-glyph/16/user.png" alt="user"/>
+                <p class="font-usach-bebas-body text-2xl text-white"> {{ store.user }}</p>
+            </router-link>
+            <svg width="1" height="25" class="fill-white flex-shrink-0"><rect width="400" height="100" /></svg>
+            <button @click="logout" class="align-middle flex-shrink-0">
+                <img src="/logout.svg" class="h-6 invert fill-usach-terra-900"/>
+            </button>
         </div>
     </header>
 </template>

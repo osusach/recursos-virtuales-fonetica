@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-y-2 text-center bg-usach-aqua-300 rounded-lg p-5 font-usach-bebas-body">
         <p class=" font-usach-bebas-title text-3xl mb-2">Corrección - {{ nombreJuego }}</p>
-        <p class="text-lg">Puntaje y porcentaje de logro</p>
+        <!-- <p class="text-lg">Puntaje y porcentaje de logro</p> -->
         <div class="flex flex-row rounded-lg gap-1 justify-center text-xl bg-usach-terra-700">
             <p class="">{{ puntaje }}</p>
             <p>puntos</p>

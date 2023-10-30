@@ -1,41 +1,49 @@
 <template>
-	<div class="bg-usach-aqua-900 rounded-lg p-5">
-		<div
-			class="p-4 mb-5 font-usach-helvetica-bold text-white bg-usach-terra-600 rounded-lg"
-		>
-			<img
+	<div class="flex flex-col gap-16 p-5">
+		<div class="flex flex-row p-4 px-5 justify-between shadow-md font-usach-helvetica-bold items-center text-white bg-usach-aqua-800 rounded-xl">
+			<div class="flex flex-row gap-4 items-center">
+				<img
 				class="invert"
 				width="64"
 				src="https://img.icons8.com/pastel-glyph/64/user-male-circle.png"
 				alt="user_icon"
 			/>
-			<p>Usuario: {{ store.user }}</p>
-			<p v-if="correo != null">Correo: {{ store.email }}</p>
+			<div class="flex flex-col">
+				<p class=" font-usach-bebas-title text-2xl">{{ store.user }}</p>
+				<p v-if="correo != null">Correo: {{ store.email }}</p>
+			</div>
+			</div>
+			<div class="flex flex-col h-20">
+				<img class="invert" width="24" height="24" src="https://img.icons8.com/material-outlined/24/more.png" alt="more"/>
+			</div>
 		</div>
-		<div
-			class="flex flex-col w-fit justify-between lg:flex-row items-center gap-5"
-		>
-			<Leaderboard
-				class="w-[300px]"
-				:score-list="listaPindaro"
-				label="Píndaro"
-			></Leaderboard>
-			<Leaderboard
-				class="w-[300px]"
-				:score-list="listaRima"
-				label="Rima"
-			></Leaderboard>
-			<Leaderboard
-				class="w-[300px]"
-				:score-list="listaAcentual"
-				label="Categoría acentual"
-			></Leaderboard>
+		<div class="flex flex-col gap-3 items-center ">
+			<p class="w-full bg-usach-ultra-900 font-usach-bebas-title text-4xl text-white text-center rounded-xl py-1">Historial de partidas</p>
+			<div class="flex flex-row w-fit justify-between lg:flex-row items-center gap-5">
+				<Historial
+					class="w-[300px]"
+					:score-list="listaPindaro"
+					label="Píndaro"
+				></Historial>
+				<Historial
+					class="w-[300px]"
+					:score-list="listaPindaro"
+					label="Píndaro"
+				></Historial>
+				<Historial
+					class="w-[300px]"
+					:score-list="listaAcentual"
+					label="Categoría acentual"
+				></Historial>
+			</div>
 		</div>
+		
 	</div>
 </template>
 
 <script setup>
 import Leaderboard from "../components/Leaderboard.vue";
+import Historial from "../components/Historial.vue";
 import { store } from "../store.js";
 import { ref, onMounted } from "vue";
 import axios from "axios";

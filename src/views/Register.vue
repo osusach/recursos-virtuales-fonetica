@@ -75,7 +75,10 @@
 				placeholder="Repetir contraseña"
 			/>
 
-			<p v-if="!isValidRegister" class="text-red-600">{{ errorMsg }}</p>
+			<div v-if="!isValidRegister" class="m-auto px-4 rounded-lg mb-2 flex flex-row gap-3 items-center justify-center bg-usach-rouge-700 text-xl font-usach-bebas-title">
+				<img width="24" height="24" class="invert" src="https://img.icons8.com/material-outlined/24/error--v1.png" alt="error--v1"/>
+				<p>{{ errorMsg }}</p>
+			</div>
 			<Boton
 				label="Registrarse"
 				@click="registerFunc()"
@@ -119,7 +122,7 @@ const validateRegister = () => {
 	}
 	if (selectedFirst.value === "") {
 		isValidRegister.value = false;
-		errorMsg.value = "Nivel Educativo no puede estar vacío";
+		errorMsg.value = "Nivel educativo no puede estar vacío";
 		console.log(selectedFirst.value);
 		return;
 	}

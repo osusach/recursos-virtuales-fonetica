@@ -1,7 +1,9 @@
 <template>
 	<div class="flex flex-col gap-10 items-center">
 		<CarouselAlt></CarouselAlt>
-		<div
+
+		<Loading v-if="loading"/>
+		<div v-if="!loading"
 			class="flex flex-col w-full justify-between lg:flex-row items-center gap-5"
 		>
 			<Leaderboard
@@ -20,10 +22,12 @@
 <script setup>
 import Leaderboard from "../components/Leaderboard.vue";
 import CarouselAlt from "../components/CarouselAlt.vue";
+import Loading from "../components/Loading.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { store } from "../store.js";
 
+let loading = ref(true);
 let apiResponse;
 let listaAcentual = ref(null);
 let listaRima = ref(null);
@@ -39,6 +43,7 @@ onMounted(async () => {
 		listaAcentual.value = apiResponse.acentualLeaderboard.leaderboard;
 		listaRima.value = apiResponse.rimasLeaderboard.leaderboard;
 		listaPindaro.value = apiResponse.silabaLeaderboard.leaderboard;
+		loading.value = false;
 	} catch (error) {
 		console.error("Error fetching data:", error);
 	}

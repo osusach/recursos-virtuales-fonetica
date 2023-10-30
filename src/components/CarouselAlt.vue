@@ -147,7 +147,7 @@
 							<p
 								class="bg-usach-daisy-700 text-2xl font-usach-helvetica-bold pt-2 px-3 rounded-lg w-fit"
 							>
-								Categoría Acentual
+								Categoría acentual
 							</p>
 							<p
 								class="font-usach-helvetica-body rounded-lg text-lg"

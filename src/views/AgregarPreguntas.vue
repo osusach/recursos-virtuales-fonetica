@@ -1,5 +1,10 @@
 <template>
-    <div class="flex flex-row gap-10 items-center justify-between">
+    <div :class="{ hidden: isAdmin }" class="flex flex-col items-center bg-usach-aqua-600 px-3 py-2 rounded-md">
+        <label for="password" class="pb-5">Contraseña</label>
+        <input type="text" class="rounded-md" name="password" v-model="adminPass">
+        <button @click="validatePassword()" class="mt-5 p-2 rounded-md bg-usach-terra-600 hover:bg-usach-terra-800">Siguiente</button>
+    </div>
+    <div :class="{ hidden: !isAdmin}" class="flex flex-row gap-10 items-center justify-between">
         <div class="flex flex-col gap-4 bg-usach-aqua-400 p-3 rounded-lg ">
             <div class="flex flex-row gap-5 items-center">
                 <select v-model="selectedGame" class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm 
@@ -15,7 +20,7 @@
                 </button>
             </div>
             <div class="flex flex-row w-full h-36 bg-usach-aqua-100 rounded-lg">
-                    <ul class="w-full text-center overflow-scroll">
+                    <ul class="w-full text-center overflow-scroll-y">
                         <li v-for="pregunta in preguntas[selectedGame]" class="flex flex-row py-1 gap-2">
                             <p class="w-[75%]"> {{ pregunta }} </p>
                             <button @click="setAction(false, pregunta)" class="bg-usach-terra-600 rounded-md px-1"> <img class="h-5" src="/edit.svg"> </button>
@@ -58,9 +63,18 @@ const dificult = ref('')
 
 const questionUpdate = ref('')
 
+const isAdmin = ref(false)
+const adminPass = ref('')
+
 const questionsToAdd = []
 const questionsToRemove = []
 const questionsToUpdate = []
+
+const validatePassword = () => {
+    if (adminPass.value === 'admin') {
+        isAdmin.value = true
+    }
+}
 
 const setAction = (newAction, questionToUpdate) => {
     activeAction.value = true

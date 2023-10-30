@@ -81,7 +81,7 @@
 				placeholder="Repetir contraseña"
 			/>
 
-			<div v-if="!isValidRegister" class="m-auto px-4 rounded-lg mb-2 flex flex-row gap-3 items-center justify-center bg-usach-rouge-700 text-xl font-usach-bebas-title">
+			<div v-if="!isValidRegister && startedFilling" class="m-auto px-4 rounded-lg mb-2 flex flex-row gap-3 items-center justify-center bg-usach-rouge-700 text-xl font-usach-bebas-title">
 				<img width="24" height="24" class="invert" src="https://img.icons8.com/material-outlined/24/error--v1.png" alt="error--v1"/>
 				<p>{{ errorMsg }}</p>
 			</div>
@@ -117,8 +117,10 @@ let isValidSS = ref(true);
 let isValidPassword = ref(true);
 let isValidRegister = ref(false);
 let errorMsg = ref("");
+const startedFilling = ref(false);
 
 const validateRegister = () => {
+	startedFilling.value = true;
 	console.log("vl");
 	if (user.value === "") {
 		errorMsg.value = "Usuario no puede estar vacío";

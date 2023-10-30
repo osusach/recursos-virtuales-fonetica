@@ -12,18 +12,35 @@
                 Recursos virtuales para el aprendizaje del lenguaje</h1>
         </div>
         <div
-            class="flex flex-row gap-2 font-usach-bebas-body items-center align-middle text-2xl mx-5 px-4 bg-usach-aqua-700 p-2 rounded-lg text-white">
-            <div>
-                <p>{{ store.user }}</p>
-            </div>
-            <div v-if="store.user !== 'Invitado'" class="flex flex-row align-middle items-center justify-center">
-                <svg width="1" height="25" class=" fill-white">
-                    <rect width="400" height="100" />
-                </svg>
-                <button @click="logout" class="align-middle pl-2"><img src="/logout.svg"
-                        class="h-6 invert fill-usach-terra-900" /></button>
-            </div>
-        </div>
+			class="flex flex-row gap-2 items-center align-middle mr-1 px-4 bg-usach-aqua-700 p-2 rounded-lg w-fit flex-shrink-0"
+		>
+			<router-link
+				to="/usuario"
+				class="flex flex-row items-baseline gap-2 flex-shrink-0"
+			>
+				<img
+					class="invert"
+					width="16"
+					height="16"
+					src="https://img.icons8.com/tiny-glyph/16/user.png"
+					alt="user"
+				/>
+				<p
+					class="font-usach-bebas-body text-2xl text-white hidden sm:block"
+				>
+					{{ store.user }}
+				</p>
+			</router-link>
+			<svg width="1" height="25" class="fill-white flex-shrink-0">
+				<rect width="400" height="100" />
+			</svg>
+			<button @click="logout" class="align-middle flex-shrink-0">
+				<img
+					src="/logout.svg"
+					class="h-6 invert fill-usach-terra-900"
+				/>
+			</button>
+		</div>
         <a href="/agregar-preguntas" class="flex bg-usach-aqua-700 rounded-lg text-2xl p-2 text-white font-usach-bebas-body">
             <img src="/agregar.svg" alt="+" class="invert">
             <p>Preguntas</p>

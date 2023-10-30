@@ -9,7 +9,7 @@
 			<Input
 				:class="!isValidUser?'ring-red-700 ring-2':''"
 				Label="Usuario"
-				@input="validateRegister"
+				
 				forLabel="user"
 				type="text"
 				placeholder="Usuario"
@@ -17,14 +17,13 @@
 			<Input
 				:class="!isValidEmail?'ring-red-700 ring-2':''"
 				Label="Correo"
-				@input="validateRegister"
+				
 				forLabel="email"
 				type="text"
 				placeholder="Correo"
 			/>
 			<select
 				v-model="selectedFirst"
-				@click="validateRegister"
 				:class="!isValidSF?'ring-red-700 ring-2':''"
 				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:ring-2"
 				name="languages"
@@ -39,7 +38,6 @@
 			</select>
 			<select
 				v-if="selectedFirst == 'basica'"
-				@click="validateRegister"
 				v-model="selectedSec"
 				:class="!isValidSS?'ring-red-700 ring-2':''"
 				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm focus:ring-usach-terra-700 focus:ring-2"
@@ -53,9 +51,9 @@
 			</select>
 			<select
 				v-if="selectedFirst == 'media'"
-				@click="validateRegister"
 				v-model="selectedSec"
-				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700"
+				:class="!isValidPassword?'ring-red-700 ring-2':''"
+				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm focus:ring-usach-terra-700 focus:ring-2"
 				name="languages"
 				id="lang"
 			>
@@ -67,7 +65,7 @@
 			<Input
 				:class="!isValidPassword?'ring-red-700 ring-2':''"
 				Label="Contraseña"
-				@input="validateRegister"
+				
 				forLabel="password"
 				type="password"
 				placeholder="Contraseña"
@@ -75,7 +73,7 @@
 			<Input
 				:class="!isValidPassword?'ring-red-700 ring-2':''"
 				Label="Confirme Contraseña"
-				@input="validateRegister"
+				
 				forLabel="confirm_password"
 				type="password"
 				placeholder="Repetir contraseña"
@@ -87,13 +85,8 @@
 			</div>
 			<Boton
 				label="Registrarse"
-				@click="registerFunc()"
-				:disabled="!isValidRegister"
-				:class="
-					isValidRegister
-						? 'bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl'
-						: 'bg-usach-industrial-300 hover:cursor-default text-xl'
-				"
+				@click="validateRegister"
+				class="bg-usach-daisy-700 hover:bg-usach-daisy-900 text-xl"
 			/>
 		</div>
 	</form>
@@ -121,7 +114,6 @@ const startedFilling = ref(false);
 
 const validateRegister = () => {
 	startedFilling.value = true;
-	console.log("vl");
 	if (user.value === "") {
 		errorMsg.value = "Usuario no puede estar vacío";
 		isValidUser.value = false;
@@ -166,6 +158,7 @@ const validateRegister = () => {
 		isValidPassword.value = true;	
 	}
 	isValidRegister.value = true;
+	registerFunc();
 };
 
 const registerFunc = async () => {
@@ -184,6 +177,22 @@ const registerFunc = async () => {
 			router.push("/home");
 		})
 		.catch((error) => {
+			errorMsg.value = ""
+			error.response.data.payload.message.issues.forEach(element => {
+				if (element.code == "too_small") {
+					errorMsg.value += "La contraseña debe tener al menos 8 carácteres.\n";
+					isValidPassword.value = false;
+				}
+				if (element.code == "invalid_string") {
+					isValidEmail.value = false;
+					errorMsg.value += "El correo es inválido.\n";
+				} 
+				if (element.code != "invalid_string" && element.code != "too_small") {
+					errorMsg.value += element.message + "\n";
+					isValidRegister.value = false;
+				}
+			});
+			isValidRegister.value = false;
 			console.error("Error en la solicitud:", error);
 		});
 };

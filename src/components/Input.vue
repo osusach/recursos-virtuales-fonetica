@@ -1,13 +1,11 @@
 <template>
-	<div class="flex flex-col mb-4 text-left font-usach-helvetica-medium">
-		<input
-			:type="type"
-			:id="forLabel"
-			class="flex bg-white text-usach-industrial-1000 text-sm rounded-lg focus:ring-usach-terra-800 focus:border-usach-terra-800 w-full p-2.5 text-left font-usach-helvetica-body"
-			:placeholder="placeholder"
-			required
-		/>
-	</div>
+	<input
+		:type="type"
+		:id="forLabel"
+		class="mb-4 bg-white text-usach-industrial-1000 text-sm focus:ring-usach-terra-800 focus:ring-2 rounded-lg w-full p-2.5 text-left font-usach-helvetica-body"
+		:placeholder="placeholder"
+		required
+	/>
 </template>
 
 <script setup>

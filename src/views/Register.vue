@@ -7,6 +7,7 @@
 		>
 			<h1 class="text-3xl mb-5 font-usach-bebas-title">Registro</h1>
 			<Input
+				:class="!isValidUser?'ring-red-700 ring-2':''"
 				Label="Usuario"
 				@input="validateRegister"
 				forLabel="user"
@@ -14,6 +15,7 @@
 				placeholder="Usuario"
 			/>
 			<Input
+				:class="!isValidEmail?'ring-red-700 ring-2':''"
 				Label="Correo"
 				@input="validateRegister"
 				forLabel="email"
@@ -23,7 +25,8 @@
 			<select
 				v-model="selectedFirst"
 				@click="validateRegister"
-				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700"
+				:class="!isValidSF?'ring-red-700 ring-2':''"
+				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:ring-2"
 				name="languages"
 				id="lang"
 			>
@@ -38,7 +41,8 @@
 				v-if="selectedFirst == 'basica'"
 				@click="validateRegister"
 				v-model="selectedSec"
-				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700"
+				:class="!isValidSS?'ring-red-700 ring-2':''"
+				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm focus:ring-usach-terra-700 focus:ring-2"
 				name="languages"
 				id="lang"
 			>
@@ -61,6 +65,7 @@
 				</option>
 			</select>
 			<Input
+				:class="!isValidPassword?'ring-red-700 ring-2':''"
 				Label="Contraseña"
 				@input="validateRegister"
 				forLabel="password"
@@ -68,6 +73,7 @@
 				placeholder="Contraseña"
 			/>
 			<Input
+				:class="!isValidPassword?'ring-red-700 ring-2':''"
 				Label="Confirme Contraseña"
 				@input="validateRegister"
 				forLabel="confirm_password"
@@ -104,6 +110,11 @@ const selectedFirst = ref("");
 const selectedSec = ref("");
 const url = "https://pindarosql.pindarousach.workers.dev";
 const router = useRouter();
+let isValidUser = ref(true);
+let isValidEmail = ref(true);
+let isValidSF = ref(true);
+let isValidSS = ref(true);
+let isValidPassword = ref(true);
 let isValidRegister = ref(false);
 let errorMsg = ref("");
 
@@ -111,31 +122,46 @@ const validateRegister = () => {
 	console.log("vl");
 	if (user.value === "") {
 		errorMsg.value = "Usuario no puede estar vacío";
+		isValidUser.value = false;
 		isValidRegister.value = false;
 		return;
+	} else {
+		isValidUser.value = true;	
 	}
 	if (email.value === "") {
 		console.log("email");
 		errorMsg.value = "Correo no puede estar vacío";
+		isValidEmail.value = false;
 		isValidRegister.value = false;
 		return;
+	} else {
+		isValidEmail.value = true;	
 	}
 	if (selectedFirst.value === "") {
+		isValidSF.value = false;
 		isValidRegister.value = false;
 		errorMsg.value = "Nivel educativo no puede estar vacío";
 		console.log(selectedFirst.value);
 		return;
+	} else {
+		isValidSF.value = true;	
 	}
 	if (selectedSec.value === "" && selectedFirst.value !== "sup") {
+		isValidSS.value = false;
 		isValidRegister.value = false;
 		errorMsg.value = "Grado no puede estar vacío";
 		return;
+	} else {
+		isValidSS.value = true;	
 	}
 	if (password.value !== confirm_password.value) {
 		console.log("pass");
+		isValidPassword.value = false;
 		isValidRegister.value = false;
 		errorMsg.value = "Las contraseñas no coinciden";
 		return;
+	} else {
+		isValidPassword.value = true;	
 	}
 	isValidRegister.value = true;
 };

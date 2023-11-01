@@ -1,17 +1,27 @@
 <template>
-    <header className="bg-usach-aqua-900 flex items-center p-1">
-
-        <button className="flex-none">
-            <router-link to="/">
-                <img src="/UsachSB.png" alt="Logo Usach" className="logo-sb hidden xl:block" />
-                <img src="/UsachPB.png" alt="Logo Usach" className="logo-pb xl:hidden block" />
-            </router-link>
-        </button>
-        <div class="flex-grow text-center">
-            <h1 className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-usach-bebas-title text-white ">
-                Recursos virtuales para el aprendizaje del lenguaje</h1>
-        </div>
-        <div
+	<header className="bg-usach-aqua-900 flex items-center p-1">
+		<button className="flex-none">
+			<router-link to="/">
+				<img
+					src="/UsachSB.png"
+					alt="Logo Usach"
+					className="logo-sb hidden xl:block"
+				/>
+				<img
+					src="/UsachPB.png"
+					alt="Logo Usach"
+					className="logo-pb xl:hidden block"
+				/>
+			</router-link>
+		</button>
+		<div class="flex-grow text-center">
+			<h1
+				className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-usach-bebas-title text-white "
+			>
+				Recursos virtuales para el aprendizaje del lenguaje
+			</h1>
+		</div>
+		<div
 			class="flex flex-row gap-2 items-center align-middle mr-1 px-4 bg-usach-aqua-700 p-2 rounded-lg w-fit flex-shrink-0"
 		>
 			<router-link
@@ -41,11 +51,14 @@
 				/>
 			</button>
 		</div>
-        <a href="/agregar-preguntas" class="flex bg-usach-aqua-700 rounded-lg text-2xl p-2 text-white font-usach-bebas-body">
-            <img src="/agregar.svg" alt="+" class="invert">
-            <p>Preguntas</p>
-        </a>
-    </header>
+		<a
+			href="/agregar-preguntas"
+			class="flex bg-usach-aqua-700 rounded-lg text-2xl p-2 text-white font-usach-bebas-body"
+		>
+			<img src="/agregar.svg" alt="+" class="invert" />
+			<p>Preguntas</p>
+		</a>
+	</header>
 </template>
 
 <script setup>
@@ -55,22 +68,22 @@ console.log(store);
 const router = useRouter();
 
 const logout = () => {
-    store.user = "Invitado"
-    store.email = null
-    store.curso = null
-    store.password = null
-    router.push("/")
-}
+	store.user = "Invitado";
+	store.email = null;
+	store.curso = null;
+	store.password = null;
+	router.push("/");
+};
 </script>
 
 <style>
 .logo-pb {
-    height: 170px;
-    width: 170px;
+	height: 170px;
+	width: 170px;
 }
 
 .logo-sb {
-    height: 170px;
-    width: 538px;
+	height: 170px;
+	width: 538px;
 }
 </style>

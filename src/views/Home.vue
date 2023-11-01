@@ -2,8 +2,9 @@
 	<div class="flex flex-col gap-10 items-center">
 		<CarouselAlt></CarouselAlt>
 
-		<Loading v-if="loading"/>
-		<div v-if="!loading"
+		<Loading v-if="loading" />
+		<div
+			v-if="!loading"
 			class="flex flex-col w-full justify-between lg:flex-row items-center gap-5"
 		>
 			<Leaderboard

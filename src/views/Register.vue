@@ -7,24 +7,22 @@
 		>
 			<h1 class="text-3xl mb-5 font-usach-bebas-title">Registro</h1>
 			<Input
-				:class="!isValidUser?'ring-red-700 ring-2':''"
+				:class="!isValidUser ? 'ring-red-700 ring-2' : ''"
 				Label="Usuario"
-				
 				forLabel="user"
 				type="text"
 				placeholder="Usuario"
 			/>
 			<Input
-				:class="!isValidEmail?'ring-red-700 ring-2':''"
+				:class="!isValidEmail ? 'ring-red-700 ring-2' : ''"
 				Label="Correo"
-				
 				forLabel="email"
 				type="text"
 				placeholder="Correo"
 			/>
 			<select
 				v-model="selectedFirst"
-				:class="!isValidSF?'ring-red-700 ring-2':''"
+				:class="!isValidSF ? 'ring-red-700 ring-2' : ''"
 				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:ring-2"
 				name="languages"
 				id="lang"
@@ -39,7 +37,7 @@
 			<select
 				v-if="selectedFirst == 'basica'"
 				v-model="selectedSec"
-				:class="!isValidSS?'ring-red-700 ring-2':''"
+				:class="!isValidSS ? 'ring-red-700 ring-2' : ''"
 				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm focus:ring-usach-terra-700 focus:ring-2"
 				name="languages"
 				id="lang"
@@ -52,7 +50,7 @@
 			<select
 				v-if="selectedFirst == 'media'"
 				v-model="selectedSec"
-				:class="!isValidPassword?'ring-red-700 ring-2':''"
+				:class="!isValidPassword ? 'ring-red-700 ring-2' : ''"
 				class="mb-4 font-usach-helvetica-body w-full h-11 rounded-lg bg-white text-usach-industrial-1000 border-white text-sm focus:ring-usach-terra-700 focus:ring-2"
 				name="languages"
 				id="lang"
@@ -63,24 +61,31 @@
 				</option>
 			</select>
 			<Input
-				:class="!isValidPassword?'ring-red-700 ring-2':''"
+				:class="!isValidPassword ? 'ring-red-700 ring-2' : ''"
 				Label="Contraseña"
-				
 				forLabel="password"
 				type="password"
 				placeholder="Contraseña"
 			/>
 			<Input
-				:class="!isValidPassword?'ring-red-700 ring-2':''"
+				:class="!isValidPassword ? 'ring-red-700 ring-2' : ''"
 				Label="Confirme Contraseña"
-				
 				forLabel="confirm_password"
 				type="password"
 				placeholder="Repetir contraseña"
 			/>
 
-			<div v-if="!isValidRegister && startedFilling" class="m-auto px-4 rounded-lg mb-2 flex flex-row gap-3 items-center justify-center bg-usach-rouge-700 text-xl font-usach-bebas-title">
-				<img width="24" height="24" class="invert" src="https://img.icons8.com/material-outlined/24/error--v1.png" alt="error--v1"/>
+			<div
+				v-if="!isValidRegister && startedFilling"
+				class="m-auto px-4 rounded-lg mb-2 flex flex-row gap-3 items-center justify-center bg-usach-rouge-700 text-xl font-usach-bebas-title"
+			>
+				<img
+					width="24"
+					height="24"
+					class="invert"
+					src="https://img.icons8.com/material-outlined/24/error--v1.png"
+					alt="error--v1"
+				/>
 				<p>{{ errorMsg }}</p>
 			</div>
 			<Boton
@@ -120,7 +125,7 @@ const validateRegister = () => {
 		isValidRegister.value = false;
 		return;
 	} else {
-		isValidUser.value = true;	
+		isValidUser.value = true;
 	}
 	if (email.value === "") {
 		console.log("email");
@@ -129,7 +134,7 @@ const validateRegister = () => {
 		isValidRegister.value = false;
 		return;
 	} else {
-		isValidEmail.value = true;	
+		isValidEmail.value = true;
 	}
 	if (selectedFirst.value === "") {
 		isValidSF.value = false;
@@ -138,7 +143,7 @@ const validateRegister = () => {
 		console.log(selectedFirst.value);
 		return;
 	} else {
-		isValidSF.value = true;	
+		isValidSF.value = true;
 	}
 	if (selectedSec.value === "" && selectedFirst.value !== "sup") {
 		isValidSS.value = false;
@@ -146,7 +151,7 @@ const validateRegister = () => {
 		errorMsg.value = "Grado no puede estar vacío";
 		return;
 	} else {
-		isValidSS.value = true;	
+		isValidSS.value = true;
 	}
 	if (password.value !== confirm_password.value) {
 		console.log("pass");
@@ -155,7 +160,7 @@ const validateRegister = () => {
 		errorMsg.value = "Las contraseñas no coinciden";
 		return;
 	} else {
-		isValidPassword.value = true;	
+		isValidPassword.value = true;
 	}
 	isValidRegister.value = true;
 	registerFunc();
@@ -177,17 +182,21 @@ const registerFunc = async () => {
 			router.push("/home");
 		})
 		.catch((error) => {
-			errorMsg.value = ""
-			error.response.data.payload.message.issues.forEach(element => {
+			errorMsg.value = "";
+			error.response.data.payload.message.issues.forEach((element) => {
 				if (element.code == "too_small") {
-					errorMsg.value += "La contraseña debe tener al menos 8 carácteres.\n";
+					errorMsg.value +=
+						"La contraseña debe tener al menos 8 carácteres.\n";
 					isValidPassword.value = false;
 				}
 				if (element.code == "invalid_string") {
 					isValidEmail.value = false;
 					errorMsg.value += "El correo es inválido.\n";
-				} 
-				if (element.code != "invalid_string" && element.code != "too_small") {
+				}
+				if (
+					element.code != "invalid_string" &&
+					element.code != "too_small"
+				) {
 					errorMsg.value += element.message + "\n";
 					isValidRegister.value = false;
 				}

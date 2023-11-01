@@ -17,7 +17,7 @@
 				<img class="invert" width="24" height="24" src="https://img.icons8.com/material-outlined/24/more.png" alt="more"/>
 			</div>
 		</div>
-		<div class="flex flex-col gap-3 items-center ">
+		<div class="flex flex-col gap-3 items-center w-[940px]">
 			<p class="w-full bg-usach-ultra-900 font-usach-bebas-title text-4xl text-white text-center rounded-xl py-1">Historial de partidas</p>
 			<div class="flex flex-row w-fit justify-between lg:flex-row items-center gap-5">
 				<Historial
@@ -36,14 +36,13 @@
 					label="Categoría acentual"
 				></Historial>
 			</div>
+			<Graph class="p-4 bg-usach-daisy-600 text-xl rounded-xl" :data="chartData"></Graph>
 		</div>
-		<Graph class="bg-usach-daisy-600 text-xl rounded-xl h-[400px]" :data="chartData"></Graph>
 	</div>
 </template>
 
 <script setup>
 import Graph from "../components/Graph.vue";
-import Leaderboard from "../components/Leaderboard.vue";
 import Historial from "../components/Historial.vue";
 import { store } from "../store.js";
 import { ref, onMounted } from "vue";
@@ -80,7 +79,7 @@ const chartData = {
 	  tension: 0.1
     },
 	{
-      label: 'Píndaro',
+      label: 'Rima',
       borderColor: "blue",
 	  backgroundColor: 'blue',
       data: [500, 200, 700, 800, 1200],

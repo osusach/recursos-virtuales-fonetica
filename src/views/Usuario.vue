@@ -43,8 +43,8 @@
 				></Historial>
 				<Historial
 					class="w-[300px]"
-					:score-list="listaPindaro"
-					label="Píndaro"
+					:score-list="listaRima"
+					label="Rima"
 				></Historial>
 				<Historial
 					class="w-[300px]"

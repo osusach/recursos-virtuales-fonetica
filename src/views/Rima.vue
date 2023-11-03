@@ -17,8 +17,8 @@ const titulo =
 		: "¿Hay rima entre las siguientes palabras?";
 
 function rimaQuestion(question) {
-	let palabra0 = question.wordA;
-	let palabra1 = question.wordB;
+	let palabra0 = question.word_a;
+	let palabra1 = question.word_b;
 	return `<div class="flex flex-row gap-5">
                 <div class="bg-usach-ultra-600 p-3 rounded-lg my-5">
                     <p class="font-usach-helvetica-bold text-7xl pt-4">${palabra0}</p>

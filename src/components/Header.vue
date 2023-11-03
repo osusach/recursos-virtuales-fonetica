@@ -51,20 +51,12 @@
 				/>
 			</button>
 		</div>
-		<a
-			href="/agregar-preguntas"
-			class="flex bg-usach-aqua-700 rounded-lg text-2xl p-2 text-white font-usach-bebas-body"
-		>
-			<img src="/agregar.svg" alt="+" class="invert" />
-			<p>Preguntas</p>
-		</a>
 	</header>
 </template>
 
 <script setup>
 import { store } from "../store.js";
 import { useRouter } from "vue-router";
-console.log(store);
 const router = useRouter();
 
 const logout = () => {

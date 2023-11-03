@@ -123,7 +123,7 @@ const pindaroFunc = (item) => {
 	return `<p> ${item.word}</p>`;
 };
 const rimaFunc = (item) => {
-	return `<p> ${item.wordA} <br> ${item.wordB} </p>`;
+	return `<p> ${item.word_a} <br> ${item.word_b} </p>`;
 };
 const acentualFunc = (item) => {
 	return `<p> ${item.word} </p>`;

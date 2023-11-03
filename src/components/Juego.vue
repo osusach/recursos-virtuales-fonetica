@@ -191,10 +191,18 @@ const endQuiz = async () => {
 	for (let index = 0; index < cantPregs; index++) {
 		let answerValue =
 			respuestas[index] !== undefined ? Number(respuestas[index]) : 0;
-		const resp = {
-			question_id: apiResponse.payload.game.questions[index].id,
-			answer: answerValue,
-		};
+		let resp;
+		if (Number(props.idJuego) === 2) {
+			resp = {
+				question_id: apiResponse.payload.game.questions[index].game_id,
+				answer: answerValue,
+			};
+		} else {
+			resp = {
+				question_id: apiResponse.payload.game.questions[index].id,
+				answer: answerValue,
+			};
+		}
 		data.answers.push(resp);
 	}
 	console.log(data);

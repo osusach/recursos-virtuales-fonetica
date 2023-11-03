@@ -77,7 +77,7 @@
 
 <script setup>
 import Loading from "../components/Loading.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { store } from "../store.js";
 import axios from "axios";
@@ -89,13 +89,12 @@ const props = defineProps({
 	func: Function,
 });
 
-const router = useRouter();
-
 // Constantes
 const Fin = ref("Terminar");
 const i = ref(1);
 const loading = ref(true);
 const url = "https://pindarosql.pindarousach.workers.dev/";
+const router = useRouter();
 
 let opciones = ref([]);
 let nextText = ref("Siguiente");

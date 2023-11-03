@@ -102,14 +102,42 @@
 <script setup>
 import { store } from "../store.js";
 import { useRouter } from "vue-router";
+import { onBeforeUnmount } from "vue";
 
 const router = useRouter();
 
-const juego = Number(router.currentRoute.value.params.id);
-const data = store.correccion.payload;
-const puntaje = data.score;
-const correccion = data.corrections;
-var percentage = (data.correct * 100) / data.total;
+
+// Función para alertar al usuario
+function beforeUnload(event) {
+	const message = 'Si recargas ahora, perderás tu progreso!';
+	event.preventDefault(); // para navegadores estándar
+	event.returnValue = message; // para algunos navegadores
+	return message; // para algunos otros navegadores
+}
+
+// Agregar y remover el event listener
+window.addEventListener('beforeunload', beforeUnload);
+
+onBeforeUnmount(() => {
+	window.removeEventListener('beforeunload', beforeUnload);
+});
+
+let juego;
+let data;
+let puntaje;
+let correccion;
+var percentage;
+
+try {
+	juego = Number(router.currentRoute.value.params.id);
+	data = store.correccion.payload;
+	puntaje = data.score;
+	correccion = data.corrections;
+	percentage = (data.correct * 100) / data.total;
+} catch (error) {
+	router.replace("/home");
+}
+
 const dificultad = Number(localStorage.getItem("dificultad"));
 
 console.log(correccion);

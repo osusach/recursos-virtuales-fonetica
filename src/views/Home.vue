@@ -38,7 +38,7 @@ const url = "https://pindarosql.pindarousach.workers.dev";
 // get a db
 onMounted(async () => {
 	try {
-		const response = await axios.get(url + "scores/leaderboards");
+		const response = await axios.get(url + "/scores/leaderboards");
 		apiResponse = response.data.payload;
 
 		listaAcentual.value = apiResponse.acentualLeaderboard.leaderboard;

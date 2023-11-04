@@ -72,6 +72,8 @@ let apiResponse;
 let listaAcentual = ref([]);
 let listaRima = ref([]);
 let listaPindaro = ref([]);
+let chartData = ref(null);
+
 const url = "https://pindarosql.pindarousach.workers.dev";
 
 const userid = store.userid;

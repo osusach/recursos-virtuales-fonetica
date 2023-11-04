@@ -20,6 +20,8 @@ const { data } = defineProps({
 	data: Object,
 });
 
+console.log(data);
+
 const lineChartCanvas = ref(null);
 let myLineChart;
 

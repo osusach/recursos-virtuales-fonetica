@@ -2,7 +2,7 @@
 	<Juego
 		title="¿A qué categoría acentual pertenece esta palabra?"
 		:func="acentualQuestion"
-		:urlJuego="'acentual'"
+		:urlJuego="'/acentual'"
 		:idJuego="'3'"
 	>
 	</Juego>

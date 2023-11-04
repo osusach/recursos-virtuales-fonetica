@@ -179,7 +179,7 @@ const registerFunc = async () => {
 		.post(url + "/users/register", data)
 		.then((response) => {
 			console.log("Respuesta del servidor:", response.data);
-			router.push("/home");
+			router.push("/");
 		})
 		.catch((error) => {
 			errorMsg.value = "";

@@ -2,7 +2,7 @@
 	<Juego
 		:title="titulo"
 		:func="rimaQuestion"
-		:urlJuego="'rimas'"
+		:urlJuego="'/rimas'"
 		:idJuego="'2'"
 	>
 	</Juego>

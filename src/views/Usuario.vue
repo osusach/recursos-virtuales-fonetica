@@ -14,7 +14,7 @@
 					<p class="font-usach-bebas-title text-2xl">
 						{{ store.user }}
 					</p>
-					<p v-if="correo != null">Correo: {{ store.email }}</p>
+					<p v-if="store.email != null">Correo: {{ store.email }}</p>
 				</div>
 			</div>
 			<div class="flex flex-col h-20">
@@ -53,6 +53,7 @@
 				></Historial>
 			</div>
 			<Graph
+				v-if="maximo > 0"
 				class="p-4 bg-usach-daisy-600 text-xl rounded-xl"
 				:data="chartData"
 			></Graph>
@@ -68,49 +69,59 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 
 let apiResponse;
-let listaAcentual = ref(null);
-let listaRima = ref(null);
-let listaPindaro = ref(null);
+let listaAcentual = ref([]);
+let listaRima = ref([]);
+let listaPindaro = ref([]);
 const url = "https://pindarosql.pindarousach.workers.dev";
+
+const userid = store.userid;
+let maximo;
 
 // get a db
 onMounted(async () => {
 	try {
-		const response = await axios.get(url + "/scores/leaderboards");
+		const response = await axios.get(
+			url + "/scores/history/" + String(userid),
+		);
+		console.log(response);
 		apiResponse = response.data.payload;
 
-		listaAcentual.value = apiResponse.acentualLeaderboard.leaderboard;
-		listaRima.value = apiResponse.rimasLeaderboard.leaderboard;
-		listaPindaro.value = apiResponse.silabaLeaderboard.leaderboard;
+		listaAcentual.value = apiResponse.history[0];
+		listaRima.value = apiResponse.history[1];
+		listaPindaro.value = apiResponse.history[2];
+		maximo = Math.max(
+			listaAcentual.value.length,
+			listaRima.value.length,
+			listaPindaro.value.length,
+		);
+		chartData.value = {
+			labels: Array.from({ length: maximo }, (_, i) => i + 1),
+			datasets: [
+				{
+					label: "Píndaro",
+					borderColor: "#FFFFFF",
+					backgroundColor: "#FFFFFF",
+					data: listaPindaro.value.map((objeto) => objeto.score),
+					tension: 0.1,
+				},
+				{
+					label: "Rima",
+					borderColor: "blue",
+					backgroundColor: "blue",
+					data: listaRima.value.map((objeto) => objeto.score),
+					tension: 0.1,
+				},
+				{
+					label: "Categoría acentual",
+					borderColor: "red",
+					backgroundColor: "red",
+					data: listaAcentual.value.map((objeto) => objeto.score),
+					tension: 0.1,
+				},
+			],
+		};
 	} catch (error) {
 		console.error("Error fetching data:", error);
 	}
 });
-
-const chartData = {
-	labels: ["1", "2", "3", "4", "5"],
-	datasets: [
-		{
-			label: "Píndaro",
-			borderColor: "#FFFFFF",
-			backgroundColor: "#FFFFFF",
-			data: [200, 800, 200, 100, 1000],
-			tension: 0.1,
-		},
-		{
-			label: "Rima",
-			borderColor: "blue",
-			backgroundColor: "blue",
-			data: [500, 200, 700, 800, 1200],
-			tension: 0.1,
-		},
-		{
-			label: "Categoría acentual",
-			borderColor: "red",
-			backgroundColor: "red",
-			data: [300, 600, 800, 400, 1500],
-			tension: 0.1,
-		},
-	],
-};
 </script>

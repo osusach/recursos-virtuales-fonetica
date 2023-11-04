@@ -8,4 +8,5 @@ export const store = reactive({
 	email: null,
 	curso: null,
 	password: null,
+	userid: null,
 });

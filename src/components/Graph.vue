@@ -16,7 +16,9 @@ import {
 	LineElement,
 } from "chart.js";
 
-const { data } = defineProps(["data"]);
+const { data } = defineProps({
+	data: Object,
+});
 
 const lineChartCanvas = ref(null);
 let myLineChart;

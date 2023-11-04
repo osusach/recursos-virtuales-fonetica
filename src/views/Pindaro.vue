@@ -2,7 +2,7 @@
 	<Juego
 		title="¿Cuántas sílabas tiene esta palabra?"
 		:func="pindaroQuestion"
-		:urlJuego="'silabas'"
+		:urlJuego="'/silabas'"
 		:idJuego="'1'"
 	>
 	</Juego>

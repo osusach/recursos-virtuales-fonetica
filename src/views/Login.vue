@@ -117,6 +117,7 @@ const loginFunc = async () => {
 			store.password = resp.password;
 			store.user = resp.name;
 			store.curso = resp.course;
+			store.userid = resp.userid;
 			router.push("/home");
 		})
 		.catch((error) => {

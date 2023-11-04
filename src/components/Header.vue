@@ -1,7 +1,7 @@
 <template>
 	<header className="bg-usach-aqua-900 flex items-center p-1">
 		<button className="flex-none">
-			<router-link to="/">
+			<button @click="routeButton()">
 				<img
 					src="/UsachSB.png"
 					alt="Logo Usach"
@@ -12,7 +12,7 @@
 					alt="Logo Usach"
 					className="logo-pb xl:hidden block"
 				/>
-			</router-link>
+			</button>
 		</button>
 		<div class="flex-grow text-center">
 			<h1
@@ -55,9 +55,18 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { store } from "../store.js";
 import { useRouter } from "vue-router";
 const router = useRouter();
+
+const routeButton = () => {
+	if (store.email == null) {
+		router.push("/");
+	} else {
+		router.push("/home");
+	}
+}
 
 const logout = () => {
 	store.user = "Invitado";

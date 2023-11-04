@@ -30,7 +30,7 @@
 				/>
 				<p>{{ errorMsg }}</p>
 			</div>
-			
+
 			<Boton
 				label="Iniciar Sesión"
 				@click="validateLogin()"

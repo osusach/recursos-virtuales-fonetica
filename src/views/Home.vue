@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-col gap-10 items-center">
-		<CarouselAlt></CarouselAlt>
-
+		<CarouselAlt v-if="sm"></CarouselAlt>
+		<CarUnfolded v-if="!sm"></CarUnfolded>
 		<Loading v-if="loading" />
 		<div
 			v-if="!loading"
@@ -23,11 +23,12 @@
 <script setup>
 import Leaderboard from "../components/Leaderboard.vue";
 import CarouselAlt from "../components/CarouselAlt.vue";
+import CarUnfolded from "../components/CarUnfolded.vue";
 import Loading from "../components/Loading.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import axios from "axios";
-import { store } from "../store.js";
 
+const sm = ref(true);
 let loading = ref(true);
 let apiResponse;
 let listaAcentual = ref(null);
@@ -37,6 +38,8 @@ const url = "https://pindarosql.pindarousach.workers.dev";
 
 // get a db
 onMounted(async () => {
+	window.addEventListener("resize", actualizarMostrarElemento);
+	actualizarMostrarElemento();
 	try {
 		const response = await axios.get(url + "/scores/leaderboards");
 		apiResponse = response.data.payload;
@@ -49,4 +52,21 @@ onMounted(async () => {
 		console.error("Error fetching data:", error);
 	}
 });
+
+const actualizarMostrarElemento = () => {
+	sm.value = window.innerWidth >= 1000; // Cambia 640 al tamaño deseado
+};
+
+onBeforeUnmount(() => {
+	window.removeEventListener("resize", actualizarMostrarElemento);
+});
 </script>
+
+<style scoped>
+.carousel-alt {
+	display: none;
+}
+.carousel-unf {
+	display: none;
+}
+</style>

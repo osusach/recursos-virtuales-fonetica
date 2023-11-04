@@ -66,7 +66,7 @@ const routeButton = () => {
 	} else {
 		router.push("/home");
 	}
-}
+};
 
 const logout = () => {
 	store.user = "Invitado";

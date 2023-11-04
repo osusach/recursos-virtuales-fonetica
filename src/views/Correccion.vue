@@ -106,20 +106,19 @@ import { onBeforeUnmount } from "vue";
 
 const router = useRouter();
 
-
 // Función para alertar al usuario
 function beforeUnload(event) {
-	const message = 'Si recargas ahora, perderás tu progreso!';
+	const message = "Si recargas ahora, perderás tu progreso!";
 	event.preventDefault(); // para navegadores estándar
 	event.returnValue = message; // para algunos navegadores
 	return message; // para algunos otros navegadores
 }
 
 // Agregar y remover el event listener
-window.addEventListener('beforeunload', beforeUnload);
+window.addEventListener("beforeunload", beforeUnload);
 
 onBeforeUnmount(() => {
-	window.removeEventListener('beforeunload', beforeUnload);
+	window.removeEventListener("beforeunload", beforeUnload);
 });
 
 let juego;

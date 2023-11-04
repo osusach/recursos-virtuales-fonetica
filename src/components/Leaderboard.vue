@@ -1,7 +1,7 @@
 <template>
 	<div
 		v-if="props.scoreList"
-		class="overflow-hidden flex flex-col rounded-lg w-[30%] bg-usach-industrial-900"
+		class="overflow-hidden flex flex-col rounded-lg md:w-[30%] bg-usach-industrial-900"
 	>
 		<div
 			class="flex flex-row px-5 pt-3 text-white text-xl justify-center items-center gap-3"

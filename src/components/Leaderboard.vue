@@ -1,53 +1,16 @@
 <template>
 	<div
 		v-if="props.scoreList"
-		class="overflow-hidden flex flex-col rounded-lg md:w-[30%] bg-usach-industrial-900"
+		class="overflow-hidden flex flex-col rounded-lg w-full bg-usach-industrial-900"
 	>
 		<div
-			class="flex flex-row px-5 pt-3 text-white text-xl justify-center items-center gap-3"
+			class="flex flex-row px-5 pt-3 text-white text-xl justify-center items-center gap-3 mb-2"
 		>
 			<img src="/crown_8.svg" class="h-5 invert" />
-			<h1 class="font-usach-helvetica-bold">{{ label }}</h1>
+			<h1 class="font-usach-helvetica-bold pt-1">{{ label }}</h1>
 		</div>
 		<ol class="text-white">
-			<li class="px-3 pb-1 flex flex-row justify-items-start">
-				<p class="w-[80px]">
-					<img
-						class="invert"
-						width="24"
-						height="24"
-						src="https://img.icons8.com/material-outlined/24/leaderboard.png"
-						alt="leaderboard"
-					/>
-				</p>
-				<p class="w-[110px]">
-					<img
-						class="invert"
-						width="24"
-						height="24"
-						src="https://img.icons8.com/material-outlined/24/user--v1.png"
-						alt="user--v1"
-					/>
-				</p>
-				<p class="w-[55px]">
-					<img
-						class="invert"
-						width="24"
-						height="24"
-						src="https://img.icons8.com/material-outlined/24/joystick.png"
-						alt="joystick"
-					/>
-				</p>
-				<p>
-					<img
-						class="invert"
-						width="24"
-						height="24"
-						src="https://img.icons8.com/material-outlined/24/000000/time.png"
-						alt="time"
-					/>
-				</p>
-			</li>
+			
 			<li
 				v-for="(item, index) in props.scoreList.slice(0, 5)"
 				:key="index"
@@ -60,12 +23,15 @@
 					'bg-usach-terra-1000': index === 4,
 				}"
 			>
-				<p class="bg-transparent text-white font-usach-helvetica-body">
+				<div class="flex flex-row gap-1">
+					<p class="bg-transparent text-white font-usach-helvetica-body">
 					{{ index + 1 }}.
-				</p>
-				<p class="w-36 font-usach-helvetica-bold">{{ item.name }}</p>
-				<p class="font-usach-helvetica-bold">{{ item.answer_time }}</p>
-				<p class="w-9 text-right">{{ item.score }}</p>
+					</p>
+					<p v-if="item.name !== 'Invitado/Anónimo'" class="font-usach-helvetica-bold">{{ item.name }}</p>
+					<p v-if="item.name === 'Invitado/Anónimo'" class="font-usach-helvetica-bold">Invitado</p>
+				</div>
+				<p class="font-usach-helvetica-body">{{ item.answer_time }}</p>
+				<p class="text-right font-usach-helvetica-bold">{{ item.score }}</p>
 			</li>
 		</ol>
 	</div>

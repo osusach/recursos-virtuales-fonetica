@@ -6,6 +6,7 @@
 		<div
 			v-if="!loading"
 			class="flex flex-col w-full justify-between lg:flex-row items-center gap-5"
+			:class="{'px-2': !sm}"
 		>
 			<Leaderboard
 				:score-list="listaPindaro"

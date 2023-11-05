@@ -40,22 +40,25 @@
 					class="w-[300px]"
 					:score-list="listaPindaro"
 					label="Píndaro"
-				></Historial>
+					:boton-grafico="cambiarGrafico"
+				/>
 				<Historial
 					class="w-[300px]"
 					:score-list="listaRima"
 					label="Rima"
-				></Historial>
+					:boton-grafico="cambiarGrafico"
+				/>
 				<Historial
 					class="w-[300px]"
 					:score-list="listaAcentual"
 					label="Categoría acentual"
-				></Historial>
+					:boton-grafico="cambiarGrafico"
+				/>
 			</div>
 			<Graph
-				v-if="maximo > 0"
 				class="p-4 bg-usach-daisy-600 text-xl rounded-xl"
 				:data="chartData"
+				:title="chartTitle"
 			></Graph>
 		</div>
 	</div>
@@ -72,12 +75,32 @@ let apiResponse;
 let listaAcentual = ref([]);
 let listaRima = ref([]);
 let listaPindaro = ref([]);
-let chartData = ref(null);
+let chartData = ref({});
+let chartTitle = ref("")
 
 const url = "https://pindarosql.pindarousach.workers.dev";
 
 const userid = store.userid;
-let maximo;
+
+const cambiarGrafico = (lista, label) => {
+	if (lista === undefined)
+	{
+		return;
+	}
+	chartTitle.value = label;
+	chartData.value = {
+			labels: Array.from({ length: lista.length }, (_, i) => i + 1),
+			datasets: [
+				{
+					label: label,
+					borderColor: "#FFFFFF",
+					backgroundColor: "#FFFFFF",
+					data: lista.map((objeto) => objeto.score),
+					tension: 0.1,
+				}
+			],
+		};
+}
 
 // get a db
 onMounted(async () => {
@@ -91,39 +114,10 @@ onMounted(async () => {
 		listaAcentual.value = apiResponse.history[0];
 		listaRima.value = apiResponse.history[1];
 		listaPindaro.value = apiResponse.history[2];
-		maximo = Math.max(
-			listaAcentual.value.length,
-			listaRima.value.length,
-			listaPindaro.value.length,
-		);
-		chartData.value = {
-			labels: Array.from({ length: maximo }, (_, i) => i + 1),
-			datasets: [
-				{
-					label: "Píndaro",
-					borderColor: "#FFFFFF",
-					backgroundColor: "#FFFFFF",
-					data: listaPindaro.value.map((objeto) => objeto.score),
-					tension: 0.1,
-				},
-				{
-					label: "Rima",
-					borderColor: "blue",
-					backgroundColor: "blue",
-					data: listaRima.value.map((objeto) => objeto.score),
-					tension: 0.1,
-				},
-				{
-					label: "Categoría acentual",
-					borderColor: "red",
-					backgroundColor: "red",
-					data: listaAcentual.value.map((objeto) => objeto.score),
-					tension: 0.1,
-				},
-			],
-		};
+		cambiarGrafico(listaAcentual.value, "Categoría Acentual")
 	} catch (error) {
 		console.error("Error fetching data:", error);
 	}
 });
+
 </script>

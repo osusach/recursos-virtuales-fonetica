@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from "vue";
+import { ref, onMounted, defineProps, watchEffect  } from "vue";
 import {
 	Chart,
 	CategoryScale,
@@ -16,11 +16,10 @@ import {
 	LineElement,
 } from "chart.js";
 
-const { data } = defineProps({
+const props = defineProps({
 	data: Object,
+	title: String,
 });
-
-console.log(data);
 
 const lineChartCanvas = ref(null);
 let myLineChart;
@@ -41,7 +40,7 @@ onMounted(() => {
 
 	myLineChart = new Chart(lineChartCanvas.value, {
 		type: "line",
-		data: data,
+		data: props.data,
 		options: {
 			responsive: true,
 			maintainAspectRatio: true,
@@ -58,7 +57,7 @@ onMounted(() => {
 				title: {
 					font: { family: "BebasNeuePro Bold", size: 26 },
 					display: true,
-					text: "Ultimos 5 Puntajes",
+					text: "Ultimos 5 Puntajes de " + props.title,
 				},
 				legend: {
 					position: "bottom",
@@ -73,4 +72,18 @@ onMounted(() => {
 		},
 	});
 });
+
+function updateChartData(newData, newTitle) {
+	if (myLineChart)
+	{
+		myLineChart.data = newData;
+		myLineChart.options.plugins.title.text = "Ultimos 5 Puntajes de " + newTitle;
+		myLineChart.update()
+	}
+}
+
+watchEffect(() => {
+  updateChartData(props.data, props.title);
+});
+
 </script>

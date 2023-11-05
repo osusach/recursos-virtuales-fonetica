@@ -7,6 +7,7 @@
 			class="flex flex-row px-5 pt-3 mb-2 text-white text-xl justify-center items-center gap-3"
 		>
 			<p class="font-usach-helvetica-bold">{{ label }}</p>
+			<button @click="props.botonGrafico(props.scoreList, props.label)">g</button>
 		</div>
 		<ol class="text-white">
 			<li
@@ -33,5 +34,6 @@
 const props = defineProps({
 	label: String,
 	scoreList: Object,
+	botonGrafico: Function,
 });
 </script>

@@ -111,9 +111,9 @@ onMounted(async () => {
 		console.log(response);
 		apiResponse = response.data.payload;
 
-		listaAcentual.value = apiResponse.history[0];
-		listaRima.value = apiResponse.history[1];
-		listaPindaro.value = apiResponse.history[2];
+		listaPindaro.value = apiResponse.history[0];
+		listaAcentual.value = apiResponse.history[1];
+		listaRima.value = apiResponse.history[2];
 		cambiarGrafico(listaAcentual.value, "Categoría Acentual")
 	} catch (error) {
 		console.error("Error fetching data:", error);

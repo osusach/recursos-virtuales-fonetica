@@ -1,5 +1,5 @@
 <template>
-	<div v-if="!loading" class="w-full sm:w-fit flex flex-col gap-4">
+	<div v-if="!loading" class="mx-2 flex flex-col gap-4">
 		<div
 			class="hidden sm:flex flex-row h-14 rounded-lg bg-usach-ultra-900 align-middle items-center"
 		>
@@ -42,12 +42,12 @@
 
 			<p class="text-center text-xl">{{ props.title }}</p>
 
-			<div class="preguntas">
-				<div v-for="opcion in opciones" class="flex">
+			<div class="xs:flex-col preguntas flex sm:flex-row">
+				<div v-for="opcion in opciones" class="xs:flex-col w-full flex sm:flex-row">
 					<button
 						:value="opcion.value"
 						@click="saveAnswer(opcion.value)"
-						class="px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out"
+						class="w-full px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out"
 						:class="{
 							' bg-usach-aqua-800 text-white':
 								respuesta === opcion.value,

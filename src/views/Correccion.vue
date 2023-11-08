@@ -80,7 +80,7 @@
 					v-if="dificultad < 1 && juego === 2"
 					class="font-usach-bebas-body text-lg"
 				>
-					Correcta:
+					Correcta: {{ item.answer }}
 				</p>
 				<p
 					v-if="dificultad < 1 && juego === 3"

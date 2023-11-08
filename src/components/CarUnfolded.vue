@@ -95,7 +95,7 @@
 				</div>
 			</div>
 			<router-link
-				to="/dificultad/1"
+				to="/dificultad/2"
 				@click="setJuego(2)"
 				class="w-full rounded-lg text-center p-2 bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800"
 			>
@@ -144,7 +144,7 @@
 				</div>
 			</div>
 			<router-link
-				to="/dificultad/1"
+				to="/dificultad/3"
 				@click="setJuego(3)"
 				class="w-full rounded-lg text-center p-2 bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800"
 			>
@@ -182,6 +182,7 @@ const props = defineProps({
 });
 
 const setJuego = (num) => {
+	console.log(num);
 	localStorage.setItem("juego", num);
 };
 </script>

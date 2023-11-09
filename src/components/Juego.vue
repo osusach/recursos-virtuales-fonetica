@@ -43,7 +43,7 @@
 			<p class="text-center text-xl">{{ props.title }}</p>
 
 			<div class="xs:flex-col preguntas flex sm:flex-row">
-				<div v-for="opcion in opciones" class="xs:flex-col w-full flex sm:flex-row">
+				<div v-for="(opcion, key) in opciones" class="xs:flex-col w-full flex sm:flex-row">
 					<button
 						:value="opcion.value"
 						@click="saveAnswer(opcion.value)"
@@ -111,14 +111,15 @@ const changeQuestionApi = () => {
 		return;
 	}
 	let question = apiResponse.payload.game.questions[i.value - 1];
-	console.log(apiResponse);
+	// console.log(apiResponse);
 	opciones.value = question.options;
-	console.log(JSON.stringify(opciones.value));
+	// console.log(JSON.stringify(opciones.value));
 	opciones.value.sort((a, b) => a.value - b.value);
 	if (loading) {
 		loading.value = false;
 	}
 	pregunta.value = props.func(question);
+	console.log(respuesta);
 };
 
 // get a db
@@ -141,9 +142,11 @@ const saveAnswer = (opcion) => {
 	if (respuesta !== -1) {
 		respuestas[i.value - 1] = respuesta.value;
 	}
+	console.log("respuesta");
 	console.log(respuesta);
 	console.log(opcion);
 	console.log(respuestas[i.value - 1]);
+	console.log(i.value - 1);
 };
 
 const nextTextVerify = () => {
@@ -152,7 +155,10 @@ const nextTextVerify = () => {
 	} else {
 		nextText.value = "Siguiente";
 	}
-	respuesta.value = -1;
+	if (respuestas[i.value - 1])
+		respuesta.value =  respuestas[i.value - 1];
+	else
+		respuesta.value = -1;
 };
 
 const nextQuestion = () => {

@@ -186,6 +186,7 @@ const changeQuestion = (num) => {
 };
 
 const endQuiz = async () => {
+	let question_order = [];
 	const data = {
 		email: store.email,
 		password: store.password,
@@ -194,15 +195,18 @@ const endQuiz = async () => {
 	};
 
 	for (let index = 0; index < cantPregs; index++) {
+		
 		let answerValue =
-			respuestas[index] !== undefined ? Number(respuestas[index]) : 0;
+		respuestas[index] !== undefined ? Number(respuestas[index]) : 0;
 		let resp;
 		if (Number(props.idJuego) === 2) {
+			question_order.push(apiResponse.payload.game.questions[index].game_id);
 			resp = {
 				question_id: apiResponse.payload.game.questions[index].game_id,
 				answer: answerValue,
 			};
 		} else {
+			question_order.push(apiResponse.payload.game.questions[index].id);
 			resp = {
 				question_id: apiResponse.payload.game.questions[index].id,
 				answer: answerValue,
@@ -217,6 +221,7 @@ const endQuiz = async () => {
 		.then((response) => {
 			store.correccion = response.data;
 			console.log("Respuesta del servidor:", response.data);
+			store.question_order = question_order;
 		})
 		.catch((error) => {
 			console.error("Error en la solicitud:", error);

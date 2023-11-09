@@ -9,4 +9,5 @@ export const store = reactive({
 	curso: null,
 	password: null,
 	userid: null,
+	question_order: [],
 });

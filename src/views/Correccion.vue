@@ -105,7 +105,6 @@ import { useRouter } from "vue-router";
 import { onBeforeUnmount } from "vue";
 
 const router = useRouter();
-
 // Función para alertar al usuario
 function beforeUnload(event) {
 	const message = "Si recargas ahora, perderás tu progreso!";
@@ -127,20 +126,36 @@ let puntaje;
 let correccion;
 var percentage;
 
+const dificultad = Number(localStorage.getItem("dificultad"));
+const idJuego = Number(localStorage.getItem("juego"));
+
 try {
 	juego = Number(router.currentRoute.value.params.id);
 	data = store.correccion.payload;
 	puntaje = data.score;
 	correccion = data.corrections;
+	let question_order = store.question_order;
+
+	if (idJuego == 1)
+		correccion.sort((a, b) => {
+			return question_order.findIndex(obj => obj === a.silaba_id) - question_order.findIndex(obj => obj === b.silaba_id);
+		});
+	if (idJuego == 2)
+		correccion.sort((a, b) => {
+			return question_order.findIndex(obj => obj === a.game_id) - question_order.findIndex(obj => obj === b.game_id);
+		});
+	if (idJuego == 3)
+		correccion.sort((a, b) => {
+			return question_order.findIndex(obj => obj === a.word_id) - question_order.findIndex(obj => obj === b.word_id);
+		});
+
 	percentage = (data.correct * 100) / data.total;
 } catch (error) {
+	console.log(error);
 	router.replace("/home");
 }
 
-const dificultad = Number(localStorage.getItem("dificultad"));
 
-console.log(correccion);
-console.log(percentage);
 let nombreJuego = "error";
 let textFunc = () => {
 	return "error";

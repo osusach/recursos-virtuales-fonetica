@@ -128,7 +128,6 @@ const validateRegister = () => {
 		isValidUser.value = true;
 	}
 	if (email.value === "") {
-		console.log("email");
 		errorMsg.value = "Correo no puede estar vacío";
 		isValidEmail.value = false;
 		isValidRegister.value = false;
@@ -140,7 +139,6 @@ const validateRegister = () => {
 		isValidSF.value = false;
 		isValidRegister.value = false;
 		errorMsg.value = "Nivel educativo no puede estar vacío";
-		console.log(selectedFirst.value);
 		return;
 	} else {
 		isValidSF.value = true;
@@ -154,7 +152,6 @@ const validateRegister = () => {
 		isValidSS.value = true;
 	}
 	if (password.value !== confirm_password.value) {
-		console.log("pass");
 		isValidPassword.value = false;
 		isValidRegister.value = false;
 		errorMsg.value = "Las contraseñas no coinciden";
@@ -173,12 +170,10 @@ const registerFunc = async () => {
 		course: String(selectedSec.value + selectedFirst.value),
 		name: user.value,
 	};
-	console.log(data);
 
 	await axios
 		.post(url + "/users/register", data)
 		.then((response) => {
-			console.log("Respuesta del servidor:", response.data);
 			router.push("/");
 		})
 		.catch((error) => {
@@ -202,7 +197,6 @@ const registerFunc = async () => {
 				}
 			});
 			isValidRegister.value = false;
-			console.error("Error en la solicitud:", error);
 		});
 };
 </script>

@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, watchEffect  } from "vue";
+import { ref, onMounted, defineProps, watchEffect } from "vue";
 import {
 	Chart,
 	CategoryScale,
@@ -74,16 +74,15 @@ onMounted(() => {
 });
 
 function updateChartData(newData, newTitle) {
-	if (myLineChart)
-	{
+	if (myLineChart) {
 		myLineChart.data = newData;
-		myLineChart.options.plugins.title.text = "Ultimos 5 Puntajes de " + newTitle;
-		myLineChart.update()
+		myLineChart.options.plugins.title.text =
+			"Ultimos 5 Puntajes de " + newTitle;
+		myLineChart.update();
 	}
 }
 
 watchEffect(() => {
-  updateChartData(props.data, props.title);
+	updateChartData(props.data, props.title);
 });
-
 </script>

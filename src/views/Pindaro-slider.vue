@@ -121,7 +121,6 @@ onMounted(async () => {
 				store.dificultad,
 		);
 		apiResponse = response.data;
-		console.log(apiResponse);
 		store.preguntas = [];
 		apiResponse.forEach((element) => {
 			store.preguntas.push(element["word"]);

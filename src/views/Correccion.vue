@@ -138,23 +138,30 @@ try {
 
 	if (idJuego == 1)
 		correccion.sort((a, b) => {
-			return question_order.findIndex(obj => obj === a.silaba_id) - question_order.findIndex(obj => obj === b.silaba_id);
+			return (
+				question_order.findIndex((obj) => obj === a.silaba_id) -
+				question_order.findIndex((obj) => obj === b.silaba_id)
+			);
 		});
 	if (idJuego == 2)
 		correccion.sort((a, b) => {
-			return question_order.findIndex(obj => obj === a.game_id) - question_order.findIndex(obj => obj === b.game_id);
+			return (
+				question_order.findIndex((obj) => obj === a.game_id) -
+				question_order.findIndex((obj) => obj === b.game_id)
+			);
 		});
 	if (idJuego == 3)
 		correccion.sort((a, b) => {
-			return question_order.findIndex(obj => obj === a.word_id) - question_order.findIndex(obj => obj === b.word_id);
+			return (
+				question_order.findIndex((obj) => obj === a.word_id) -
+				question_order.findIndex((obj) => obj === b.word_id)
+			);
 		});
 
 	percentage = (data.correct * 100) / data.total;
 } catch (error) {
-	console.log(error);
 	router.replace("/home");
 }
-
 
 let nombreJuego = "error";
 let textFunc = () => {

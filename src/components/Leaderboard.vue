@@ -10,7 +10,6 @@
 			<h1 class="font-usach-helvetica-bold pt-1">{{ label }}</h1>
 		</div>
 		<ol class="text-white">
-			
 			<li
 				v-for="(item, index) in props.scoreList.slice(0, 5)"
 				:key="index"
@@ -24,14 +23,28 @@
 				}"
 			>
 				<div class="flex flex-row gap-1">
-					<p class="bg-transparent text-white font-usach-helvetica-body">
-					{{ index + 1 }}.
+					<p
+						class="bg-transparent text-white font-usach-helvetica-body"
+					>
+						{{ index + 1 }}.
 					</p>
-					<p v-if="item.name !== 'Invitado/Anónimo'" class="font-usach-helvetica-bold">{{ item.name }}</p>
-					<p v-if="item.name === 'Invitado/Anónimo'" class="font-usach-helvetica-bold">Invitado</p>
+					<p
+						v-if="item.name !== 'Invitado/Anónimo'"
+						class="font-usach-helvetica-bold"
+					>
+						{{ item.name }}
+					</p>
+					<p
+						v-if="item.name === 'Invitado/Anónimo'"
+						class="font-usach-helvetica-bold"
+					>
+						Invitado
+					</p>
 				</div>
 				<p class="font-usach-helvetica-body">{{ item.answer_time }}</p>
-				<p class="text-right font-usach-helvetica-bold">{{ item.score }}</p>
+				<p class="text-right font-usach-helvetica-bold">
+					{{ item.score }}
+				</p>
 			</li>
 		</ol>
 	</div>

@@ -100,10 +100,6 @@ import { useRouter } from "vue-router";
 import { store } from "../store.js";
 
 const router = useRouter();
-console.log("store.juego");
-console.log(store.juego);
-console.log("store.dificultad");
-console.log(store.dificultad);
 // TESTEO
 const Fin = ref("Terminar");
 const cantPregs = 10;
@@ -130,13 +126,6 @@ const saveAnswer = () => {
 	if (respuesta.value !== "") {
 		store.respuestas[i.value - 1] = respuesta.value;
 	}
-	console.log("-----------");
-	console.log("i =" + i.value);
-	console.log("palabra =" + palabra.value);
-	console.log("respuesta =" + respuesta);
-	console.log("respuestas =" + store.respuestas);
-	console.log("respuestas[i] =");
-	console.log(store.respuestas[i.value - 1]);
 };
 const nextTextVerify = () => {
 	if (i.value == cantPregs) {

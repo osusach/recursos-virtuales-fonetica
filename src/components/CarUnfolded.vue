@@ -1,22 +1,62 @@
 <template>
 	<div class="flex flex-col gap-3 items-center">
-		<h1 class=" font-usach-helvetica-bold text-3xl text-slate-600">Selecciona un juego</h1>
+		<h1 class="font-usach-helvetica-bold text-3xl text-slate-600">
+			Selecciona un juego
+		</h1>
 		<div class="flex flex-row gap-2 font-usach-bebas-body text-lg">
-			<button @click="showGame(1)" class=" bg-usach-aqua-500 p-2 px-4 rounded-lg shadow" 
-			:class="{'bg-usach-aqua-900 text-white font-usach-bebas-title shadow-none': showPindaro == true}">Píndaro</button>
-			<button @click="showGame(2)" class=" bg-usach-ultra-500 p-2 px-4 rounded-lg shadow"
-			:class="{'bg-usach-ultra-900 text-white font-usach-bebas-title shadow-none': showRimas == true}">Rimas</button>
-			<button @click="showGame(3)" class=" bg-usach-cloudy-500 p-2 rounded-lg shadow"
-			:class="{'bg-usach-cloudy-900 text-white font-usach-bebas-title shadow-none': showAcentual == true}">Categoría Acentual</button>
+			<button
+				@click="showGame(1)"
+				class="bg-usach-aqua-500 p-2 px-4 rounded-lg shadow"
+				:class="{
+					'bg-usach-aqua-900 text-white font-usach-bebas-title shadow-none':
+						showPindaro == true,
+				}"
+			>
+				Píndaro
+			</button>
+			<button
+				@click="showGame(2)"
+				class="bg-usach-ultra-500 p-2 px-4 rounded-lg shadow"
+				:class="{
+					'bg-usach-ultra-900 text-white font-usach-bebas-title shadow-none':
+						showRimas == true,
+				}"
+			>
+				Rimas
+			</button>
+			<button
+				@click="showGame(3)"
+				class="bg-usach-cloudy-500 p-2 rounded-lg shadow"
+				:class="{
+					'bg-usach-cloudy-900 text-white font-usach-bebas-title shadow-none':
+						showAcentual == true,
+				}"
+			>
+				Categoría Acentual
+			</button>
 		</div>
 
-		<div v-if="showPindaro" class="bg-usach-aqua-900 carta-juego mx-2" :class="classCartas">
+		<div
+			v-if="showPindaro"
+			class="bg-usach-aqua-900 carta-juego mx-2"
+			:class="classCartas"
+		>
 			<div class="flex flex-col gap-2 items-center">
-				<p class="bg-usach-daisy-700 text-4xl font-usach-helvetica-bold pt-2 px-2 mb-2 rounded-lg w-fit texto-sombra">Píndaro</p>
-				<p class="font-usach-helvetica-bold rounded-lg text-xl text-center">¿Cómo jugar?</p>
-				<p class="font-usach-helvetica-body rounded-lg text-lg text-center">
-					En este juego debes contar la cantidad de sílabas que tiene cada
-					palabra y seleccionar la alternativa correcta.
+				<p
+					class="bg-usach-daisy-700 text-4xl font-usach-helvetica-bold pt-2 px-2 mb-2 rounded-lg w-fit texto-sombra"
+				>
+					Píndaro
+				</p>
+				<p
+					class="font-usach-helvetica-bold rounded-lg text-xl text-center"
+				>
+					¿Cómo jugar?
+				</p>
+				<p
+					class="font-usach-helvetica-body rounded-lg text-lg text-center"
+				>
+					En este juego debes contar la cantidad de sílabas que tiene
+					cada palabra y seleccionar la alternativa correcta.
 				</p>
 			</div>
 			<div
@@ -60,10 +100,16 @@
 				>
 					Rimas
 				</p>
-				<p class="font-usach-helvetica-bold rounded-lg text-xl text-center">¿Cómo jugar?</p>
-				<p class="font-usach-helvetica-body rounded-lg text-lg text-center">
-					En este juego debes identificar el tipo de rima que existe entre
-					ambas palabras, en caso de existir.
+				<p
+					class="font-usach-helvetica-bold rounded-lg text-xl text-center"
+				>
+					¿Cómo jugar?
+				</p>
+				<p
+					class="font-usach-helvetica-body rounded-lg text-lg text-center"
+				>
+					En este juego debes identificar el tipo de rima que existe
+					entre ambas palabras, en caso de existir.
 				</p>
 			</div>
 			<div
@@ -110,8 +156,14 @@
 				>
 					Categoría acentual
 				</p>
-				<p class="font-usach-helvetica-bold rounded-lg text-xl text-center">¿Cómo jugar?</p>
-				<p class="font-usach-helvetica-body rounded-lg text-lg text-center">
+				<p
+					class="font-usach-helvetica-bold rounded-lg text-xl text-center"
+				>
+					¿Cómo jugar?
+				</p>
+				<p
+					class="font-usach-helvetica-body rounded-lg text-lg text-center"
+				>
 					En este juego debes identificar el tipo de acentuación de la
 					palabra y seleccionar la opción correcta.
 				</p>
@@ -157,9 +209,9 @@
 <script setup>
 import { ref } from "vue";
 
-const showPindaro = ref(true)
-const showRimas = ref(false)
-const showAcentual = ref(false)
+const showPindaro = ref(true);
+const showRimas = ref(false);
+const showAcentual = ref(false);
 
 const showGame = (num) => {
 	if (num === 1) {
@@ -182,7 +234,6 @@ const props = defineProps({
 });
 
 const setJuego = (num) => {
-	console.log(num);
 	localStorage.setItem("juego", num);
 };
 </script>

@@ -76,31 +76,30 @@ let listaAcentual = ref([]);
 let listaRima = ref([]);
 let listaPindaro = ref([]);
 let chartData = ref({});
-let chartTitle = ref("")
+let chartTitle = ref("");
 
 const url = "https://pindarosql.pindarousach.workers.dev";
 
 const userid = store.userid;
 
 const cambiarGrafico = (lista, label) => {
-	if (lista === undefined)
-	{
+	if (lista === undefined) {
 		return;
 	}
 	chartTitle.value = label;
 	chartData.value = {
-			labels: Array.from({ length: lista.length }, (_, i) => i + 1),
-			datasets: [
-				{
-					label: label,
-					borderColor: "#FFFFFF",
-					backgroundColor: "#FFFFFF",
-					data: lista.map((objeto) => objeto.score),
-					tension: 0.1,
-				}
-			],
-		};
-}
+		labels: Array.from({ length: lista.length }, (_, i) => i + 1),
+		datasets: [
+			{
+				label: label,
+				borderColor: "#FFFFFF",
+				backgroundColor: "#FFFFFF",
+				data: lista.map((objeto) => objeto.score),
+				tension: 0.1,
+			},
+		],
+	};
+};
 
 // get a db
 onMounted(async () => {
@@ -108,16 +107,14 @@ onMounted(async () => {
 		const response = await axios.get(
 			url + "/scores/history/" + String(userid),
 		);
-		console.log(response);
 		apiResponse = response.data.payload;
 
 		listaPindaro.value = apiResponse.history[0];
 		listaAcentual.value = apiResponse.history[1];
 		listaRima.value = apiResponse.history[2];
-		cambiarGrafico(listaAcentual.value, "Categoría Acentual")
+		cambiarGrafico(listaAcentual.value, "Categoría Acentual");
 	} catch (error) {
 		console.error("Error fetching data:", error);
 	}
 });
-
 </script>

@@ -77,7 +77,6 @@ const startedFilling = ref(false);
 const validateLogin = () => {
 	startedFilling.value = true;
 	if (email.value === "") {
-		console.log("email");
 		errorMsg.value = "Correo no puede estar vacío";
 		isValidEmail.value = false;
 		isValidLogin.value = false;
@@ -86,7 +85,6 @@ const validateLogin = () => {
 		isValidEmail.value = true;
 	}
 	if (password.value === "") {
-		console.log("pass");
 		isValidPassword.value = false;
 		isValidLogin.value = false;
 		errorMsg.value = "La contraseña no puede estar vacía";
@@ -111,7 +109,6 @@ const loginFunc = async () => {
 	await axios
 		.post(url + "/users/login", data)
 		.then((response) => {
-			console.log("Respuesta del servidor:", response.data);
 			const resp = response.data.payload.user[0];
 			store.email = resp.email;
 			store.password = resp.password;
@@ -123,7 +120,6 @@ const loginFunc = async () => {
 		.catch((error) => {
 			errorMsg.value = "El correo o contraseña son incorrectos.";
 			isValidLogin.value = false;
-			console.error("Error en la solicitud:", error);
 		});
 };
 </script>

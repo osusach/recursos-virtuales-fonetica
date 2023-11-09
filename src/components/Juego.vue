@@ -43,7 +43,10 @@
 			<p class="text-center text-xl">{{ props.title }}</p>
 
 			<div class="xs:flex-col preguntas flex sm:flex-row">
-				<div v-for="(opcion, key) in opciones" class="xs:flex-col w-full flex sm:flex-row">
+				<div
+					v-for="(opcion, key) in opciones"
+					class="xs:flex-col w-full flex sm:flex-row"
+				>
 					<button
 						:value="opcion.value"
 						@click="saveAnswer(opcion.value)"
@@ -111,15 +114,12 @@ const changeQuestionApi = () => {
 		return;
 	}
 	let question = apiResponse.payload.game.questions[i.value - 1];
-	// console.log(apiResponse);
 	opciones.value = question.options;
-	// console.log(JSON.stringify(opciones.value));
 	opciones.value.sort((a, b) => a.value - b.value);
 	if (loading) {
 		loading.value = false;
 	}
 	pregunta.value = props.func(question);
-	console.log(respuesta);
 };
 
 // get a db
@@ -129,10 +129,10 @@ onMounted(async () => {
 			url + props.urlJuego + "/start/" + dificultad,
 		);
 		apiResponse = response.data;
-		console.log(apiResponse);
 		changeQuestionApi();
 	} catch (error) {
 		console.error("Error fetching data:", error);
+		router.replace("/home");
 	}
 });
 
@@ -142,11 +142,6 @@ const saveAnswer = (opcion) => {
 	if (respuesta !== -1) {
 		respuestas[i.value - 1] = respuesta.value;
 	}
-	console.log("respuesta");
-	console.log(respuesta);
-	console.log(opcion);
-	console.log(respuestas[i.value - 1]);
-	console.log(i.value - 1);
 };
 
 const nextTextVerify = () => {
@@ -155,10 +150,8 @@ const nextTextVerify = () => {
 	} else {
 		nextText.value = "Siguiente";
 	}
-	if (respuestas[i.value - 1])
-		respuesta.value =  respuestas[i.value - 1];
-	else
-		respuesta.value = -1;
+	if (respuestas[i.value - 1]) respuesta.value = respuestas[i.value - 1];
+	else respuesta.value = -1;
 };
 
 const nextQuestion = () => {
@@ -195,12 +188,13 @@ const endQuiz = async () => {
 	};
 
 	for (let index = 0; index < cantPregs; index++) {
-		
 		let answerValue =
-		respuestas[index] !== undefined ? Number(respuestas[index]) : 0;
+			respuestas[index] !== undefined ? Number(respuestas[index]) : 0;
 		let resp;
 		if (Number(props.idJuego) === 2) {
-			question_order.push(apiResponse.payload.game.questions[index].game_id);
+			question_order.push(
+				apiResponse.payload.game.questions[index].game_id,
+			);
 			resp = {
 				question_id: apiResponse.payload.game.questions[index].game_id,
 				answer: answerValue,
@@ -214,17 +208,16 @@ const endQuiz = async () => {
 		}
 		data.answers.push(resp);
 	}
-	console.log(data);
 
 	await axios
 		.post(url + props.urlJuego + "/submit", data)
 		.then((response) => {
 			store.correccion = response.data;
-			console.log("Respuesta del servidor:", response.data);
 			store.question_order = question_order;
 		})
 		.catch((error) => {
 			console.error("Error en la solicitud:", error);
+			router.replace("/home");
 		});
 	loading.value = true;
 	router.push("/correccion/" + props.idJuego);

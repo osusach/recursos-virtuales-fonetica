@@ -1,8 +1,8 @@
 <template>
-	<div :class="{ hidden: loginInfo.isLogged }" class="flex flex-col items-center bg-usach-aqua-600 px-10 py-3 rounded-md">
-		<label for="mail" class="pb-5">Correo: </label>
+	<div :class="{ hidden: loginInfo.isLogged }" class="flex flex-col items-center bg-usach-aqua-600 px-10 py-4 rounded-md">
+		<label for="mail" class="pb-4">Correo: </label>
 		<input type="text" class="rounded-md" v-model="loginInfo.mail" placeholder="Ingrese el correo">
-		<label for="password" class="pb-5">Contraseña</label>
+		<label for="password" class="py-4">Contraseña:</label>
 		<input type="password" class="rounded-md" name="password" v-model="loginInfo.password"
 			placeholder="Ingrese la contraseña" />
 		<button @click="validateLogin()" class="mt-5 p-2 rounded-md bg-usach-terra-600 hover:bg-usach-terra-800">
@@ -10,7 +10,7 @@
 		</button>
 	</div>
 	<div :class="{ hidden: !loginInfo.isLogged }" class="flex flex-row gap-10 items-center justify-between">
-		<div class="flex flex-col gap-4 bg-usach-aqua-400 p-3 rounded-lg min-w-[200vh]">
+		<div class="flex flex-col gap-4 bg-usach-aqua-400 p-3 rounded-lg max-w-[95vw]">
 			<div class="flex flex-row gap-5 items-center">
 				<select v-model="selectedGame"
 					class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700">
@@ -24,14 +24,17 @@
 					<v-icon icon="mdi-plus"></v-icon>
 					<p class="px-3">Agregar pregunta</p>
 				</button>
-				<button @click="applyChanges()"
+				<button @click="applyChanges"
 					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800">
 					<v-icon icon="mdi-check"></v-icon>
 					<p class="px-3">Aplicar cambios</p>
 				</button>
+				<p> <span class="font-semibold">Importante:</span> Para evitar conflictos con juegos ya existentes, las palabras no se eliminan de la base de
+					datos, sino que se desactivan para futuros juegos. De esa manera, es posible seguir accediendo al
+					historial y estadísticas de las partidas anteriores.</p>
 			</div>
 			<div class="flex flex-row w-full min-h-[70vh] max-h-[70vh] bg-usach-aqua-100 rounded-lg">
-				<ul class="w-full text-center overflow-y-scroll pt-3">
+				<ul class="w-full text-center overflow-y-scroll pt-3 font-usach-helvetica-body">
 					<li v-for="pregunta in preguntas[selectedGame]" class="flex flex-row py-1 gap-2 mb-2">
 						<div class="w-[90%]">
 							<div :class="{ hidden: selectedGame !== 'pindaro' }" class="grid grid-cols-3">
@@ -62,7 +65,8 @@
 								</div>
 							</div>
 							<div :class="{ hidden: selectedGame !== 'cat_acentual' }">
-								{{ pregunta }}
+								Frase:
+								{{ pregunta.acentual_phrase }}
 							</div>
 							<hr class="h-px bg-red-800 border-0 mt-3">
 						</div>
@@ -74,9 +78,9 @@
 			</div>
 		</div>
 		<div v-if="activeAction" class="overlay" @click="closeOverlay">
-			<div class="flex flex-col gap-2 justify-center font-usach-helvetica-body text-sm bg-usach-aqua-400 p-5 rounded-lg"
+			<div class="flex flex-col gap-2 justify-center font-usach-helvetica-body text-sm bg-usach-aqua-400 p-5 rounded-lg min-w-[50vh]"
 				@click.stop>
-				<input placeholder="Escriba la palabra" type="text" id="newQuestion" v-model="newQuestion.word"
+				<input placeholder="Escriba la palabra o frase" type="text" id="newQuestion" v-model="newQuestion.word"
 					class="rounded-lg" />
 				<div :class="{ hidden: selectedGame !== 'pindaro' }" class="flex flex-col gap-3 my-1" key="pindaro_form">
 
@@ -85,9 +89,9 @@
 					<select v-model="newQuestion.difficulty"
 						class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700">
 						<option disabled value="">Dificultad</option>
-						<option value="1">Fácil</option>
-						<option value="2">Medio</option>
-						<option value="3">Difícil</option>
+						<option value="0">Fácil</option>
+						<option value="1">Medio</option>
+						<option value="2">Difícil</option>
 					</select>
 				</div>
 				<div :class="{ hidden: selectedGame !== 'rima' }" class="flex flex-col gap-3 mb-1" key="rima_form">
@@ -101,8 +105,35 @@
 						<option value="e">Esdrújula</option>
 					</select>
 				</div>
-				<div :class="{ hidden: selectedGame !== 'cat_acentual' }" class="flex flex-col gap-3 mb-1"
-					key="acentual_form">
+				<div :class="{ hidden: selectedGame !== 'cat_acentual' }" class="text-[15px]">
+					<span class="font-semibold">Formato:</span>
+					<ul class="ms-4">
+						<li>
+							monosílabos átonos: 1
+						</li>
+						<li>
+							monosílabos tónicos: 2
+						</li>
+						<li>
+							Bisílabos átonos: 3
+						</li>
+						<li>
+							palabras agudas: 4
+						</li>
+						<li>
+							palabras graves:5
+						</li>
+						<li>
+							palabras esdrújulas:6
+						</li>
+					</ul>
+					<span class="font-semibold">
+						ejemplo:
+					</span>
+					<p class="ms-4">
+						Mi-1-casa-5-es-1-mágica-6-y-1-azul-4
+					</p>
+
 				</div>
 				<button class="font-usach-bebas-body text-xl bg-usach-terra-700 hover:bg-usach-terra-800 p-2 rounded-lg"
 					@click="validateNewQuestionFields">
@@ -115,9 +146,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive } from "vue";
 
-const url = "https://devpindarosql.pindarousach.workers.dev";
+const url = "https://pindarosql.pindarousach.workers.dev";
 const selectedGame = ref("");
 
 const loginInfo = reactive({
@@ -127,44 +158,17 @@ const loginInfo = reactive({
 });
 
 const preguntas = reactive({
-	pindaro: [
-		{ "id": 1, "word": "Cautivo", "answer": 3, "difficulty": 1, "creation_date": "2023-09-03 18:58:50", "modification_date": "2023-09-03 18:58:50", "is_active": 1 },
-		{ "id": 2, "word": "Raudo", "answer": 2, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 3, "word": "Violento", "answer": 3, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 4, "word": "Caudal", "answer": 2, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 5, "word": "Furioso", "answer": 3, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 6, "word": "Marioneta", "answer": 4, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 7, "word": "Nuevo", "answer": 2, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 8, "word": "Viejo", "answer": 2, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 9, "word": "Herencia", "answer": 3, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 10, "word": "Divorcio", "answer": 2, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 11, "word": "Amnesia", "answer": 3, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 },
-		{ "id": 12, "word": "Magnesio", "answer": 3, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 }, { "id": 13, "word": "Cuaderno", "answer": 3, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 }, { "id": 14, "word": "Etnia", "answer": 2, "difficulty": 1, "creation_date": "2023-09-03 19:10:14", "modification_date": "2023-09-03 19:10:14", "is_active": 1 }],
-	rima: [
-		{ "id": 26, "word": "casa", "category": "g", "rhyme": "asa" },
-		{ "id": 27, "word": "mesa", "category": "g", "rhyme": "esa" },
-		{ "id": 28, "word": "canción", "category": "a", "rhyme": "on" },
-		{ "id": 29, "word": "lector", "category": "a", "rhyme": "or" },
-		{ "id": 30, "word": "pasa", "category": "g", "rhyme": "asa" },
-		{ "id": 31, "word": "lámpara", "category": "e", "rhyme": "ampara" },
-		{ "id": 32, "word": "trágico", "category": "e", "rhyme": "axiko" },
-		{ "id": 33, "word": "queso", "category": "g", "rhyme": "eso" },
-		{ "id": 34, "word": "beso", "category": "g", "rhyme": "eso" },
-		{ "id": 35, "word": "pesa", "category": "g", "rhyme": "esa" },
-		{ "id": 36, "word": "fiesta", "category": "g", "rhyme": "esta" },
-		{ "id": 37, "word": "finca", "category": "g", "rhyme": "inka" },
-		{ "id": 38, "word": "prístino", "category": "e", "rhyme": "istino" },
-		{ "id": 39, "word": "fin", "category": "a", "rhyme": "in" },
-		{ "id": 40, "word": "lindo", "category": "g", "rhyme": "indo" }],
-	cat_acentual: ["Pregunta 5", "Pregunta 6"],
+	pindaro: [],
+	rima: [],
+	cat_acentual: []
 });
 
 const procDificultad = (pregunta) => {
-	if (pregunta.difficulty === 1) {
+	if (pregunta.difficulty === 0) {
 		return "Fácil";
-	} else if (pregunta.difficulty === 2) {
+	} else if (pregunta.difficulty === 1) {
 		return "Medio";
-	} else if (pregunta.difficulty === 3) {
+	} else if (pregunta.difficulty === 2) {
 		return "Difícil";
 	}
 }
@@ -207,24 +211,20 @@ const logged = async () => {
 		const rimas = await rimasQuestions.json();
 		preguntas.rima = await rimas.payload.silabas;
 
-		// const acentualQuestions = await fetch(`${url}/acentual/allAcentuales`, {
-		// 	method: "POST",
-		// 	headers: {
-		// 		"Content-Type": "application/json",
-		// 	},
-		// 	body: JSON.stringify({
-		// 		admin_email: loginInfo.mail,
-		// 		admin_password: loginInfo.password,
-		// 	}),
-		// });
-		// const acentual = await acentualQuestions.json();
-		// preguntas.value["Cat acentual"] = await acentual.payload;
+		const acentualQuestions = await fetch(`${url}/acentual/allAcentuales`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+			}),
+		});
+		const acentual = await acentualQuestions.json();
+		preguntas.cat_acentual = await acentual.payload.silabas;
 	}
 };
-
-onMounted(() => {
-	logged();
-});
 
 const activeAction = ref(false);
 
@@ -320,6 +320,15 @@ const validateNewQuestionFields = () => {
 	}
 }
 
+const formatearTexto = function (texto) {
+	const partes = texto.split('-');
+	const palabras = partes.filter(function (part) {
+		return isNaN(part);
+	});
+	const resultado = palabras.join(' ');
+	return resultado;
+};
+
 const addQuestion = (juego) => {
 
 	const pregunta = { word: newQuestion.word }
@@ -331,9 +340,9 @@ const addQuestion = (juego) => {
 		pregunta.category = newQuestion.category;
 		pregunta.rhyme = newQuestion.rhyme;
 	}
-	// else if (juego === "cat_acentual") {
-	// 
-	// }
+	else if (juego === "cat_acentual") {
+		pregunta.acentual_phrase = formatearTexto(newQuestion.word);
+	}
 
 	preguntas[selectedGame.value].push(pregunta);
 	questionsToAdd[selectedGame.value].push(pregunta);
@@ -350,116 +359,158 @@ const removeQuestion = (pregunta) => {
 	const index2 = questionsToAdd[selectedGame.value].indexOf(pregunta);
 	questionsToAdd[selectedGame.value].splice(index2, 1);
 
-	questionsToRemove[selectedGame.value].push(pregunta);
+	if (pregunta.id !== undefined) {
+		questionsToRemove[selectedGame.value].push(pregunta.id);
+	}
+	if (pregunta.acentual_id !== undefined) {
+		questionsToRemove[selectedGame.value].push(pregunta.acentual_id);
+	}
 };
 
 const applyChanges = async () => {
-	let resAdd = null;
-	let resDelete = null;
+	const resAdd = [null, null, null];
+	const resDelete = [null, null, null];
 	if (selectedGame.value === "") {
 		alert("Debe seleccionar un juego");
-	} else if (selectedGame.value === "pindaro") {
-		if (questionsToAdd.pindaro.length > 0) {
-			resAdd = await fetch(`${url}/silabas/uploadSilaba`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					admin_email: loginInfo.mail,
-					admin_password: loginInfo.password,
-					silabas: questionsToAdd[selectedGame.value].map((question) => {
-						return {
-							word: question.word,
-							answer_value: question.answer,
-							difficulty: question.difficulty,
-						};
-					})
-				}),
-			});
-			resAdd = await resAdd.json();
-			resAdd = await resAdd.success;
-		}
-		if (questionsToRemove.pindaro.length > 0) {
-			resDelete = await fetch(`${url}/silabas/deleteSilaba`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					admin_email: loginInfo.mail,
-					admin_password: loginInfo.password,
-					silabas: questionsToRemove[selectedGame.value],
-				}),
-			});
-			resDelete = await resDelete.json();
-			resDelete = await resDelete.success;
-		}
-	} else if (selectedGame.value === "rima") {
-		if (questionsToAdd.rima.length > 0) {
-			resAdd = await fetch(`${url}/rimas/uploadRimas`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					admin_email: loginInfo.mail,
-					admin_password: loginInfo.password,
-					rimas: questionsToAdd[selectedGame.value],
-				}),
-			});
-			resAdd = await resAdd.json();
-			resAdd = await resAdd.success;
-		}
-		if (questionsToRemove.rima.length > 0) {
-			resDelete = await fetch(`${url}/rimas/deleteRimas`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					admin_email: loginInfo.mail,
-					admin_password: loginInfo.password,
-					rimas: questionsToRemove[selectedGame.value],
-				}),
-			});
-			resDelete = await resDelete.json();
-			resDelete = await resDelete.success;
-		}
-	} 
-	// else if (selectedGame.value === "cat_acentual") {
-	// 	if (questionsToAdd.cat_acentual.length > 0) {
-	// 		const res = await fetch(`${url}/acentual/addAcentual`, {
-	// 			method: "POST",
-	// 			headers: {
-	// 				"Content-Type": "application/json",
-	// 			},
-	// 			body: JSON.stringify({
-	// 				admin_email: loginInfo.mail,
-	// 				admin_password: loginInfo.password,
-	// 				silabas: questionsToAdd[selectedGame.value],
-	// 			}),
-	// 		});
-	// 	}
-	// 	if (questionsToRemove.cat_acentual.length > 0) {
-	// 		await fetch(`${url}/acentual/deleteAcentual`, {
-	// 			method: "POST",
-	// 			headers: {
-	// 				"Content-Type": "application/json",
-	// 			},
-	// 			body: JSON.stringify({
-	// 				admin_email: loginInfo.mail,
-	// 				admin_password: loginInfo.password,
-	// 				silabas: questionsToRemove[selectedGame.value],
-	// 			}),
-	// 		});
-	// 	}
-	// }
+	}
 
-	if ((await resAdd|| await resAdd === null) && (await resDelete || await resDelete === null)) {
-		alert("Cambios aplicados correctamente");
-	} else {
-		alert("Error al aplicar los cambios");
+	if (questionsToAdd.pindaro.length > 0) {
+		resAdd[0] = await fetch(`${url}/silabas/uploadSilaba`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+				silabas: questionsToAdd.pindaro.map((question) => {
+					return {
+						word: question.word,
+						answer_value: question.answer,
+						difficulty: question.difficulty,
+					};
+				})
+			}),
+		});
+		resAdd[0] = await resAdd[0].status;
+		console.log(resAdd[0])
+	}
+	if (questionsToRemove.pindaro.length > 0) {
+		resDelete[0] = await fetch(`${url}/silabas/deleteSilabas`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+				ids: questionsToRemove.pindaro,
+			}),
+		});
+		resDelete[0] = await resDelete[0].json();
+		resDelete[0] = await resDelete[0].success;
+	}
+	if (questionsToAdd.rima.length > 0) {
+		console.log(questionsToAdd.rima)
+		resAdd[1] = await fetch(`${url}/rimas/uploadRimas`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+				rimas: questionsToAdd.rima,
+			}),
+		});
+		resAdd[1] = await resAdd[1].json();
+		console.log(resAdd[1])
+		resAdd[1] = await resAdd[1].success;
+	}
+	if (questionsToRemove.rima.length > 0) {
+		resDelete[1] = await fetch(`${url}/rimas/deleteRimas`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+				ids: questionsToRemove.rima,
+			}),
+		});
+		resDelete[1] = await resDelete[1].json();
+		resDelete[1] = await resDelete[1].success;
+	}
+	if (questionsToAdd.cat_acentual.length > 0) {
+		resAdd[2] = await fetch(`${url}/acentual/uploadAcentual`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+				acentuales: questionsToAdd.cat_acentual.map((question) => {
+					return {
+						phrase: question.acentual_phrase,
+					};
+				})
+			}),
+		});
+		resAdd[2] = await resAdd[2].json();
+		resAdd[2] = await resAdd[2].success;
+	}
+	if (questionsToRemove.cat_acentual.length > 0) {
+		resDelete[2] = await fetch(`${url}/acentual/deleteAcentuales`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+				ids: questionsToRemove.cat_acentual
+			}),
+		});
+		resDelete[2] = await resDelete[2].json();
+		resDelete[2] = await resDelete[2].success;
+	}
+
+
+	let alertMessage = "";
+	if ((resAdd[0] === true)) {
+		alertMessage += "Preguntas agregadas correctamente a pindaro\n"
+	} else if (resAdd[0] !== true && questionsToAdd.pindaro.length > 0) {
+		alertMessage += "Error al agregar preguntas a pindaro\n"
+	}
+	if ((resDelete[0] === true)) {
+		alertMessage += "Preguntas eliminadas correctamente de pindaro\n"
+	} else if (resDelete[0] !== true && questionsToRemove.pindaro.length > 0) {
+		alertMessage += "Error al eliminar preguntas de pindaro\n"
+	}
+	if ((resAdd[1] === true)) {
+		alertMessage += "Preguntas agregadas correctamente a rimas\n"
+	} else if (resAdd[1] !== true && questionsToAdd.rima.length > 0) {
+		alertMessage += "Error al agregar preguntas a rimas\n"
+	}
+	if ((resDelete[1] === true)) {
+		alertMessage += "Preguntas eliminadas correctamente de rimas\n"
+	} else if (resDelete[1] !== true && questionsToRemove.rima.length > 0) {
+		alertMessage += "Error al eliminar preguntas de rimas\n"
+	}
+	if ((resAdd[2] === true)) {
+		alertMessage += "Preguntas agregadas correctamente a acentual\n"
+	} else if (resAdd[2] !== true && questionsToAdd.cat_acentual.length > 0) {
+		alertMessage += "Error al agregar preguntas a acentual\n"
+	}
+	if ((resDelete[2] === true)) {
+		alertMessage += "Preguntas eliminadas correctamente de acentual"
+	} else if (resDelete[2] !== true && questionsToRemove.cat_acentual.length > 0) {
+		alertMessage += "Error al eliminar preguntas de acentual"
+	}
+	if (alertMessage !== "") {
+		alert(alertMessage);
 	}
 }
 </script>

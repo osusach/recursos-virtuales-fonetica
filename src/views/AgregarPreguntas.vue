@@ -22,12 +22,12 @@
 				<button @click="setAction(true)"
 					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800">
 					<v-icon icon="mdi-plus"></v-icon>
-					<p class="px-3">Agregar pregunta</p>
+					<p class="px-3 w-32">Agregar pregunta</p>
 				</button>
 				<button @click="applyChanges"
 					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800">
 					<v-icon icon="mdi-check"></v-icon>
-					<p class="px-3">Aplicar cambios</p>
+					<p class="px-3 w-32">Aplicar cambios</p>
 				</button>
 				<p> <span class="font-semibold">Importante:</span> Para evitar conflictos con juegos ya existentes, las palabras no se eliminan de la base de
 					datos, sino que se desactivan para futuros juegos. De esa manera, es posible seguir accediendo al

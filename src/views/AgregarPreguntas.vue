@@ -31,9 +31,9 @@
 				</button>
 			</div>
 			<div class="flex flex-row w-full min-h-[70vh] max-h-[70vh] bg-usach-aqua-100 rounded-lg">
-				<ul class="w-full text-center overflow-y-scroll">
+				<ul class="w-full text-center overflow-y-scroll pt-3">
 					<li v-for="pregunta in preguntas[selectedGame]" class="flex flex-row py-1 gap-2 mb-2">
-						<div class="w-[75%]">
+						<div class="w-[90%]">
 							<div :class="{hidden: selectedGame !== 'pindaro'}" class="grid grid-cols-3">
 								<div>
 									Palabra:
@@ -64,6 +64,7 @@
 							<div :class="{hidden: selectedGame !== 'cat_acentual'}">
 								{{ pregunta }}
 							</div>
+							<hr class="h-px bg-red-800 border-0 mt-3">
 						</div>
 						<button @click="removeQuestion(pregunta)" class="bg-usach-rouge-600 rounded-md px-1">
 							<img class="h-5" src="/delete.svg" />
@@ -198,7 +199,7 @@ const procDificultad = (pregunta) => {
 
 const procCategoria = (pregunta) => {
 	if (pregunta.category === "a") {
-		return "Aguida";
+		return "Aguda";
 	} else if (pregunta.category === "e") {
 		return "Esdrujula";
 	} else if (pregunta.category === "g") {

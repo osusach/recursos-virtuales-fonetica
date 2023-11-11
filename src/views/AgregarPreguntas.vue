@@ -68,7 +68,7 @@
 								Frase:
 								{{ pregunta.acentual_phrase }}
 							</div>
-							<hr class="h-px bg-red-800 border-0 mt-3">
+							<hr class="h-px bg-usach-aqua-200 border-0 mt-3">
 						</div>
 						<button @click="removeQuestion(pregunta)" class="bg-usach-rouge-600 rounded-md px-1">
 							<img class="h-5" src="/delete.svg" />

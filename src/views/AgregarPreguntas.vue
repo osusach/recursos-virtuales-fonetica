@@ -148,7 +148,7 @@
 <script setup>
 import { ref, reactive } from "vue";
 
-const url = "https://pindarosql.pindarousach.workers.dev";
+const url = "https://devpindarosql.pindarousach.workers.dev";
 const selectedGame = ref("");
 
 const loginInfo = reactive({

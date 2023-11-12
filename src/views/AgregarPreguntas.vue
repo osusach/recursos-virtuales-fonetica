@@ -392,8 +392,8 @@ const applyChanges = async () => {
 				})
 			}),
 		});
-		resAdd[0] = await resAdd[0].status;
-		console.log(resAdd[0])
+		resAdd[0] = await resAdd[0].json();
+		resAdd[0] = await resAdd[0].success;
 	}
 	if (questionsToRemove.pindaro.length > 0) {
 		resDelete[0] = await fetch(`${url}/silabas/deleteSilabas`, {
@@ -424,7 +424,6 @@ const applyChanges = async () => {
 			}),
 		});
 		resAdd[1] = await resAdd[1].json();
-		console.log(resAdd[1])
 		resAdd[1] = await resAdd[1].success;
 	}
 	if (questionsToRemove.rima.length > 0) {

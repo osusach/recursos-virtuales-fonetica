@@ -29,7 +29,8 @@
 					<v-icon icon="mdi-check"></v-icon>
 					<p class="px-3 w-32">Aplicar cambios</p>
 				</button>
-				<p> <span class="font-semibold">Importante:</span> Para evitar conflictos con juegos ya existentes, las palabras no se eliminan de la base de
+				<p> <span class="font-semibold">Importante:</span> Para evitar conflictos con juegos ya existentes, las
+					palabras no se eliminan de la base de
 					datos, sino que se desactivan para futuros juegos. De esa manera, es posible seguir accediendo al
 					historial y estadísticas de las partidas anteriores.</p>
 			</div>
@@ -512,6 +513,12 @@ const applyChanges = async () => {
 	if (alertMessage !== "") {
 		alert(alertMessage);
 	}
+	questionsToAdd.pindaro = [];
+	questionsToAdd.rima = [];
+	questionsToAdd.cat_acentual = [];
+	questionsToRemove.pindaro = [];
+	questionsToRemove.rima = [];
+	questionsToRemove.cat_acentual = [];
 }
 </script>
 

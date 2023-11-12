@@ -511,6 +511,12 @@ const applyChanges = async () => {
 	if (alertMessage !== "") {
 		alert(alertMessage);
 	}
+	questionsToAdd.pindaro = [];
+	questionsToAdd.rima = [];
+	questionsToAdd.cat_acentual = [];
+	questionsToRemove.pindaro = [];
+	questionsToRemove.rima = [];
+	questionsToRemove.cat_acentual = [];
 }
 </script>
 

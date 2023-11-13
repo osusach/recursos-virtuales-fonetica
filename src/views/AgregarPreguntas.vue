@@ -463,7 +463,7 @@ const applyChanges = async () => {
 				admin_password: loginInfo.password,
 				acentuales: questionsToAdd.cat_acentual.map((question) => {
 					return {
-						phrase: question.acentual_phrase,
+						phrase: question.word,
 					};
 				})
 			}),

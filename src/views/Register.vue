@@ -106,7 +106,7 @@ import { useRouter } from "vue-router";
 
 const selectedFirst = ref("");
 const selectedSec = ref("");
-const url = "https://pindarosql.pindarousach.workers.dev";
+const url = "https://devpindarosql.pindarousach.workers.dev";
 const router = useRouter();
 let isValidUser = ref(true);
 let isValidEmail = ref(true);
@@ -175,6 +175,7 @@ const registerFunc = async () => {
 		.post(url + "/users/register", data)
 		.then((response) => {
 			router.push("/");
+			alert("Registro Exitoso");
 		})
 		.catch((error) => {
 			errorMsg.value = "";

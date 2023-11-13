@@ -117,7 +117,7 @@ const changeQuestionApi = () => {
 onMounted(async () => {
 	try {
 		const response = await axios.get(
-			"https://pindaro.pindarousach.workers.dev/silabas/start/" +
+			"https://devpindaro.pindarousach.workers.dev/silabas/start/" +
 				store.dificultad,
 		);
 		apiResponse = response.data;

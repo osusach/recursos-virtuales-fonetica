@@ -78,7 +78,7 @@ let listaPindaro = ref([]);
 let chartData = ref({});
 let chartTitle = ref("");
 
-const url = "https://devpindarosql.pindarousach.workers.dev";
+const url = "https://pindarosql.pindarousach.workers.dev";
 
 const userid = store.userid;
 

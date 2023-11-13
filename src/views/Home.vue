@@ -35,7 +35,7 @@ let apiResponse;
 let listaAcentual = ref(null);
 let listaRima = ref(null);
 let listaPindaro = ref(null);
-const url = "https://devpindarosql.pindarousach.workers.dev";
+const url = "https://pindarosql.pindarousach.workers.dev";
 
 // get a db
 onMounted(async () => {

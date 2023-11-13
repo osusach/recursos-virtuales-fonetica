@@ -184,7 +184,7 @@ const procCategoria = (pregunta) => {
 	}
 }
 
-const logged = async () => {
+const getAll = async () => {
 	if (loginInfo.isLogged) {
 		const pindaroQuestions = await fetch(`${url}/silabas/allSilabas`, {
 			method: "POST",
@@ -270,7 +270,7 @@ const validateLogin = async () => {
 		const success = await res.success;
 		if (await success) {
 			loginInfo.isLogged = true;
-			logged();
+			getAll();
 		} else {
 			alert("Correo o contraseña incorrectos");
 		}
@@ -330,7 +330,17 @@ const formatearTexto = function (texto) {
 	return resultado;
 };
 
+
 const addQuestion = (juego) => {
+	// Contamos cuántas veces aparece la palabra en la lista
+	const ocurrencias = preguntas[selectedGame.value].filter(obj => obj.word === newQuestion.word).length;
+
+	// Si hay más de una ocurrencia, muestra un alert
+	if (ocurrencias >= 1) {
+		alert(`La palabra '${newQuestion.word}' está repetida.`);
+		return;
+	}
+
 
 	const pregunta = { word: newQuestion.word }
 
@@ -425,7 +435,6 @@ const applyChanges = async () => {
 			}),
 		});
 		resAdd[1] = await resAdd[1].json();
-		console.log(resAdd[1])
 		resAdd[1] = await resAdd[1].success;
 	}
 	if (questionsToRemove.rima.length > 0) {
@@ -454,7 +463,7 @@ const applyChanges = async () => {
 				admin_password: loginInfo.password,
 				acentuales: questionsToAdd.cat_acentual.map((question) => {
 					return {
-						phrase: question.acentual_phrase,
+						phrase: question.word,
 					};
 				})
 			}),
@@ -513,6 +522,7 @@ const applyChanges = async () => {
 	if (alertMessage !== "") {
 		alert(alertMessage);
 	}
+	getAll();
 	questionsToAdd.pindaro = [];
 	questionsToAdd.rima = [];
 	questionsToAdd.cat_acentual = [];

@@ -175,6 +175,7 @@ const registerFunc = async () => {
 		.post(url + "/users/register", data)
 		.then((response) => {
 			router.push("/");
+			alert("Registro Exitoso");
 		})
 		.catch((error) => {
 			errorMsg.value = "";

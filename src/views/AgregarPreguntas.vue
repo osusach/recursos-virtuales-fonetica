@@ -29,7 +29,8 @@
 					<v-icon icon="mdi-check"></v-icon>
 					<p class="px-3 w-32">Aplicar cambios</p>
 				</button>
-				<p> <span class="font-semibold">Importante:</span> Para evitar conflictos con juegos ya existentes, las palabras no se eliminan de la base de
+				<p> <span class="font-semibold">Importante:</span> Para evitar conflictos con juegos ya existentes, las
+					palabras no se eliminan de la base de
 					datos, sino que se desactivan para futuros juegos. De esa manera, es posible seguir accediendo al
 					historial y estadísticas de las partidas anteriores.</p>
 			</div>
@@ -183,7 +184,7 @@ const procCategoria = (pregunta) => {
 	}
 }
 
-const logged = async () => {
+const getAll = async () => {
 	if (loginInfo.isLogged) {
 		const pindaroQuestions = await fetch(`${url}/silabas/allSilabas`, {
 			method: "POST",
@@ -269,7 +270,7 @@ const validateLogin = async () => {
 		const success = await res.success;
 		if (await success) {
 			loginInfo.isLogged = true;
-			logged();
+			getAll();
 		} else {
 			alert("Correo o contraseña incorrectos");
 		}
@@ -329,7 +330,17 @@ const formatearTexto = function (texto) {
 	return resultado;
 };
 
+
 const addQuestion = (juego) => {
+	// Contamos cuántas veces aparece la palabra en la lista
+	const ocurrencias = preguntas[selectedGame.value].filter(obj => obj.word === newQuestion.word).length;
+
+	// Si hay más de una ocurrencia, muestra un alert
+	if (ocurrencias >= 1) {
+		alert(`La palabra '${newQuestion.word}' está repetida.`);
+		return;
+	}
+
 
 	const pregunta = { word: newQuestion.word }
 
@@ -511,6 +522,7 @@ const applyChanges = async () => {
 	if (alertMessage !== "") {
 		alert(alertMessage);
 	}
+	getAll();
 	questionsToAdd.pindaro = [];
 	questionsToAdd.rima = [];
 	questionsToAdd.cat_acentual = [];

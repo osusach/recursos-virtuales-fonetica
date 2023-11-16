@@ -106,7 +106,7 @@ import { useRouter } from "vue-router";
 
 const selectedFirst = ref("");
 const selectedSec = ref("");
-const url = "https://devpindarosql.pindarousach.workers.dev";
+const url = "https://pindarosql.pindarousach.workers.dev";
 const router = useRouter();
 let isValidUser = ref(true);
 let isValidEmail = ref(true);
@@ -175,27 +175,34 @@ const registerFunc = async () => {
 		.post(url + "/users/register", data)
 		.then((response) => {
 			router.push("/");
+			alert("Registro Exitoso");
 		})
 		.catch((error) => {
 			errorMsg.value = "";
-			error.response.data.payload.message.issues.forEach((element) => {
-				if (element.code == "too_small") {
-					errorMsg.value +=
-						"La contraseña debe tener al menos 8 carácteres.\n";
-					isValidPassword.value = false;
-				}
-				if (element.code == "invalid_string") {
-					isValidEmail.value = false;
-					errorMsg.value += "El correo es inválido.\n";
-				}
-				if (
-					element.code != "invalid_string" &&
-					element.code != "too_small"
-				) {
-					errorMsg.value += element.message + "\n";
-					isValidRegister.value = false;
-				}
-			});
+			if (!error.response.data.payload.message.name) {
+				errorMsg.value += error.response.data.payload.message;
+			}
+			if (error.response.data.payload.message.issues)
+			{
+				error.response.data.payload.message.issues.forEach((element) => {
+					if (element.code == "too_small") {
+						errorMsg.value +=
+							"La contraseña debe tener al menos 8 carácteres.\n";
+						isValidPassword.value = false;
+					}
+					if (element.code == "invalid_string") {
+						isValidEmail.value = false;
+						errorMsg.value += "El correo es inválido.\n";
+					}
+					if (
+						element.code != "invalid_string" &&
+						element.code != "too_small"
+					) {
+						errorMsg.value += element.message + "\n";
+						isValidRegister.value = false;
+					}
+				});
+			}
 			isValidRegister.value = false;
 		});
 };

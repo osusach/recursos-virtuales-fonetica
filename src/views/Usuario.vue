@@ -78,7 +78,7 @@ let listaPindaro = ref([]);
 let chartData = ref({});
 let chartTitle = ref("");
 
-const url = "https://devpindarosql.pindarousach.workers.dev";
+const url = "https://pindarosql.pindarousach.workers.dev";
 
 const userid = store.userid;
 
@@ -103,6 +103,8 @@ const cambiarGrafico = (lista, label) => {
 
 // get a db
 onMounted(async () => {
+	if (userid === null)
+		return;
 	try {
 		const response = await axios.get(
 			url + "/scores/history/" + String(userid),

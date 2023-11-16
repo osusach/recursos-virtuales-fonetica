@@ -163,7 +163,7 @@
 <script setup>
 import { ref, reactive } from "vue";
 
-const url = "https://devpindarosql.pindarousach.workers.dev";
+const url = "https://pindarosql.pindarousach.workers.dev";
 const selectedGame = ref("");
 
 const loginInfo = reactive({
@@ -354,7 +354,17 @@ const formatearTexto = function (texto) {
 	return resultado;
 };
 
+
 const addQuestion = (juego) => {
+	// Contamos cuántas veces aparece la palabra en la lista
+	const ocurrencias = preguntas[selectedGame.value].filter(obj => obj.word === newQuestion.word).length;
+
+	// Si hay más de una ocurrencia, muestra un alert
+	if (ocurrencias >= 1) {
+		alert(`La palabra '${newQuestion.word}' está repetida.`);
+		return;
+	}
+
 
 	const pregunta = { word: newQuestion.word }
 
@@ -499,7 +509,7 @@ const applyChanges = async () => {
 				admin_password: loginInfo.password,
 				acentuales: questionsToAdd.cat_acentual.map((question) => {
 					return {
-						phrase: question.acentual_phrase,
+						phrase: question.word,
 					};
 				})
 			}),
@@ -558,6 +568,7 @@ const applyChanges = async () => {
 	if (alertMessage !== "") {
 		alert(alertMessage);
 	}
+	getAll();
 	questionsToAdd.pindaro = [];
 	questionsToAdd.rima = [];
 	questionsToAdd.cat_acentual = [];

@@ -38,7 +38,7 @@
 				<ul class="w-full text-center overflow-y-scroll pt-3 font-usach-helvetica-body">
 					<li v-for="pregunta in preguntas[selectedGame]" class="flex flex-row py-1 gap-2 mb-2">
 						<div class="w-[90%]">
-							<div :class="{ hidden: selectedGame !== 'pindaro' }" class="grid grid-cols-3">
+							<div :class="{ hidden: selectedGame !== 'pindaro' }" class="grid grid-cols-4">
 								<div>
 									Palabra:
 									{{ pregunta.word }}
@@ -51,23 +51,37 @@
 									Dificultad:
 									{{ procDificultad(pregunta) }}
 								</div>
-							</div>
-							<div :class="{ hidden: selectedGame !== 'rima' }" class="grid grid-cols-3">
 								<div>
-									Palabra:
-									{{ pregunta.word }}
+									<label>
+										Estado:
+									</label>
+									<input
+										class="mr-2 h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-usach-rouge-300 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-neutral-100 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:bg-neutral-600 dark:after:bg-neutral-400 dark:checked:bg-primary dark:checked:after:bg-primary dark:focus:before:shadow-[3px_-1px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca]"
+										type="checkbox" :checked="procIsActive(pregunta)"
+										@change="activateQuestion(pregunta)" />
+								</div>
+							</div>
+							<div :class="{ hidden: selectedGame !== 'rima' }" class="grid grid-cols-4">
+								<div>
+									Palabra: {{ pregunta.word }}
 								</div>
 								<div>
 									Rima: {{ pregunta.rhyme }}
 								</div>
 								<div>
-									Categoria:
-									{{ procCategoria(pregunta) }}
+									Categoria: {{ procCategoria(pregunta) }}
+								</div>
+								<div>
+									Estado:{{ procIsActive(pregunta) }}
 								</div>
 							</div>
 							<div :class="{ hidden: selectedGame !== 'cat_acentual' }">
-								Frase:
-								{{ pregunta.acentual_phrase }}
+								<div>
+									Frase: {{ pregunta.acentual_phrase }}
+								</div>
+								<div>
+									Estado: {{ procIsActive(pregunta) }}
+								</div>
 							</div>
 							<hr class="h-px bg-usach-aqua-200 border-0 mt-3">
 						</div>
@@ -153,8 +167,8 @@ const url = "https://devpindarosql.pindarousach.workers.dev";
 const selectedGame = ref("");
 
 const loginInfo = reactive({
-	mail: "",
-	password: "",
+	mail: "nashi@nashi.nashi",
+	password: "nashi",
 	isLogged: false,
 });
 
@@ -184,7 +198,11 @@ const procCategoria = (pregunta) => {
 	}
 }
 
-const logged = async () => {
+const procIsActive = (pregunta) => {
+	return pregunta.is_active === 1
+}
+
+const getAll = async () => {
 	if (loginInfo.isLogged) {
 		const pindaroQuestions = await fetch(`${url}/silabas/allSilabas`, {
 			method: "POST",
@@ -252,6 +270,12 @@ const questionsToRemove = reactive({
 	cat_acentual: [],
 });
 
+const questionsToActivate = reactive({
+	pindaro: [],
+	rima: [],
+	cat_acentual: [],
+});
+
 const validateLogin = async () => {
 	if (loginInfo.mail == "" || loginInfo.password == "") {
 		alert("Debe ingresar un correo y una contraseña");
@@ -270,7 +294,7 @@ const validateLogin = async () => {
 		const success = await res.success;
 		if (await success) {
 			loginInfo.isLogged = true;
-			logged();
+			getAll();
 		} else {
 			alert("Correo o contraseña incorrectos");
 		}
@@ -355,10 +379,14 @@ const addQuestion = (juego) => {
 const removeQuestion = (pregunta) => {
 	// Si esta en preguntas se elimina
 	const index1 = preguntas[selectedGame.value].indexOf(pregunta);
-	preguntas[selectedGame.value].splice(index1, 1);
+	preguntas[selectedGame.value][index1].is_active = 0;
 	// Si esta en preguntas para agregar se elimina
 	const index2 = questionsToAdd[selectedGame.value].indexOf(pregunta);
-	questionsToAdd[selectedGame.value].splice(index2, 1);
+	if (index2 !== -1) {
+		questionsToAdd[selectedGame.value].splice(index2, 1);
+		preguntas[selectedGame.value].splice(index1, 1);
+	}
+
 
 	if (pregunta.id !== undefined) {
 		questionsToRemove[selectedGame.value].push(pregunta.id);
@@ -367,6 +395,25 @@ const removeQuestion = (pregunta) => {
 		questionsToRemove[selectedGame.value].push(pregunta.acentual_id);
 	}
 };
+
+const activateQuestion = (pregunta) => {
+	const index = preguntas[selectedGame.value].indexOf(pregunta);
+	const prevIsActive = preguntas[selectedGame.value][index].is_active
+	preguntas[selectedGame.value][index].is_active = prevIsActive - 1 < 0 ? 1 : 0 
+	const preguntaToActivate = preguntas[selectedGame.value][index];
+	const cantidadPalabras = questionsToActivate[selectedGame.value].filter(id =>
+		id === preguntaToActivate.id
+	).length
+	
+	if (cantidadPalabras === 0) {
+		questionsToActivate[selectedGame.value].push(preguntaToActivate.id);
+	} else {
+		const indexToActivate = questionsToActivate[selectedGame.value].indexOf(preguntaToActivate.id);
+		if (indexToActivate !== -1) {
+			questionsToActivate[selectedGame.value].splice(indexToActivate, 1);
+		}
+	}
+}
 
 const applyChanges = async () => {
 	const resAdd = [null, null, null];
@@ -412,7 +459,6 @@ const applyChanges = async () => {
 		resDelete[0] = await resDelete[0].success;
 	}
 	if (questionsToAdd.rima.length > 0) {
-		console.log(questionsToAdd.rima)
 		resAdd[1] = await fetch(`${url}/rimas/uploadRimas`, {
 			method: "POST",
 			headers: {
@@ -425,7 +471,6 @@ const applyChanges = async () => {
 			}),
 		});
 		resAdd[1] = await resAdd[1].json();
-		console.log(resAdd[1])
 		resAdd[1] = await resAdd[1].success;
 	}
 	if (questionsToRemove.rima.length > 0) {
@@ -519,6 +564,7 @@ const applyChanges = async () => {
 	questionsToRemove.pindaro = [];
 	questionsToRemove.rima = [];
 	questionsToRemove.cat_acentual = [];
+	getAll();
 }
 </script>
 

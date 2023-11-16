@@ -214,8 +214,8 @@ const url = "https://devpindarosql.pindarousach.workers.dev";
 const selectedGame = ref("");
 
 const loginInfo = reactive({
-	mail: "nashi@nashi.nashi",
-	password: "nashi",
+	mail: "",
+	password: "",
 	isLogged: false,
 });
 

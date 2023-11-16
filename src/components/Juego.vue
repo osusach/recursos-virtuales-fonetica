@@ -96,7 +96,7 @@ const props = defineProps({
 const Fin = ref("Terminar");
 const i = ref(1);
 const loading = ref(true);
-const url = "https://pindarosql.pindarousach.workers.dev";
+const url = "https://devpindarosql.pindarousach.workers.dev";
 const router = useRouter();
 
 let opciones = ref([]);

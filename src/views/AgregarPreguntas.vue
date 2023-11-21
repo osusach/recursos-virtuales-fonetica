@@ -34,7 +34,8 @@
 					datos, sino que se desactivan para futuros juegos. De esa manera, es posible seguir accediendo al
 					historial y estadísticas de las partidas anteriores.</p>
 			</div>
-			<div class="flex flex-row w-full min-h-[70vh] max-h-[70vh] bg-usach-aqua-100 rounded-lg">
+			<p class="font-semibold">Preguntas</p>
+			<div class="flex flex-row w-full min-h-[40vh] max-h-[40vh] bg-usach-aqua-100 rounded-lg">
 				<ul class="w-full text-center overflow-y-scroll pt-3 font-usach-helvetica-body">
 					<li v-for="pregunta in preguntas[selectedGame]" class="flex flex-row py-1 gap-2 mb-2">
 						<div class="w-[90%]">
@@ -52,13 +53,11 @@
 									{{ procDificultad(pregunta) }}
 								</div>
 								<div>
-									<label>
-										Estado:
-									</label>
-									<input
-										class="mr-2 h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-usach-rouge-300 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-neutral-100 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:bg-neutral-600 dark:after:bg-neutral-400 dark:checked:bg-primary dark:checked:after:bg-primary dark:focus:before:shadow-[3px_-1px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca]"
-										type="checkbox" :checked="procIsActive(pregunta)"
-										@change="activateQuestion(pregunta)" />
+									Estado:
+									<input type="checkbox"
+										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
+										@change="toggleQuestion(pregunta)"
+										:checked="procIsActive(pregunta)">
 								</div>
 							</div>
 							<div :class="{ hidden: selectedGame !== 'rima' }" class="grid grid-cols-4">
@@ -72,15 +71,63 @@
 									Categoria: {{ procCategoria(pregunta) }}
 								</div>
 								<div>
-									Estado:{{ procIsActive(pregunta) }}
+									Estado:
+									<input type="checkbox"
+										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
+										@change="toggleQuestion(pregunta)"
+										:checked="procIsActive(pregunta)">
+								</div>
+							</div>
+							<div :class="{ hidden: selectedGame !== 'cat_acentual' }" class="grid grid-cols-5">
+								<div class="col-span-3">
+									Frase: {{ pregunta.acentual_phrase }}
+								</div>
+								<div>
+									Estado:
+									<input type="checkbox"
+										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
+										@change="toggleQuestion(pregunta)"
+										:checked="procIsActive(pregunta)">
+								</div>
+							</div>
+							<hr class="h-px bg-usach-aqua-200 border-0 mt-3">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<p class="font-semibold">Preguntas a agregar</p>
+			<div class="flex flex-row w-full min-h-[40vh] max-h-[40vh] bg-usach-aqua-100 rounded-lg">
+				<ul class="w-full text-center overflow-y-scroll pt-3 font-usach-helvetica-body">
+					<li v-for="pregunta in questionsToAdd[selectedGame]" class="flex flex-row py-1 gap-2 mb-2">
+						<div class="w-[90%]">
+							<div :class="{ hidden: selectedGame !== 'pindaro' }" class="grid grid-cols-3">
+								<div>
+									Palabra:
+									{{ pregunta.word }}
+								</div>
+								<div>
+									Respuesta (Cantidad de silabas):
+									{{ pregunta.answer }}
+								</div>
+								<div>
+									Dificultad:
+									{{ procDificultad(pregunta) }}
+								</div>
+							</div>
+							<div :class="{ hidden: selectedGame !== 'rima' }" class="grid grid-cols-3">
+								<div>
+									Palabra: {{ pregunta.word }}
+								</div>
+								<div>
+									Rima: {{ pregunta.rhyme }}
+								</div>
+								<div>
+									Categoria: {{ procCategoria(pregunta) }}
 								</div>
 							</div>
 							<div :class="{ hidden: selectedGame !== 'cat_acentual' }">
 								<div>
 									Frase: {{ pregunta.acentual_phrase }}
-								</div>
-								<div>
-									Estado: {{ procIsActive(pregunta) }}
 								</div>
 							</div>
 							<hr class="h-px bg-usach-aqua-200 border-0 mt-3">
@@ -163,12 +210,12 @@
 <script setup>
 import { ref, reactive } from "vue";
 
-const url = "https://pindarosql.pindarousach.workers.dev";
+const url = "https://devpindarosql.pindarousach.workers.dev";
 const selectedGame = ref("");
 
 const loginInfo = reactive({
-	mail: "nashi@nashi.nashi",
-	password: "nashi",
+	mail: "",
+	password: "",
 	isLogged: false,
 });
 
@@ -229,6 +276,7 @@ const getAll = async () => {
 		});
 		const rimas = await rimasQuestions.json();
 		preguntas.rima = await rimas.payload.silabas;
+		console.log(preguntas.rima)
 
 		const acentualQuestions = await fetch(`${url}/acentual/allAcentuales`, {
 			method: "POST",
@@ -242,6 +290,7 @@ const getAll = async () => {
 		});
 		const acentual = await acentualQuestions.json();
 		preguntas.cat_acentual = await acentual.payload.silabas;
+		console.log(preguntas.cat_acentual)
 	}
 };
 
@@ -379,7 +428,6 @@ const addQuestion = (juego) => {
 		pregunta.acentual_phrase = formatearTexto(newQuestion.word);
 	}
 
-	preguntas[selectedGame.value].push(pregunta);
 	questionsToAdd[selectedGame.value].push(pregunta);
 
 	clearText();
@@ -387,9 +435,6 @@ const addQuestion = (juego) => {
 };
 
 const removeQuestion = (pregunta) => {
-	// Si esta en preguntas se elimina
-	const index1 = preguntas[selectedGame.value].indexOf(pregunta);
-	preguntas[selectedGame.value][index1].is_active = 0;
 	// Si esta en preguntas para agregar se elimina
 	const index2 = questionsToAdd[selectedGame.value].indexOf(pregunta);
 	if (index2 !== -1) {
@@ -397,6 +442,10 @@ const removeQuestion = (pregunta) => {
 		preguntas[selectedGame.value].splice(index1, 1);
 	}
 
+	const index3 = questionsToActivate[selectedGame.value].indexOf(pregunta.id);
+	if (index3 !== -1) {
+		questionsToActivate[selectedGame.value].splice(index3, 1);
+	}
 
 	if (pregunta.id !== undefined) {
 		questionsToRemove[selectedGame.value].push(pregunta.id);
@@ -407,27 +456,41 @@ const removeQuestion = (pregunta) => {
 };
 
 const activateQuestion = (pregunta) => {
-	const index = preguntas[selectedGame.value].indexOf(pregunta);
-	const prevIsActive = preguntas[selectedGame.value][index].is_active
-	preguntas[selectedGame.value][index].is_active = prevIsActive - 1 < 0 ? 1 : 0 
-	const preguntaToActivate = preguntas[selectedGame.value][index];
-	const cantidadPalabras = questionsToActivate[selectedGame.value].filter(id =>
-		id === preguntaToActivate.id
-	).length
-	
-	if (cantidadPalabras === 0) {
-		questionsToActivate[selectedGame.value].push(preguntaToActivate.id);
-	} else {
-		const indexToActivate = questionsToActivate[selectedGame.value].indexOf(preguntaToActivate.id);
-		if (indexToActivate !== -1) {
-			questionsToActivate[selectedGame.value].splice(indexToActivate, 1);
-		}
+	const index2 = questionsToRemove[selectedGame.value].indexOf(pregunta.id);
+	if (index2 !== -1) {
+		questionsToRemove[selectedGame.value].splice(index2, 1);
 	}
+
+	if (pregunta.id !== undefined) {
+		questionsToActivate[selectedGame.value].push(pregunta.id);
+	}
+	if (pregunta.acentual_id !== undefined) {
+		questionsToActivate[selectedGame.value].push(pregunta.acentual_id);
+	}
+}
+
+const toggleQuestion = (pregunta) => {
+	const index = preguntas[selectedGame.value].indexOf(pregunta);
+	console.log(index)
+	console.log(preguntas[selectedGame.value][index])
+	console.log(preguntas[selectedGame.value][index].is_active)
+
+	preguntas[selectedGame.value][index].is_active = (preguntas[selectedGame.value][index].is_active + 1) % 2;
+	const is_active = preguntas[selectedGame.value][index].is_active;
+	console.log(is_active)
+
+	if (is_active === 1) {
+		activateQuestion(pregunta);
+	} else {
+		removeQuestion(pregunta);
+	}
+
 }
 
 const applyChanges = async () => {
 	const resAdd = [null, null, null];
 	const resDelete = [null, null, null];
+	const resActivate = [null, null, null];
 	if (selectedGame.value === "") {
 		alert("Debe seleccionar un juego");
 	}
@@ -468,6 +531,21 @@ const applyChanges = async () => {
 		resDelete[0] = await resDelete[0].json();
 		resDelete[0] = await resDelete[0].success;
 	}
+	if (questionsToActivate.pindaro.length > 0) {
+		resActivate[0] = await fetch(`${url}/silabas/activateSilabas`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+				ids: questionsToActivate.pindaro,
+			}),
+		});
+		resActivate[0] = await resActivate[0].json();
+		resActivate[0] = await resActivate[0].success;
+	}
 	if (questionsToAdd.rima.length > 0) {
 		resAdd[1] = await fetch(`${url}/rimas/uploadRimas`, {
 			method: "POST",
@@ -497,6 +575,21 @@ const applyChanges = async () => {
 		});
 		resDelete[1] = await resDelete[1].json();
 		resDelete[1] = await resDelete[1].success;
+	}
+	if (questionsToActivate.rima.length > 0) {
+		resActivate[1] = await fetch(`${url}/rimas/activateRimas`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+				ids: questionsToActivate.rima,
+			}),
+		});
+		resActivate[1] = await resActivate[1].json();
+		resActivate[1] = await resActivate[1].success;
 	}
 	if (questionsToAdd.cat_acentual.length > 0) {
 		resAdd[2] = await fetch(`${url}/acentual/uploadAcentual`, {
@@ -532,6 +625,22 @@ const applyChanges = async () => {
 		resDelete[2] = await resDelete[2].json();
 		resDelete[2] = await resDelete[2].success;
 	}
+	if (questionsToActivate.cat_acentual.length > 0) {
+		resActivate[2] = await fetch(`${url}/acentual/activateAcentuales`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				admin_email: loginInfo.mail,
+				admin_password: loginInfo.password,
+				ids: questionsToActivate.cat_acentual
+			}),
+		});
+		resActivate[2] = await resActivate[2].json();
+		resActivate[2] = await resActivate[2].success;
+	}
+
 
 
 	let alertMessage = "";
@@ -545,6 +654,11 @@ const applyChanges = async () => {
 	} else if (resDelete[0] !== true && questionsToRemove.pindaro.length > 0) {
 		alertMessage += "Error al eliminar preguntas de pindaro\n"
 	}
+	if (resActivate[0] === true) {
+		alertMessage += "Preguntas activadas correctamente de pindaro\n"
+	} else if (resActivate[0] !== true && questionsToActivate.pindaro.length > 0) {
+		alertMessage += "Error al activar preguntas de pindaro\n"
+	}
 	if ((resAdd[1] === true)) {
 		alertMessage += "Preguntas agregadas correctamente a rimas\n"
 	} else if (resAdd[1] !== true && questionsToAdd.rima.length > 0) {
@@ -554,6 +668,11 @@ const applyChanges = async () => {
 		alertMessage += "Preguntas eliminadas correctamente de rimas\n"
 	} else if (resDelete[1] !== true && questionsToRemove.rima.length > 0) {
 		alertMessage += "Error al eliminar preguntas de rimas\n"
+	}
+	if (resActivate[1] === true) {
+		alertMessage += "Preguntas activadas correctamente de rimas\n"
+	} else if (resActivate[1] !== true && questionsToActivate.rima.length > 0) {
+		alertMessage += "Error al activar preguntas de rimas\n"
 	}
 	if ((resAdd[2] === true)) {
 		alertMessage += "Preguntas agregadas correctamente a acentual\n"
@@ -565,6 +684,11 @@ const applyChanges = async () => {
 	} else if (resDelete[2] !== true && questionsToRemove.cat_acentual.length > 0) {
 		alertMessage += "Error al eliminar preguntas de acentual"
 	}
+	if (resActivate[2] === true) {
+		alertMessage += "Preguntas activadas correctamente de acentual"
+	} else if (resActivate[2] !== true && questionsToActivate.cat_acentual.length > 0) {
+		alertMessage += "Error al activar preguntas de acentual"
+	}
 	if (alertMessage !== "") {
 		alert(alertMessage);
 	}
@@ -575,6 +699,9 @@ const applyChanges = async () => {
 	questionsToRemove.pindaro = [];
 	questionsToRemove.rima = [];
 	questionsToRemove.cat_acentual = [];
+	questionsToActivate.pindaro = [];
+	questionsToActivate.rima = [];
+	questionsToActivate.cat_acentual = [];
 	getAll();
 }
 </script>

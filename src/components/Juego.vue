@@ -115,7 +115,7 @@ const changeQuestionApi = () => {
 	}
 	let question = apiResponse.payload.game.questions[i.value - 1];
 	opciones.value = question.options;
-	opciones.value.sort((a, b) => a.value - b.value);
+	opciones.value.sort((a, b) => a.answer.localeCompare(b.answer));
 	if (loading) {
 		loading.value = false;
 	}

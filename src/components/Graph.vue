@@ -57,7 +57,7 @@ onMounted(() => {
 				title: {
 					font: { family: "BebasNeuePro Bold", size: 26 },
 					display: true,
-					text: "Ultimos 5 Puntajes de " + props.title,
+					text: "Últimos 5 Puntajes en " + props.title,
 				},
 				legend: {
 					position: "bottom",
@@ -77,7 +77,7 @@ function updateChartData(newData, newTitle) {
 	if (myLineChart) {
 		myLineChart.data = newData;
 		myLineChart.options.plugins.title.text =
-			"Ultimos 5 Puntajes de " + newTitle;
+			"Últimos 5 Puntajes en " + newTitle;
 		myLineChart.update();
 	}
 }

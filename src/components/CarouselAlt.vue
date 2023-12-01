@@ -105,12 +105,12 @@
 							</p>
 							<div class="flex flex-row">
 								<p
-									class="px-4 mx-1 text-2xl font-usach-bebas-title py-2 rounded-lg bg-usach-daisy-700"
+									class="px-4 mx-1 text-2xl font-usach-bebas-title py-2 rounded-lg bg-usach-aqua-800"
 								>
 									asonante
 								</p>
 								<p
-									class="px-4 mx-1 text-2xl font-usach-bebas-title py-2 rounded-lg bg-usach-aqua-800"
+									class="px-4 mx-1 text-2xl font-usach-bebas-title py-2 rounded-lg bg-usach-daisy-700"
 								>
 									consonante
 								</p>

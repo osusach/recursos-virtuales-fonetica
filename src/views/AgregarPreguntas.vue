@@ -56,8 +56,7 @@
 									Estado:
 									<input type="checkbox"
 										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
-										@change="toggleQuestion(pregunta)"
-										:checked="procIsActive(pregunta)">
+										@change="toggleQuestion(pregunta)" :checked="procIsActive(pregunta)">
 								</div>
 							</div>
 							<div :class="{ hidden: selectedGame !== 'rima' }" class="grid grid-cols-4">
@@ -74,8 +73,7 @@
 									Estado:
 									<input type="checkbox"
 										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
-										@change="toggleQuestion(pregunta)"
-										:checked="procIsActive(pregunta)">
+										@change="toggleQuestion(pregunta)" :checked="procIsActive(pregunta)">
 								</div>
 							</div>
 							<div :class="{ hidden: selectedGame !== 'cat_acentual' }" class="grid grid-cols-5">
@@ -86,8 +84,7 @@
 									Estado:
 									<input type="checkbox"
 										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
-										@change="toggleQuestion(pregunta)"
-										:checked="procIsActive(pregunta)">
+										@change="toggleQuestion(pregunta)" :checked="procIsActive(pregunta)">
 								</div>
 							</div>
 							<hr class="h-px bg-usach-aqua-200 border-0 mt-3">
@@ -210,7 +207,7 @@
 <script setup>
 import { ref, reactive } from "vue";
 
-const url = "https://devpindarosql.pindarousach.workers.dev";
+const url = "https://pindarosql.pindarousach.workers.dev";
 const selectedGame = ref("");
 
 const loginInfo = reactive({
@@ -436,15 +433,15 @@ const addQuestion = (juego) => {
 
 const removeQuestion = (pregunta) => {
 	// Si esta en preguntas para agregar se elimina
-	const index2 = questionsToAdd[selectedGame.value].indexOf(pregunta);
-	if (index2 !== -1) {
-		questionsToAdd[selectedGame.value].splice(index2, 1);
-		preguntas[selectedGame.value].splice(index1, 1);
+	const index = questionsToAdd[selectedGame.value].indexOf(pregunta);
+	if (index !== -1) {
+		questionsToAdd[selectedGame.value].splice(index, 1);
 	}
 
-	const index3 = questionsToActivate[selectedGame.value].indexOf(pregunta.id);
-	if (index3 !== -1) {
-		questionsToActivate[selectedGame.value].splice(index3, 1);
+	const index2 = questionsToActivate[selectedGame.value].indexOf(pregunta.id);
+	if (index2 !== -1) {
+		questionsToActivate[selectedGame.value].splice(index2, 1);
+		return;
 	}
 
 	if (pregunta.id !== undefined) {
@@ -456,9 +453,10 @@ const removeQuestion = (pregunta) => {
 };
 
 const activateQuestion = (pregunta) => {
-	const index2 = questionsToRemove[selectedGame.value].indexOf(pregunta.id);
-	if (index2 !== -1) {
-		questionsToRemove[selectedGame.value].splice(index2, 1);
+	const index = questionsToRemove[selectedGame.value].indexOf(pregunta.id);
+	if (index !== -1) {
+		questionsToRemove[selectedGame.value].splice(index, 1);
+		return;
 	}
 
 	if (pregunta.id !== undefined) {
@@ -471,13 +469,9 @@ const activateQuestion = (pregunta) => {
 
 const toggleQuestion = (pregunta) => {
 	const index = preguntas[selectedGame.value].indexOf(pregunta);
-	console.log(index)
-	console.log(preguntas[selectedGame.value][index])
-	console.log(preguntas[selectedGame.value][index].is_active)
 
 	preguntas[selectedGame.value][index].is_active = (preguntas[selectedGame.value][index].is_active + 1) % 2;
 	const is_active = preguntas[selectedGame.value][index].is_active;
-	console.log(is_active)
 
 	if (is_active === 1) {
 		activateQuestion(pregunta);

@@ -106,7 +106,7 @@ import { useRouter } from "vue-router";
 
 const selectedFirst = ref("");
 const selectedSec = ref("");
-const url = "https://devpindarosql.pindarousach.workers.dev";
+const url = "https://pindarosql.pindarousach.workers.dev";
 const router = useRouter();
 let isValidUser = ref(true);
 let isValidEmail = ref(true);

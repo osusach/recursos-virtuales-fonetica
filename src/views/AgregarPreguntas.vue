@@ -32,7 +32,10 @@
 				<p> <span class="font-semibold">Importante:</span> Para evitar conflictos con juegos ya existentes, las
 					palabras no se eliminan de la base de
 					datos, sino que se desactivan para futuros juegos. De esa manera, es posible seguir accediendo al
-					historial y estadísticas de las partidas anteriores.</p>
+					historial y estadísticas de las partidas anteriores, <span class="font-semibold">
+						por lo que si desea cambiar una pregunta,
+						desactivela y cree otra
+					</span> .</p>
 			</div>
 			<p class="font-semibold">Preguntas</p>
 			<div class="flex flex-row w-full min-h-[40vh] max-h-[40vh] bg-usach-aqua-100 rounded-lg">
@@ -53,7 +56,7 @@
 									{{ procDificultad(pregunta) }}
 								</div>
 								<div>
-									Estado:
+									Activo / Inactivo:
 									<input type="checkbox"
 										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
 										@change="toggleQuestion(pregunta)" :checked="procIsActive(pregunta)">
@@ -70,7 +73,7 @@
 									Categoria: {{ procCategoria(pregunta) }}
 								</div>
 								<div>
-									Estado:
+									Activo / Inactivo:
 									<input type="checkbox"
 										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
 										@change="toggleQuestion(pregunta)" :checked="procIsActive(pregunta)">
@@ -81,7 +84,7 @@
 									Frase: {{ pregunta.acentual_phrase }}
 								</div>
 								<div>
-									Estado:
+									Activo / Inactivo:
 									<input type="checkbox"
 										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
 										@change="toggleQuestion(pregunta)" :checked="procIsActive(pregunta)">
@@ -207,7 +210,7 @@
 <script setup>
 import { ref, reactive } from "vue";
 
-const url = "https://pindarosql.pindarousach.workers.dev";
+const url = import.meta.env.VITE_API_URL;
 const selectedGame = ref("");
 
 const loginInfo = reactive({
@@ -273,7 +276,6 @@ const getAll = async () => {
 		});
 		const rimas = await rimasQuestions.json();
 		preguntas.rima = await rimas.payload.silabas;
-		console.log(preguntas.rima)
 
 		const acentualQuestions = await fetch(`${url}/acentual/allAcentuales`, {
 			method: "POST",
@@ -287,7 +289,6 @@ const getAll = async () => {
 		});
 		const acentual = await acentualQuestions.json();
 		preguntas.cat_acentual = await acentual.payload.silabas;
-		console.log(preguntas.cat_acentual)
 	}
 };
 
@@ -403,10 +404,12 @@ const formatearTexto = function (texto) {
 
 const addQuestion = (juego) => {
 	// Contamos cuántas veces aparece la palabra en la lista
-	const ocurrencias = preguntas[selectedGame.value].filter(obj => obj.word === newQuestion.word).length;
+	const ocurrencias = preguntas[selectedGame.value].filter(obj => obj.word.toLowerCase() === newQuestion.word.toLowerCase()).length;
+
+	const ocurrenciasAdd = questionsToAdd[selectedGame.value].filter(obj => obj.word.toLowerCase() === newQuestion.word.toLowerCase()).length;
 
 	// Si hay más de una ocurrencia, muestra un alert
-	if (ocurrencias >= 1) {
+	if (ocurrencias >= 1 || ocurrenciasAdd >= 1) {
 		alert(`La palabra '${newQuestion.word}' está repetida.`);
 		return;
 	}

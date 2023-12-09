@@ -66,7 +66,7 @@ import { store } from "../store";
 import { ref } from "vue";
 
 const router = useRouter();
-const url = "https://pindarosql.pindarousach.workers.dev";
+const url = import.meta.env.VITE_API_URL;
 
 let isValidEmail = ref(true);
 let isValidPassword = ref(true);

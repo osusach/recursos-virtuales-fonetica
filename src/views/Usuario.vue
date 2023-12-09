@@ -78,7 +78,7 @@ let listaPindaro = ref([]);
 let chartData = ref({});
 let chartTitle = ref("");
 
-const url = "https://pindarosql.pindarousach.workers.dev";
+const url = import.meta.env.VITE_API_URL;
 
 const userid = store.userid;
 

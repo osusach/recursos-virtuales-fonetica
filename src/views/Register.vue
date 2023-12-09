@@ -106,7 +106,7 @@ import { useRouter } from "vue-router";
 
 const selectedFirst = ref("");
 const selectedSec = ref("");
-const url = "https://pindarosql.pindarousach.workers.dev";
+const url = import.meta.env.VITE_API_URL;
 const router = useRouter();
 let isValidUser = ref(true);
 let isValidEmail = ref(true);

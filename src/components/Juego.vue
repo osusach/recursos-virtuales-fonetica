@@ -96,7 +96,7 @@ const props = defineProps({
 const Fin = ref("Terminar");
 const i = ref(1);
 const loading = ref(true);
-const url = "https://pindarosql.pindarousach.workers.dev";
+const url = import.meta.env.VITE_API_URL;
 const router = useRouter();
 
 let opciones = ref([]);

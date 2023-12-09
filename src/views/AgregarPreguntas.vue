@@ -404,10 +404,12 @@ const formatearTexto = function (texto) {
 
 const addQuestion = (juego) => {
 	// Contamos cuántas veces aparece la palabra en la lista
-	const ocurrencias = preguntas[selectedGame.value].filter(obj => obj.word === newQuestion.word).length;
+	const ocurrencias = preguntas[selectedGame.value].filter(obj => obj.word.toLowerCase() === newQuestion.word.toLowerCase()).length;
+
+	const ocurrenciasAdd = questionsToAdd[selectedGame.value].filter(obj => obj.word.toLowerCase() === newQuestion.word.toLowerCase()).length;
 
 	// Si hay más de una ocurrencia, muestra un alert
-	if (ocurrencias >= 1) {
+	if (ocurrencias >= 1 || ocurrenciasAdd >= 1) {
 		alert(`La palabra '${newQuestion.word}' está repetida.`);
 		return;
 	}

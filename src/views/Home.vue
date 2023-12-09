@@ -35,7 +35,7 @@ let apiResponse;
 let listaAcentual = ref(null);
 let listaRima = ref(null);
 let listaPindaro = ref(null);
-const url = "https://devpindarosql.pindarousach.workers.dev";
+const url = import.meta.env.VITE_API_URL;
 
 // get a db
 onMounted(async () => {

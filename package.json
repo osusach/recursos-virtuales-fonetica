@@ -10,6 +10,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.1.1",
     "axios": "^1.4.0",
     "chart.js": "^4.4.0",
     "flowbite": "^1.8.1",

@@ -7,8 +7,8 @@
 			class="flex flex-row px-5 pt-3 mb-2 text-white text-xl justify-center items-center gap-3"
 		>
 			<p class="font-usach-helvetica-bold">{{ label }}</p>
-			<button @click="props.botonGrafico(props.scoreList, props.label)">
-				g
+			<button @click="props.botonGrafico(props.scoreList, props.label)" class="p-1 bg-usach-ultra-700 rounded-lg hover:shadow hover:shadow-black border border-black">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m16 11.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"/></svg>
 			</button>
 		</div>
 		<ol class="text-white">

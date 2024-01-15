@@ -52,6 +52,7 @@
 				@click="guestFunc()"
 				class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"
 			/>
+			<p class="font-usach-helvetica-body text-base"> <i> Registrate para guardar tus puntajes!</i></p>
 		</div>
 	</form>
 </template>
@@ -60,7 +61,6 @@
 import { useRouter } from "vue-router";
 import Input from "../components/Input.vue";
 import Boton from "../components/Boton.vue";
-import Enlaces from "../components/Enlaces.vue";
 import axios from "axios";
 import { store } from "../store";
 import { ref } from "vue";

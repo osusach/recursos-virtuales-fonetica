@@ -174,7 +174,7 @@ const registerFunc = async () => {
 	await axios
 		.post(url + "/users/register", data)
 		.then((response) => {
-			router.push("/");
+			router.push("/home");
 			alert("Registro Exitoso");
 		})
 		.catch((error) => {

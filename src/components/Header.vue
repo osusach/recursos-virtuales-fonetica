@@ -22,11 +22,11 @@
 			</h1>
 		</div>
 		<div
-			class="flex flex-row gap-2 items-center align-middle mr-1 px-4 bg-usach-aqua-700 p-2 rounded-lg w-fit flex-shrink-0"
+			class="flex flex-row gap-2 items-center align-middle mr-1 px-4 bg-usach-aqua-700 hover:bg-usach-aqua-1000 p-2 rounded-lg w-fit flex-shrink-0"
 		>
 			<router-link
 				to="/usuario"
-				class="flex flex-row items-baseline gap-2 flex-shrink-0"
+				class="flex flex-row items-baseline gap-2 flex-shrink-0 hover:underline text-white hover:shadow-md p-2 bg-usach-aqua-700 rounded-lg"
 			>
 				<img
 					class="invert"
@@ -36,7 +36,7 @@
 					alt="user"
 				/>
 				<p
-					class="font-usach-bebas-body text-2xl text-white hidden sm:block"
+					class="font-usach-bebas-body text-2xl hidden sm:block"
 				>
 					{{ store.user }}
 				</p>
@@ -44,7 +44,7 @@
 			<svg width="1" height="25" class="fill-white flex-shrink-0">
 				<rect width="400" height="100" />
 			</svg>
-			<button @click="logout" class="align-middle flex-shrink-0">
+			<button @click="logout" class="align-middle flex-shrink-0 hover:underline text-white hover:shadow-md p-3 bg-usach-aqua-700 rounded-lg">
 				<img
 					src="/logout.svg"
 					class="h-6 invert fill-usach-terra-900"
@@ -62,9 +62,9 @@ const router = useRouter();
 
 const routeButton = () => {
 	if (store.email == null) {
-		router.push("/");
+		router.push("/login");
 	} else {
-		router.push("/home");
+		router.push("/");
 	}
 };
 
@@ -73,7 +73,7 @@ const logout = () => {
 	store.email = null;
 	store.curso = null;
 	store.password = null;
-	router.push("/");
+	router.push("/login");
 };
 </script>
 

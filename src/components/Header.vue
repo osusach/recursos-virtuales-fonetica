@@ -1,7 +1,7 @@
 <template>
 	<header className="bg-usach-aqua-900 flex items-center p-1">
-		<button className="flex-none">
-			<button @click="routeButton()">
+		<div className="flex-none">
+			<button @click="routeButton()" title="Ir al inicio">
 				<img
 					src="/UsachSB.png"
 					alt="Logo Usach"
@@ -13,7 +13,7 @@
 					className="logo-pb xl:hidden block"
 				/>
 			</button>
-		</button>
+		</div>
 		<div class="flex-grow text-center">
 			<h1
 				className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-usach-bebas-title text-white "
@@ -27,6 +27,7 @@
 			<router-link
 				to="/usuario"
 				class="flex flex-row items-baseline gap-2 flex-shrink-0 hover:underline text-white hover:shadow-md p-2 bg-usach-aqua-700 rounded-lg"
+				title="Usuario"
 			>
 				<img
 					class="invert"
@@ -44,10 +45,11 @@
 			<svg width="1" height="25" class="fill-white flex-shrink-0">
 				<rect width="400" height="100" />
 			</svg>
-			<button @click="logout" class="align-middle flex-shrink-0 hover:underline text-white hover:shadow-md p-3 bg-usach-aqua-700 rounded-lg">
+			<button title="Cerrar Sesión" @click="logout" class="align-middle flex-shrink-0 hover:underline text-white hover:shadow-md p-3 bg-usach-aqua-700 rounded-lg">
 				<img
 					src="/logout.svg"
 					class="h-6 invert fill-usach-terra-900"
+					alt="Logout"
 				/>
 			</button>
 		</div>

@@ -105,18 +105,18 @@ const cambiarGrafico = (lista, label) => {
 onMounted(async () => {
 	if (userid === null)
 		return;
-	try {
-		const response = await axios.get(
-			url + "/scores/history/" + String(userid),
-		);
-		apiResponse = response.data.payload;
 
-		listaPindaro.value = apiResponse.history[0];
-		listaAcentual.value = apiResponse.history[1];
-		listaRima.value = apiResponse.history[2];
-		cambiarGrafico(listaAcentual.value, "Categoría Acentual");
-	} catch (error) {
-		console.error("Error fetching data:", error);
-	}
+	axios.get(
+			url + "/scores/history/" + String(userid),
+		).then( (response) => {
+			apiResponse = response.data.payload;
+			
+			listaPindaro.value = apiResponse.history[0];
+			listaAcentual.value = apiResponse.history[1];
+			listaRima.value = apiResponse.history[2];
+			cambiarGrafico(listaPindaro.value, "Píndaro");
+		}).catch((error) => {
+			console.error("Error fetching data:", error);
+		});
 });
 </script>

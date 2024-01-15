@@ -40,7 +40,7 @@
 				className="font-usach-helvetica-medium rounded-lg  p-4 text-lg"
 			>
 				¿No tienes cuenta?
-				<router-link to="/register"> <b>Regístrate</b> </router-link>
+				<router-link to="/register" class="hover:underline"> <b>Regístrate</b> </router-link>
 			</div>
 			<div
 				className="font-usach-helvetica-medium rounded-lg  px-6 text-lg"

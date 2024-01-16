@@ -1,14 +1,5 @@
 <template>
-	<div class="flex flex-col md:flex-row gap-5 items-center">
-		<div class="flex flex-col p-7 bg-usach-aqua-800 font-usach-helvetica-body text-white rounded-lg h-fit">
-			<h1 class="">
-				Quieres guardar tu puntaje en el leaderboard?
-			</h1>
-			<a href="/login" class="font-usach-helvetica-bold hover:underline">
-				Inicia Sesión
-			</a>
-		</div>
-	
+	<div class="flex flex-col md:flex-col md:gap-7 gap-4 items-center">
 		<div
 			class="flex flex-col p-7 justify-center items-center text-center text-lg font-usach-helvetica-body bg-usach-aqua-800 rounded-lg text-white">
 			<div class="flex flex-row gap-2 mb-5">
@@ -31,10 +22,19 @@
 				</router-link>
 			</div>
 		</div>
+		<div v-if="usuario == 'Invitado'" class="flex flex-col p-7 w-full gap-2 text-center bg-usach-aqua-800 font-usach-helvetica-body text-white rounded-lg h-fit">
+			<h1 class="">
+				Quieres guardar tu puntaje?
+			</h1>
+			<a href="/login" class="font-usach-helvetica-bold hover:bg-usach-rouge-800 transition bg-usach-rouge-700 rounded-lg">
+				<p class="pt-2 p-1">Inicia sesión</p>
+			</a>
+		</div>
 	</div>
 </template>
 
 <script setup>
+import { store } from "../store.js";
 import Boton from "../components/Boton.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
@@ -44,6 +44,7 @@ const router = useRouter();
 const juego = Number(router.currentRoute.value.params.id);
 let ruta = ref("/home");
 let nombreJuego = ref("");
+let usuario = store.user;
 
 switch (juego) {
 	case 1:

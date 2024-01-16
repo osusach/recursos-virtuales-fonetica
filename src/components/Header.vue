@@ -22,11 +22,11 @@
 			</h1>
 		</div>
 		<div
-			class="flex flex-row gap-2 items-center align-middle mr-1 px-4 bg-usach-aqua-700 hover:bg-usach-aqua-1000 p-2 rounded-lg w-fit flex-shrink-0"
+			class="flex flex-row gap-2 items-center align-middle mr-1 px-4  p-2 rounded-lg w-fit flex-shrink-0"
 		>
 			<router-link
 				to="/usuario"
-				class="flex flex-row items-baseline gap-2 flex-shrink-0 hover:underline text-white hover:shadow-md p-2 bg-usach-aqua-700 rounded-lg"
+				class="flex flex-row items-baseline gap-2 flex-shrink-0 text-white transition p-2 bg-usach-aqua-700 hover:bg-usach-aqua-600 rounded-lg"
 				title="Usuario"
 			>
 				<img
@@ -45,7 +45,7 @@
 			<svg width="1" height="25" class="fill-white flex-shrink-0">
 				<rect width="400" height="100" />
 			</svg>
-			<button title="Cerrar Sesión" @click="logout" class="align-middle flex-shrink-0 hover:underline text-white hover:shadow-md p-3 bg-usach-aqua-700 rounded-lg">
+			<button title="Cerrar Sesión" @click="logout" class="align-middle flex-shrink-0 transition text-white hover:bg-usach-aqua-600 p-3 bg-usach-aqua-700 rounded-lg">
 				<img
 					src="/logout.svg"
 					class="h-6 invert fill-usach-terra-900"

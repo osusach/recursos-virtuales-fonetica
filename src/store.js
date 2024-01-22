@@ -7,7 +7,6 @@ export const store = reactive({
 	user: "Invitado",
 	email: null,
 	curso: null,
-	password: null,
-	userid: null,
+	token: null,
 	question_order: [],
 });

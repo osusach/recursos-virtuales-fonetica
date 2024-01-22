@@ -15,6 +15,7 @@
 						{{ store.user }}
 					</p>
 					<p v-if="store.email != null">Correo: {{ store.email }}</p>
+					<p v-if="store.email == null">Registrate para guardar tus puntajes!</p>
 				</div>
 			</div>
 			<div class="flex flex-col h-20">

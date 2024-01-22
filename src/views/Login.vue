@@ -109,12 +109,11 @@ const loginFunc = async () => {
 	await axios
 		.post(url + "/users/login", data)
 		.then((response) => {
-			const resp = response.data.payload.user[0];
-			store.email = resp.email;
-			store.password = resp.password;
+			const resp = response.data.payload.user;
+			store.email = email.value;
 			store.user = resp.name;
 			store.curso = resp.course;
-			store.userid = resp.id;
+			store.token = resp.token;
 			router.push("/home");
 		})
 		.catch((error) => {

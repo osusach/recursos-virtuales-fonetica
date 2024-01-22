@@ -128,10 +128,11 @@ onMounted(async () => {
 		const response = await axios.get(
 			url + props.urlJuego + "/start/" + dificultad,
 		);
+		console.log(response);
 		apiResponse = response.data;
 		changeQuestionApi();
 	} catch (error) {
-		console.error("Error fetching data:", error);
+		console.error(error);
 		router.replace("/home");
 	}
 });
@@ -181,6 +182,7 @@ const changeQuestion = (num) => {
 const endQuiz = async () => {
 	let question_order = [];
 	const data = {
+		token: store.token,
 		email: store.email,
 		password: store.password,
 		session_id: apiResponse.payload.game.session_id,

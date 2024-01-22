@@ -11,9 +11,9 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
 // Vercel analytics
-import { inject } from '@vercel/analytics';
+// import { inject } from '@vercel/analytics';
 
-inject();
+// inject();
 
 const vuetify = createVuetify({
 	components,

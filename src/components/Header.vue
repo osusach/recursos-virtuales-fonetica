@@ -3,12 +3,12 @@
 		<div className="flex-none">
 			<button @click="routeButton()" title="Ir al inicio">
 				<img
-					src="/UsachSB.png"
+					src="/UsachSB.avif"
 					alt="Logo Usach"
 					className="logo-sb hidden xl:block"
 				/>
 				<img
-					src="/UsachPB.png"
+					src="/UsachPB.avif"
 					alt="Logo Usach"
 					className="logo-pb xl:hidden block"
 				/>

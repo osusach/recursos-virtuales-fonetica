@@ -11,7 +11,8 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
-posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
+// public api anyway
+posthog.init("phc_oAdnbupVjpGsZr1qA2aPjB0YB148V7aqu7DTrtjhbpg", {
 	api_host: "https://us.posthog.com",
 });
 

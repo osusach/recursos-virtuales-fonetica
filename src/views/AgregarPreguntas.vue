@@ -1,48 +1,90 @@
 <template>
-	<div :class="{ hidden: loginInfo.isLogged }" class="flex flex-col items-center bg-usach-aqua-600 px-10 py-4 rounded-md">
+	<div
+		:class="{ hidden: loginInfo.isLogged }"
+		class="flex flex-col items-center bg-usach-aqua-600 px-10 py-4 rounded-md"
+	>
 		<label for="mail" class="pb-4">Correo: </label>
-		<input type="text" class="rounded-md" v-model="loginInfo.mail" placeholder="Ingrese el correo">
+		<input
+			type="text"
+			class="rounded-md"
+			v-model="loginInfo.mail"
+			placeholder="Ingrese el correo"
+		/>
 		<label for="password" class="py-4">Contraseña:</label>
-		<input type="password" class="rounded-md" name="password" v-model="loginInfo.password"
-			placeholder="Ingrese la contraseña" />
-		<button @click="validateLogin()" class="mt-5 p-2 rounded-md bg-usach-terra-600 hover:bg-usach-terra-800">
+		<input
+			type="password"
+			class="rounded-md"
+			name="password"
+			v-model="loginInfo.password"
+			placeholder="Ingrese la contraseña"
+		/>
+		<button
+			@click="validateLogin()"
+			class="mt-5 p-2 rounded-md bg-usach-terra-600 hover:bg-usach-terra-800"
+		>
 			Siguiente
 		</button>
 	</div>
-	<div :class="{ hidden: !loginInfo.isLogged }" class="flex flex-row gap-10 items-center justify-between">
-		<div class="flex flex-col gap-4 bg-usach-aqua-400 p-3 rounded-lg max-w-[95vw]">
+	<div
+		:class="{ hidden: !loginInfo.isLogged }"
+		class="flex flex-row gap-10 items-center justify-between"
+	>
+		<div
+			class="flex flex-col gap-4 bg-usach-aqua-400 p-3 rounded-lg max-w-[95vw]"
+		>
 			<div class="flex flex-row gap-5 items-center">
-				<select v-model="selectedGame"
-					class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700">
+				<select
+					v-model="selectedGame"
+					class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700"
+				>
 					<option disabled value="">Selecciona un juego</option>
 					<option value="pindaro">Píndaro</option>
 					<option value="rima">Rimas</option>
 					<option value="cat_acentual">Acentual</option>
 				</select>
-				<button @click="setAction(true)"
-					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800">
+				<button
+					@click="setAction(true)"
+					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800"
+				>
 					<v-icon icon="mdi-plus"></v-icon>
 					<p class="px-3 w-32">Agregar pregunta</p>
 				</button>
-				<button @click="applyChanges"
-					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800">
+				<button
+					@click="applyChanges"
+					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800"
+				>
 					<v-icon icon="mdi-check"></v-icon>
 					<p class="px-3 w-32">Aplicar cambios</p>
 				</button>
-				<p> <span class="font-semibold">Importante:</span> Para evitar conflictos con juegos ya existentes, las
-					palabras no se eliminan de la base de
-					datos, sino que se desactivan para futuros juegos. De esa manera, es posible seguir accediendo al
-					historial y estadísticas de las partidas anteriores, <span class="font-semibold">
-						por lo que si desea cambiar una pregunta,
-						desactivela y cree otra
-					</span> .</p>
+				<p>
+					<span class="font-semibold">Importante:</span> Para evitar
+					conflictos con juegos ya existentes, las palabras no se
+					eliminan de la base de datos, sino que se desactivan para
+					futuros juegos. De esa manera, es posible seguir accediendo
+					al historial y estadísticas de las partidas anteriores,
+					<span class="font-semibold">
+						por lo que si desea cambiar una pregunta, desactivela y
+						cree otra
+					</span>
+					.
+				</p>
 			</div>
 			<p class="font-semibold">Preguntas</p>
-			<div class="flex flex-row w-full min-h-[40vh] max-h-[40vh] bg-usach-aqua-100 rounded-lg">
-				<ul class="w-full text-center overflow-y-scroll pt-3 font-usach-helvetica-body">
-					<li v-for="pregunta in preguntas[selectedGame]" class="flex flex-row py-1 gap-2 mb-2">
+			<div
+				class="flex flex-row w-full min-h-[40vh] max-h-[40vh] bg-usach-aqua-100 rounded-lg"
+			>
+				<ul
+					class="w-full text-center overflow-y-scroll pt-3 font-usach-helvetica-body"
+				>
+					<li
+						v-for="pregunta in preguntas[selectedGame]"
+						class="flex flex-row py-1 gap-2 mb-2"
+					>
 						<div class="w-[90%]">
-							<div :class="{ hidden: selectedGame !== 'pindaro' }" class="grid grid-cols-4">
+							<div
+								:class="{ hidden: selectedGame !== 'pindaro' }"
+								class="grid grid-cols-4"
+							>
 								<div>
 									Palabra:
 									{{ pregunta.word }}
@@ -57,50 +99,73 @@
 								</div>
 								<div>
 									Activo / Inactivo:
-									<input type="checkbox"
+									<input
+										type="checkbox"
 										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
-										@change="toggleQuestion(pregunta)" :checked="procIsActive(pregunta)">
+										@change="toggleQuestion(pregunta)"
+										:checked="procIsActive(pregunta)"
+									/>
 								</div>
 							</div>
-							<div :class="{ hidden: selectedGame !== 'rima' }" class="grid grid-cols-4">
-								<div>
-									Palabra: {{ pregunta.word }}
-								</div>
-								<div>
-									Rima: {{ pregunta.rhyme }}
-								</div>
+							<div
+								:class="{ hidden: selectedGame !== 'rima' }"
+								class="grid grid-cols-4"
+							>
+								<div>Palabra: {{ pregunta.word }}</div>
+								<div>Rima: {{ pregunta.rhyme }}</div>
 								<div>
 									Categoria: {{ procCategoria(pregunta) }}
 								</div>
 								<div>
 									Activo / Inactivo:
-									<input type="checkbox"
+									<input
+										type="checkbox"
 										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
-										@change="toggleQuestion(pregunta)" :checked="procIsActive(pregunta)">
+										@change="toggleQuestion(pregunta)"
+										:checked="procIsActive(pregunta)"
+									/>
 								</div>
 							</div>
-							<div :class="{ hidden: selectedGame !== 'cat_acentual' }" class="grid grid-cols-5">
+							<div
+								:class="{
+									hidden: selectedGame !== 'cat_acentual',
+								}"
+								class="grid grid-cols-5"
+							>
 								<div class="col-span-3">
 									Frase: {{ pregunta.acentual_phrase }}
 								</div>
 								<div>
 									Activo / Inactivo:
-									<input type="checkbox"
+									<input
+										type="checkbox"
 										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
-										@change="toggleQuestion(pregunta)" :checked="procIsActive(pregunta)">
+										@change="toggleQuestion(pregunta)"
+										:checked="procIsActive(pregunta)"
+									/>
 								</div>
 							</div>
-							<hr class="h-px bg-usach-aqua-200 border-0 mt-3">
+							<hr class="h-px bg-usach-aqua-200 border-0 mt-3" />
 						</div>
 					</li>
 				</ul>
 			</div>
 			<p class="font-semibold">Preguntas a agregar</p>
-			<div class="flex flex-row w-full min-h-[40vh] max-h-[40vh] bg-usach-aqua-100 rounded-lg">
-				<ul class="w-full text-center overflow-y-scroll pt-3 font-usach-helvetica-body">
-					<li v-for="pregunta in questionsToAdd[selectedGame]" class="flex flex-row py-1 gap-2 mb-2">
+			<div
+				class="flex flex-row w-full min-h-[40vh] max-h-[40vh] bg-usach-aqua-100 rounded-lg"
+			>
+				<ul
+					class="w-full text-center overflow-y-scroll pt-3 font-usach-helvetica-body"
+				>
+					<li
+						v-for="pregunta in questionsToAdd[selectedGame]"
+						class="flex flex-row py-1 gap-2 mb-2"
+					>
 						<div class="w-[90%]">
-							<div :class="{ hidden: selectedGame !== 'pindaro' }" class="grid grid-cols-3">
+							<div
+								:class="{ hidden: selectedGame !== 'pindaro' }"
+								class="grid grid-cols-3"
+							>
 								<div>
 									Palabra:
 									{{ pregunta.word }}
@@ -114,25 +179,29 @@
 									{{ procDificultad(pregunta) }}
 								</div>
 							</div>
-							<div :class="{ hidden: selectedGame !== 'rima' }" class="grid grid-cols-3">
-								<div>
-									Palabra: {{ pregunta.word }}
-								</div>
-								<div>
-									Rima: {{ pregunta.rhyme }}
-								</div>
+							<div
+								:class="{ hidden: selectedGame !== 'rima' }"
+								class="grid grid-cols-3"
+							>
+								<div>Palabra: {{ pregunta.word }}</div>
+								<div>Rima: {{ pregunta.rhyme }}</div>
 								<div>
 									Categoria: {{ procCategoria(pregunta) }}
 								</div>
 							</div>
-							<div :class="{ hidden: selectedGame !== 'cat_acentual' }">
-								<div>
-									Frase: {{ pregunta.acentual_phrase }}
-								</div>
+							<div
+								:class="{
+									hidden: selectedGame !== 'cat_acentual',
+								}"
+							>
+								<div>Frase: {{ pregunta.acentual_phrase }}</div>
 							</div>
-							<hr class="h-px bg-usach-aqua-200 border-0 mt-3">
+							<hr class="h-px bg-usach-aqua-200 border-0 mt-3" />
 						</div>
-						<button @click="removeQuestion(pregunta)" class="bg-usach-rouge-600 rounded-md px-1">
+						<button
+							@click="removeQuestion(pregunta)"
+							class="bg-usach-rouge-600 rounded-md px-1"
+						>
 							<img class="h-5" src="/delete.svg" />
 						</button>
 					</li>
@@ -140,68 +209,83 @@
 			</div>
 		</div>
 		<div v-if="activeAction" class="overlay" @click="closeOverlay">
-			<div class="flex flex-col gap-2 justify-center font-usach-helvetica-body text-sm bg-usach-aqua-400 p-5 rounded-lg min-w-[50vh]"
-				@click.stop>
-				<input placeholder="Escriba la palabra o frase" type="text" id="newQuestion" v-model="newQuestion.word"
-					class="rounded-lg" />
-				<div :class="{ hidden: selectedGame !== 'pindaro' }" class="flex flex-col gap-3 my-1" key="pindaro_form">
-
-					<input placeholder="Respuesta" type="text" id="solution" v-model="newQuestion.solution"
-						class="rounded-lg" />
-					<select v-model="newQuestion.difficulty"
-						class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700">
+			<div
+				class="flex flex-col gap-2 justify-center font-usach-helvetica-body text-sm bg-usach-aqua-400 p-5 rounded-lg min-w-[50vh]"
+				@click.stop
+			>
+				<input
+					placeholder="Escriba la palabra o frase"
+					type="text"
+					id="newQuestion"
+					v-model="newQuestion.word"
+					class="rounded-lg"
+				/>
+				<div
+					:class="{ hidden: selectedGame !== 'pindaro' }"
+					class="flex flex-col gap-3 my-1"
+					key="pindaro_form"
+				>
+					<input
+						placeholder="Respuesta"
+						type="text"
+						id="solution"
+						v-model="newQuestion.solution"
+						class="rounded-lg"
+					/>
+					<select
+						v-model="newQuestion.difficulty"
+						class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700"
+					>
 						<option disabled value="">Dificultad</option>
 						<option value="0">Fácil</option>
 						<option value="1">Medio</option>
 						<option value="2">Difícil</option>
 					</select>
 				</div>
-				<div :class="{ hidden: selectedGame !== 'rima' }" class="flex flex-col gap-3 mb-1" key="rima_form">
-					<input placeholder="Rima de la palabra" type="text" id="rhyme" v-model="newQuestion.rhyme"
-						class="rounded-lg" />
-					<select v-model="newQuestion.category"
-						class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700">
+				<div
+					:class="{ hidden: selectedGame !== 'rima' }"
+					class="flex flex-col gap-3 mb-1"
+					key="rima_form"
+				>
+					<input
+						placeholder="Rima de la palabra"
+						type="text"
+						id="rhyme"
+						v-model="newQuestion.rhyme"
+						class="rounded-lg"
+					/>
+					<select
+						v-model="newQuestion.category"
+						class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700"
+					>
 						<option disabled value="">Categoria</option>
 						<option value="a">Aguda</option>
 						<option value="g">Grave</option>
 						<option value="e">Esdrújula</option>
 					</select>
 				</div>
-				<div :class="{ hidden: selectedGame !== 'cat_acentual' }" class="text-[15px]">
+				<div
+					:class="{ hidden: selectedGame !== 'cat_acentual' }"
+					class="text-[15px]"
+				>
 					<span class="font-semibold">Formato:</span>
 					<ul class="ms-4">
-						<li>
-							monosílabos átonos: 1
-						</li>
-						<li>
-							monosílabos tónicos: 2
-						</li>
-						<li>
-							Bisílabos átonos: 3
-						</li>
-						<li>
-							palabras agudas: 4
-						</li>
-						<li>
-							palabras graves:5
-						</li>
-						<li>
-							palabras esdrújulas:6
-						</li>
+						<li>monosílabos átonos: 1</li>
+						<li>monosílabos tónicos: 2</li>
+						<li>Bisílabos átonos: 3</li>
+						<li>palabras agudas: 4</li>
+						<li>palabras graves:5</li>
+						<li>palabras esdrújulas:6</li>
 					</ul>
-					<span class="font-semibold">
-						ejemplo:
-					</span>
-					<p class="ms-4">
-						Mi-1-casa-5-es-1-mágica-6-y-1-azul-4
-					</p>
-
+					<span class="font-semibold"> ejemplo: </span>
+					<p class="ms-4">Mi-1-casa-5-es-1-mágica-6-y-1-azul-4</p>
 				</div>
-				<button class="font-usach-bebas-body text-xl bg-usach-terra-700 hover:bg-usach-terra-800 p-2 rounded-lg"
-					@click="validateNewQuestionFields">
+				<button
+					class="font-usach-bebas-body text-xl bg-usach-terra-700 hover:bg-usach-terra-800 p-2 rounded-lg"
+					@click="validateNewQuestionFields"
+				>
 					Confirmar
 				</button>
-
 			</div>
 		</div>
 	</div>
@@ -222,7 +306,7 @@ const loginInfo = reactive({
 const preguntas = reactive({
 	pindaro: [],
 	rima: [],
-	cat_acentual: []
+	cat_acentual: [],
 });
 
 const procDificultad = (pregunta) => {
@@ -233,7 +317,7 @@ const procDificultad = (pregunta) => {
 	} else if (pregunta.difficulty === 2) {
 		return "Difícil";
 	}
-}
+};
 
 const procCategoria = (pregunta) => {
 	if (pregunta.category === "a") {
@@ -243,11 +327,11 @@ const procCategoria = (pregunta) => {
 	} else if (pregunta.category === "g") {
 		return "Grave";
 	}
-}
+};
 
 const procIsActive = (pregunta) => {
-	return pregunta.is_active === 1
-}
+	return pregunta.is_active === 1;
+};
 
 const getAll = async () => {
 	if (loginInfo.isLogged) {
@@ -302,7 +386,7 @@ const newQuestion = reactive({
 	difficulty: "",
 	// Rima attributes
 	category: "",
-	rhyme: ""
+	rhyme: "",
 });
 
 const questionsToAdd = reactive({
@@ -335,8 +419,8 @@ const validateLogin = async () => {
 			body: JSON.stringify({
 				email: loginInfo.mail,
 				password: loginInfo.password,
-			})
-		})
+			}),
+		});
 		const res = await response.json();
 		const success = await res.success;
 		if (await success) {
@@ -390,23 +474,26 @@ const validateNewQuestionFields = () => {
 	} else if (selectedGame.value === "cat_acentual") {
 		addQuestion(selectedGame.value);
 	}
-}
+};
 
 const formatearTexto = function (texto) {
-	const partes = texto.split('-');
+	const partes = texto.split("-");
 	const palabras = partes.filter(function (part) {
 		return isNaN(part);
 	});
-	const resultado = palabras.join(' ');
+	const resultado = palabras.join(" ");
 	return resultado;
 };
 
-
 const addQuestion = (juego) => {
 	// Contamos cuántas veces aparece la palabra en la lista
-	const ocurrencias = preguntas[selectedGame.value].filter(obj => obj.word.toLowerCase() === newQuestion.word.toLowerCase()).length;
+	const ocurrencias = preguntas[selectedGame.value].filter(
+		(obj) => obj.word.toLowerCase() === newQuestion.word.toLowerCase(),
+	).length;
 
-	const ocurrenciasAdd = questionsToAdd[selectedGame.value].filter(obj => obj.word.toLowerCase() === newQuestion.word.toLowerCase()).length;
+	const ocurrenciasAdd = questionsToAdd[selectedGame.value].filter(
+		(obj) => obj.word.toLowerCase() === newQuestion.word.toLowerCase(),
+	).length;
 
 	// Si hay más de una ocurrencia, muestra un alert
 	if (ocurrencias >= 1 || ocurrenciasAdd >= 1) {
@@ -414,8 +501,7 @@ const addQuestion = (juego) => {
 		return;
 	}
 
-
-	const pregunta = { word: newQuestion.word }
+	const pregunta = { word: newQuestion.word };
 
 	if (juego === "pindaro") {
 		pregunta.answer = parseInt(newQuestion.solution);
@@ -423,8 +509,7 @@ const addQuestion = (juego) => {
 	} else if (juego === "rima") {
 		pregunta.category = newQuestion.category;
 		pregunta.rhyme = newQuestion.rhyme;
-	}
-	else if (juego === "cat_acentual") {
+	} else if (juego === "cat_acentual") {
 		pregunta.acentual_phrase = formatearTexto(newQuestion.word);
 	}
 
@@ -468,12 +553,13 @@ const activateQuestion = (pregunta) => {
 	if (pregunta.acentual_id !== undefined) {
 		questionsToActivate[selectedGame.value].push(pregunta.acentual_id);
 	}
-}
+};
 
 const toggleQuestion = (pregunta) => {
 	const index = preguntas[selectedGame.value].indexOf(pregunta);
 
-	preguntas[selectedGame.value][index].is_active = (preguntas[selectedGame.value][index].is_active + 1) % 2;
+	preguntas[selectedGame.value][index].is_active =
+		(preguntas[selectedGame.value][index].is_active + 1) % 2;
 	const is_active = preguntas[selectedGame.value][index].is_active;
 
 	if (is_active === 1) {
@@ -481,8 +567,7 @@ const toggleQuestion = (pregunta) => {
 	} else {
 		removeQuestion(pregunta);
 	}
-
-}
+};
 
 const applyChanges = async () => {
 	const resAdd = [null, null, null];
@@ -507,7 +592,7 @@ const applyChanges = async () => {
 						answer_value: question.answer,
 						difficulty: question.difficulty,
 					};
-				})
+				}),
 			}),
 		});
 		resAdd[0] = await resAdd[0].json();
@@ -601,7 +686,7 @@ const applyChanges = async () => {
 					return {
 						phrase: question.word,
 					};
-				})
+				}),
 			}),
 		});
 		resAdd[2] = await resAdd[2].json();
@@ -616,7 +701,7 @@ const applyChanges = async () => {
 			body: JSON.stringify({
 				admin_email: loginInfo.mail,
 				admin_password: loginInfo.password,
-				ids: questionsToRemove.cat_acentual
+				ids: questionsToRemove.cat_acentual,
 			}),
 		});
 		resDelete[2] = await resDelete[2].json();
@@ -631,60 +716,67 @@ const applyChanges = async () => {
 			body: JSON.stringify({
 				admin_email: loginInfo.mail,
 				admin_password: loginInfo.password,
-				ids: questionsToActivate.cat_acentual
+				ids: questionsToActivate.cat_acentual,
 			}),
 		});
 		resActivate[2] = await resActivate[2].json();
 		resActivate[2] = await resActivate[2].success;
 	}
 
-
-
 	let alertMessage = "";
-	if ((resAdd[0] === true)) {
-		alertMessage += "Preguntas agregadas correctamente a pindaro\n"
+	if (resAdd[0] === true) {
+		alertMessage += "Preguntas agregadas correctamente a pindaro\n";
 	} else if (resAdd[0] !== true && questionsToAdd.pindaro.length > 0) {
-		alertMessage += "Error al agregar preguntas a pindaro\n"
+		alertMessage += "Error al agregar preguntas a pindaro\n";
 	}
-	if ((resDelete[0] === true)) {
-		alertMessage += "Preguntas eliminadas correctamente de pindaro\n"
+	if (resDelete[0] === true) {
+		alertMessage += "Preguntas eliminadas correctamente de pindaro\n";
 	} else if (resDelete[0] !== true && questionsToRemove.pindaro.length > 0) {
-		alertMessage += "Error al eliminar preguntas de pindaro\n"
+		alertMessage += "Error al eliminar preguntas de pindaro\n";
 	}
 	if (resActivate[0] === true) {
-		alertMessage += "Preguntas activadas correctamente de pindaro\n"
-	} else if (resActivate[0] !== true && questionsToActivate.pindaro.length > 0) {
-		alertMessage += "Error al activar preguntas de pindaro\n"
+		alertMessage += "Preguntas activadas correctamente de pindaro\n";
+	} else if (
+		resActivate[0] !== true &&
+		questionsToActivate.pindaro.length > 0
+	) {
+		alertMessage += "Error al activar preguntas de pindaro\n";
 	}
-	if ((resAdd[1] === true)) {
-		alertMessage += "Preguntas agregadas correctamente a rimas\n"
+	if (resAdd[1] === true) {
+		alertMessage += "Preguntas agregadas correctamente a rimas\n";
 	} else if (resAdd[1] !== true && questionsToAdd.rima.length > 0) {
-		alertMessage += "Error al agregar preguntas a rimas\n"
+		alertMessage += "Error al agregar preguntas a rimas\n";
 	}
-	if ((resDelete[1] === true)) {
-		alertMessage += "Preguntas eliminadas correctamente de rimas\n"
+	if (resDelete[1] === true) {
+		alertMessage += "Preguntas eliminadas correctamente de rimas\n";
 	} else if (resDelete[1] !== true && questionsToRemove.rima.length > 0) {
-		alertMessage += "Error al eliminar preguntas de rimas\n"
+		alertMessage += "Error al eliminar preguntas de rimas\n";
 	}
 	if (resActivate[1] === true) {
-		alertMessage += "Preguntas activadas correctamente de rimas\n"
+		alertMessage += "Preguntas activadas correctamente de rimas\n";
 	} else if (resActivate[1] !== true && questionsToActivate.rima.length > 0) {
-		alertMessage += "Error al activar preguntas de rimas\n"
+		alertMessage += "Error al activar preguntas de rimas\n";
 	}
-	if ((resAdd[2] === true)) {
-		alertMessage += "Preguntas agregadas correctamente a acentual\n"
+	if (resAdd[2] === true) {
+		alertMessage += "Preguntas agregadas correctamente a acentual\n";
 	} else if (resAdd[2] !== true && questionsToAdd.cat_acentual.length > 0) {
-		alertMessage += "Error al agregar preguntas a acentual\n"
+		alertMessage += "Error al agregar preguntas a acentual\n";
 	}
-	if ((resDelete[2] === true)) {
-		alertMessage += "Preguntas eliminadas correctamente de acentual"
-	} else if (resDelete[2] !== true && questionsToRemove.cat_acentual.length > 0) {
-		alertMessage += "Error al eliminar preguntas de acentual"
+	if (resDelete[2] === true) {
+		alertMessage += "Preguntas eliminadas correctamente de acentual";
+	} else if (
+		resDelete[2] !== true &&
+		questionsToRemove.cat_acentual.length > 0
+	) {
+		alertMessage += "Error al eliminar preguntas de acentual";
 	}
 	if (resActivate[2] === true) {
-		alertMessage += "Preguntas activadas correctamente de acentual"
-	} else if (resActivate[2] !== true && questionsToActivate.cat_acentual.length > 0) {
-		alertMessage += "Error al activar preguntas de acentual"
+		alertMessage += "Preguntas activadas correctamente de acentual";
+	} else if (
+		resActivate[2] !== true &&
+		questionsToActivate.cat_acentual.length > 0
+	) {
+		alertMessage += "Error al activar preguntas de acentual";
 	}
 	if (alertMessage !== "") {
 		alert(alertMessage);
@@ -700,7 +792,7 @@ const applyChanges = async () => {
 	questionsToActivate.rima = [];
 	questionsToActivate.cat_acentual = [];
 	getAll();
-}
+};
 </script>
 
 <style>

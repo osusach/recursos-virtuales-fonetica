@@ -3,8 +3,7 @@ import "./index.css";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import posthog from 'posthog-js'
-
+import posthog from "posthog-js";
 
 // Vuetify
 import "vuetify/styles";
@@ -12,7 +11,9 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
-posthog.init(import.meta.env.VITE_POSTHOG_KEY, { api_host: 'https://us.posthog.com' })
+posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
+	api_host: "https://us.posthog.com",
+});
 
 const vuetify = createVuetify({
 	components,

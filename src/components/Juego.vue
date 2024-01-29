@@ -193,9 +193,7 @@ const endQuiz = async () => {
 			respuestas[index] !== undefined ? Number(respuestas[index]) : 0;
 		let resp;
 		if (Number(props.idJuego) === 2) {
-			question_order.push(
-				apiResponse.payload.questions[index].game_id,
-			);
+			question_order.push(apiResponse.payload.questions[index].game_id);
 			resp = {
 				question_id: apiResponse.payload.questions[index].game_id,
 				answer: answerValue,

@@ -177,33 +177,33 @@ const registerFunc = async () => {
 			console.log(response);
 			router.push("/login");
 			alert("Registro Exitoso");
-			
 		})
 		.catch((error) => {
 			errorMsg.value = "";
 			if (!error.response.data.payload.message.name) {
 				errorMsg.value += error.response.data.payload.message;
 			}
-			if (error.response.data.payload.message.issues)
-			{
-				error.response.data.payload.message.issues.forEach((element) => {
-					if (element.code == "too_small") {
-						errorMsg.value +=
-							"La contraseña debe tener al menos 8 carácteres.\n";
-						isValidPassword.value = false;
-					}
-					if (element.code == "invalid_string") {
-						isValidEmail.value = false;
-						errorMsg.value += "El correo es inválido.\n";
-					}
-					if (
-						element.code != "invalid_string" &&
-						element.code != "too_small"
-					) {
-						errorMsg.value += element.message + "\n";
-						isValidRegister.value = false;
-					}
-				});
+			if (error.response.data.payload.message.issues) {
+				error.response.data.payload.message.issues.forEach(
+					(element) => {
+						if (element.code == "too_small") {
+							errorMsg.value +=
+								"La contraseña debe tener al menos 8 carácteres.\n";
+							isValidPassword.value = false;
+						}
+						if (element.code == "invalid_string") {
+							isValidEmail.value = false;
+							errorMsg.value += "El correo es inválido.\n";
+						}
+						if (
+							element.code != "invalid_string" &&
+							element.code != "too_small"
+						) {
+							errorMsg.value += element.message + "\n";
+							isValidRegister.value = false;
+						}
+					},
+				);
 			}
 			isValidRegister.value = false;
 		});

@@ -163,10 +163,11 @@ try {
 	percentage = (data.correct * 100) / data.total;
 	posthog.capture("juego_terminado", {
 		juego: juego,
-		nombreJuego: nombreJuego,
 		dificultad: dificultad,
 		puntaje: puntaje,
 		percentage: percentage,
+		curso: store.curso,
+		tiene_cuenta: store.email ? true : false,
 	});
 } catch (error) {
 	router.replace("/home");

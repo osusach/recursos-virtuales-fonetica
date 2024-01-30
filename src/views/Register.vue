@@ -103,6 +103,7 @@ import Input from "../components/Input.vue";
 import Boton from "../components/Boton.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import posthog from "posthog-js";
 
 const selectedFirst = ref("");
 const selectedSec = ref("");
@@ -174,7 +175,9 @@ const registerFunc = async () => {
 	await axios
 		.post(url + "/users/register", data)
 		.then((response) => {
-			console.log(response);
+			posthog.capture("usuario registrado", {
+				course: String(selectedSec.value + selectedFirst.value),
+			});
 			router.push("/login");
 			alert("Registro Exitoso");
 		})

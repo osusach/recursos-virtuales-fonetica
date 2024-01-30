@@ -132,15 +132,15 @@ onMounted(async () => {
 		apiResponse = response.data;
 		changeQuestionApi();
 	} catch (error) {
-		posthog.capture("juego start error", { error: {
-					name: error.name,
-					message: error.message,
-					response: error.response,
-					code: error.code,
-					method: error.method,
-					url: error.url,
-					status: error.status,
-				}, });
+		posthog.capture("juego start error", {
+			name: error.name,
+			message: error.message,
+			response: error.response,
+			code: error.code,
+			method: error.method,
+			url: error.url,
+			status: error.status,
+		});
 		router.replace("/home");
 	}
 });
@@ -216,10 +216,12 @@ const endQuiz = async () => {
 		}
 		data.answers.push(resp);
 	}
+	console.log(data);
 
 	await axios
 		.post(url + props.urlJuego + "/submit", data)
 		.then((response) => {
+			console.log(response);
 			store.correccion = response.data;
 			store.question_order = question_order;
 		})

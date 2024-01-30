@@ -161,6 +161,7 @@ try {
 		});
 
 	percentage = (data.correct * 100) / data.total;
+	console.log(data);
 	posthog.capture("juego_terminado", {
 		juego: juego,
 		dificultad: dificultad,
@@ -170,15 +171,15 @@ try {
 		tiene_cuenta: store.email ? true : false,
 	});
 } catch (error) {
-	posthog.capture("correccion error", { error: {
-					name: error.name,
-					message: error.message,
-					response: error.response,
-					code: error.code,
-					method: error.method,
-					url: error.url,
-					status: error.status,
-				} });
+	posthog.capture("correccion error", {
+		name: error.name,
+		message: error.message,
+		response: error.response,
+		code: error.code,
+		method: error.method,
+		url: error.url,
+		status: error.status,
+	});
 	router.replace("/home");
 }
 

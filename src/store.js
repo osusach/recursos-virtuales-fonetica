@@ -9,4 +9,5 @@ export const store = reactive({
 	curso: null,
 	token: null,
 	question_order: [],
+	scrollY: 0,
 });

@@ -1,5 +1,5 @@
 <template>
-	<div class="carousel w-[1000px] h-[400px] rounded-lg">
+	<div class="carousel w-[1000px] h-[400px] rounded-lg ">
 		<div id="slide1" class="carousel-item relative w-full h-full">
 
 			<div class="bg-usach-aqua-800 h-full w-fit flex flex-col px-20 gap-10 items-center text-white">
@@ -44,8 +44,8 @@
 
 
 			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide3" class="btn btn-circle">❮</a>
-				<a href="#slide2" class="btn btn-circle">❯</a>
+				<a href="#slide3" class="btn btn-circle" @click="guardarScroll()">❮</a>
+				<a href="#slide2" class="btn btn-circle" @click="guardarScroll()">❯</a>
 			</div>
 		</div>
 		<div id="slide2" class="carousel-item relative w-full h-full">
@@ -94,8 +94,8 @@
 
 
 			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide1" class="btn btn-circle">❮</a>
-				<a href="#slide3" class="btn btn-circle">❯</a>
+				<a href="#slide1" class="btn btn-circle" @click="guardarScroll()">❮</a>
+				<a href="#slide3" class="btn btn-circle" @click="guardarScroll()">❯</a>
 			</div>
 		</div>
 		<div id="slide3" class="carousel-item relative w-full h-full">
@@ -139,15 +139,19 @@
 				</router-link>
 			</div>
 			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide2" class="btn btn-circle">❮</a>
-				<a href="#slide1" class="btn btn-circle">❯</a>
+				<a href="#slide2" class="btn btn-circle" @click="guardarScroll()">❮</a>
+				<a href="#slide1" class="btn btn-circle" @click="guardarScroll()">❯</a>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
+import {store} from "../store.js";
 const setJuego = (num) => {
 	localStorage.setItem("juego", num);
+};
+const guardarScroll = () => {
+	store.scrollY = window.scrollY;
 };
 </script>

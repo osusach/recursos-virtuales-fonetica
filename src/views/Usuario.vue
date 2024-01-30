@@ -15,6 +15,9 @@
 						{{ store.user }}
 					</p>
 					<p v-if="store.email != null">Correo: {{ store.email }}</p>
+					<p v-if="store.email == null">
+						Registrate para guardar tus puntajes!
+					</p>
 				</div>
 			</div>
 			<div class="flex flex-col h-20">
@@ -103,19 +106,19 @@ const cambiarGrafico = (lista, label) => {
 
 // get a db
 onMounted(async () => {
-	if (userid === null)
-		return;
+	if (userid === null) return;
 
-	axios.get(
-			url + "/scores/history/" + String(userid),
-		).then( (response) => {
+	axios
+		.get(url + "/scores/history/" + String(userid))
+		.then((response) => {
 			apiResponse = response.data.payload;
-			
+
 			listaPindaro.value = apiResponse.history[0];
 			listaAcentual.value = apiResponse.history[1];
 			listaRima.value = apiResponse.history[2];
 			cambiarGrafico(listaPindaro.value, "Píndaro");
-		}).catch((error) => {
+		})
+		.catch((error) => {
 			console.error("Error fetching data:", error);
 		});
 });

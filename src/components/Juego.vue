@@ -113,7 +113,7 @@ const changeQuestionApi = () => {
 	if (apiResponse === null) {
 		return;
 	}
-	let question = apiResponse.payload.game.questions[i.value - 1];
+	let question = apiResponse.payload.questions[i.value - 1];
 	opciones.value = question.options;
 	opciones.value.sort((a, b) => a.answer.localeCompare(b.answer));
 	if (loading) {
@@ -131,7 +131,7 @@ onMounted(async () => {
 		apiResponse = response.data;
 		changeQuestionApi();
 	} catch (error) {
-		console.error("Error fetching data:", error);
+		console.error(error);
 		router.replace("/home");
 	}
 });
@@ -181,9 +181,10 @@ const changeQuestion = (num) => {
 const endQuiz = async () => {
 	let question_order = [];
 	const data = {
+		token: store.token,
 		email: store.email,
 		password: store.password,
-		session_id: apiResponse.payload.game.session_id,
+		session_id: apiResponse.payload.session_id,
 		answers: [],
 	};
 
@@ -192,17 +193,15 @@ const endQuiz = async () => {
 			respuestas[index] !== undefined ? Number(respuestas[index]) : 0;
 		let resp;
 		if (Number(props.idJuego) === 2) {
-			question_order.push(
-				apiResponse.payload.game.questions[index].game_id,
-			);
+			question_order.push(apiResponse.payload.questions[index].game_id);
 			resp = {
-				question_id: apiResponse.payload.game.questions[index].game_id,
+				question_id: apiResponse.payload.questions[index].game_id,
 				answer: answerValue,
 			};
 		} else {
-			question_order.push(apiResponse.payload.game.questions[index].id);
+			question_order.push(apiResponse.payload.questions[index].id);
 			resp = {
-				question_id: apiResponse.payload.game.questions[index].id,
+				question_id: apiResponse.payload.questions[index].id,
 				answer: answerValue,
 			};
 		}
@@ -216,7 +215,7 @@ const endQuiz = async () => {
 			store.question_order = question_order;
 		})
 		.catch((error) => {
-			console.error("Error en la solicitud:", error);
+			console.error(error);
 			router.replace("/home");
 		});
 	loading.value = true;

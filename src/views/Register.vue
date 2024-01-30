@@ -103,6 +103,7 @@ import Input from "../components/Input.vue";
 import Boton from "../components/Boton.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import posthog from "posthog-js";
 
 const selectedFirst = ref("");
 const selectedSec = ref("");
@@ -174,7 +175,10 @@ const registerFunc = async () => {
 	await axios
 		.post(url + "/users/register", data)
 		.then((response) => {
-			router.push("/home");
+			posthog.capture("usuario registrado", {
+				course: String(selectedSec.value + selectedFirst.value),
+			});
+			router.push("/login");
 			alert("Registro Exitoso");
 		})
 		.catch((error) => {
@@ -182,26 +186,27 @@ const registerFunc = async () => {
 			if (!error.response.data.payload.message.name) {
 				errorMsg.value += error.response.data.payload.message;
 			}
-			if (error.response.data.payload.message.issues)
-			{
-				error.response.data.payload.message.issues.forEach((element) => {
-					if (element.code == "too_small") {
-						errorMsg.value +=
-							"La contraseña debe tener al menos 8 carácteres.\n";
-						isValidPassword.value = false;
-					}
-					if (element.code == "invalid_string") {
-						isValidEmail.value = false;
-						errorMsg.value += "El correo es inválido.\n";
-					}
-					if (
-						element.code != "invalid_string" &&
-						element.code != "too_small"
-					) {
-						errorMsg.value += element.message + "\n";
-						isValidRegister.value = false;
-					}
-				});
+			if (error.response.data.payload.message.issues) {
+				error.response.data.payload.message.issues.forEach(
+					(element) => {
+						if (element.code == "too_small") {
+							errorMsg.value +=
+								"La contraseña debe tener al menos 8 carácteres.\n";
+							isValidPassword.value = false;
+						}
+						if (element.code == "invalid_string") {
+							isValidEmail.value = false;
+							errorMsg.value += "El correo es inválido.\n";
+						}
+						if (
+							element.code != "invalid_string" &&
+							element.code != "too_small"
+						) {
+							errorMsg.value += element.message + "\n";
+							isValidRegister.value = false;
+						}
+					},
+				);
 			}
 			isValidRegister.value = false;
 		});

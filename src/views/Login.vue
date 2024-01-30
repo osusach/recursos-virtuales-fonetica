@@ -40,7 +40,9 @@
 				className="font-usach-helvetica-medium rounded-lg  p-4 text-lg"
 			>
 				¿No tienes cuenta?
-				<router-link to="/register" class="hover:underline"> <b>Regístrate</b> </router-link>
+				<router-link to="/register" class="hover:underline">
+					<b>Regístrate</b>
+				</router-link>
 			</div>
 			<div
 				className="font-usach-helvetica-medium rounded-lg  px-6 text-lg"
@@ -52,7 +54,9 @@
 				@click="guestFunc()"
 				class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"
 			/>
-			<p class="font-usach-helvetica-body text-base"> <i> Registrate para guardar tus puntajes!</i></p>
+			<p class="font-usach-helvetica-body text-base">
+				<i> Registrate para guardar tus puntajes!</i>
+			</p>
 		</div>
 	</form>
 </template>
@@ -109,12 +113,11 @@ const loginFunc = async () => {
 	await axios
 		.post(url + "/users/login", data)
 		.then((response) => {
-			const resp = response.data.payload.user[0];
-			store.email = resp.email;
-			store.password = resp.password;
+			const resp = response.data.payload.user;
+			store.email = email.value;
 			store.user = resp.name;
 			store.curso = resp.course;
-			store.userid = resp.id;
+			store.token = resp.token;
 			router.push("/home");
 		})
 		.catch((error) => {

@@ -103,6 +103,7 @@
 import { store } from "../store.js";
 import { useRouter } from "vue-router";
 import { onBeforeUnmount } from "vue";
+import posthog from "posthog-js";
 
 const router = useRouter();
 // Función para alertar al usuario
@@ -121,6 +122,7 @@ onBeforeUnmount(() => {
 });
 
 let juego;
+let nombreJuego = "error";
 let data;
 let puntaje;
 let correccion;
@@ -159,11 +161,18 @@ try {
 		});
 
 	percentage = (data.correct * 100) / data.total;
+	posthog.capture("juego_terminado", {
+		juego: juego,
+		dificultad: dificultad,
+		puntaje: puntaje,
+		percentage: percentage,
+		curso: store.curso,
+		tiene_cuenta: store.email ? true : false,
+	});
 } catch (error) {
 	router.replace("/home");
 }
 
-let nombreJuego = "error";
 let textFunc = () => {
 	return "error";
 };
@@ -177,6 +186,7 @@ const rimaFunc = (item) => {
 const acentualFunc = (item) => {
 	return `<p> ${item.word} </p>`;
 };
+
 switch (juego) {
 	case 1:
 		nombreJuego = "Píndaro";

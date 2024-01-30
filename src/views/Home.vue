@@ -50,7 +50,7 @@ onMounted(async () => {
 		listaPindaro.value = apiResponse.silabaLeaderboard.leaderboard;
 		loading.value = false;
 	} catch (error) {
-		console.error("Error fetching data:", error);
+		console.error(error);
 	}
 });
 

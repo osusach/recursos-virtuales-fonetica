@@ -22,7 +22,7 @@
 			</h1>
 		</div>
 		<div
-			class="flex flex-row gap-2 items-center align-middle mr-1 px-4  p-2 rounded-lg w-fit flex-shrink-0"
+			class="flex flex-row gap-2 items-center align-middle mr-1 px-4 p-2 rounded-lg w-fit flex-shrink-0"
 		>
 			<router-link
 				to="/usuario"
@@ -36,16 +36,18 @@
 					src="https://img.icons8.com/tiny-glyph/16/user.png"
 					alt="user"
 				/>
-				<p
-					class="font-usach-bebas-body text-2xl hidden sm:block"
-				>
+				<p class="font-usach-bebas-body text-2xl hidden sm:block">
 					{{ store.user }}
 				</p>
 			</router-link>
 			<svg width="1" height="25" class="fill-white flex-shrink-0">
 				<rect width="400" height="100" />
 			</svg>
-			<button title="Cerrar Sesión" @click="logout" class="align-middle flex-shrink-0 transition text-white hover:bg-usach-aqua-600 p-3 bg-usach-aqua-700 rounded-lg">
+			<button
+				title="Cerrar Sesión"
+				@click="logout"
+				class="align-middle flex-shrink-0 transition text-white hover:bg-usach-aqua-600 p-3 bg-usach-aqua-700 rounded-lg"
+			>
 				<img
 					src="/logout.svg"
 					class="h-6 invert fill-usach-terra-900"

@@ -3,6 +3,7 @@ import "./index.css";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+import posthog from "posthog-js";
 
 // Vuetify
 import "vuetify/styles";
@@ -10,10 +11,10 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
-// Vercel analytics
-// import { inject } from '@vercel/analytics';
-
-// inject();
+// public api anyway
+posthog.init("phc_oAdnbupVjpGsZr1qA2aPjB0YB148V7aqu7DTrtjhbpg", {
+	api_host: "https://us.posthog.com",
+});
 
 const vuetify = createVuetify({
 	components,

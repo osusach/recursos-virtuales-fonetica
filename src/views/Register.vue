@@ -182,7 +182,15 @@ const registerFunc = async () => {
 			alert("Registro Exitoso");
 		})
 		.catch((error) => {
-			posthog.capture("register error", { error: error });
+			posthog.capture("register error", { error: {
+					name: error.name,
+					message: error.message,
+					response: error.response,
+					code: error.code,
+					method: error.method,
+					url: error.url,
+					status: error.status,
+				} });
 
 			errorMsg.value = "";
 			if (!error.response.data.payload.message.name) {

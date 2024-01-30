@@ -124,7 +124,15 @@ const loginFunc = async () => {
 		.catch((error) => {
 			posthog.capture("login error", {
 				email: email.value,
-				error: error,
+				error: {
+					name: error.name,
+					message: error.message,
+					response: error.response,
+					code: error.code,
+					method: error.method,
+					url: error.url,
+					status: error.status,
+				},
 			});
 			errorMsg.value = "El correo o contraseña son incorrectos.";
 			isValidLogin.value = false;

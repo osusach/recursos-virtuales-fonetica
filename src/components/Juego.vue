@@ -132,8 +132,15 @@ onMounted(async () => {
 		apiResponse = response.data;
 		changeQuestionApi();
 	} catch (error) {
-		posthog.capture("juego start error", { error: error });
-		console.error(error);
+		posthog.capture("juego start error", { error: {
+					name: error.name,
+					message: error.message,
+					response: error.response,
+					code: error.code,
+					method: error.method,
+					url: error.url,
+					status: error.status,
+				}, });
 		router.replace("/home");
 	}
 });

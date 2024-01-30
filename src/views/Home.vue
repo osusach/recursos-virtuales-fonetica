@@ -60,7 +60,6 @@ onMounted(async () => {
 	}
 });
 
-
 const actualizarMostrarElemento = () => {
 	sm.value = window.innerWidth >= 1000; // Cambia 640 al tamaño deseado
 };
@@ -68,7 +67,6 @@ const actualizarMostrarElemento = () => {
 onBeforeUnmount(() => {
 	window.removeEventListener("resize", actualizarMostrarElemento);
 });
-
 </script>
 
 <style scoped>

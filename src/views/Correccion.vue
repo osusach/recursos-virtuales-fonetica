@@ -170,7 +170,15 @@ try {
 		tiene_cuenta: store.email ? true : false,
 	});
 } catch (error) {
-	posthog.capture("correccion error", { error: error });
+	posthog.capture("correccion error", { error: {
+					name: error.name,
+					message: error.message,
+					response: error.response,
+					code: error.code,
+					method: error.method,
+					url: error.url,
+					status: error.status,
+				} });
 	router.replace("/home");
 }
 

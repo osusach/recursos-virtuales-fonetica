@@ -108,7 +108,6 @@ const cambiarGrafico = (lista, label) => {
 // get a db
 onMounted(async () => {
 	if (userid === null) {
-		
 		cambiarGrafico(listaPindaro.value, "Píndaro");
 		return;
 	}
@@ -124,9 +123,18 @@ onMounted(async () => {
 			cambiarGrafico(listaPindaro.value, "Píndaro");
 		})
 		.catch((error) => {
-			posthog.capture("history error", { error: error });
+			posthog.capture("history error", {
+				error: {
+					name: error.name,
+					message: error.message,
+					response: error.response,
+					code: error.code,
+					method: error.method,
+					url: error.url,
+					status: error.status,
+				},
+			});
 
-			console.error("Error fetching data:", error);
 		});
 });
 </script>

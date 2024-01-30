@@ -121,6 +121,10 @@ const loginFunc = async () => {
 			router.push("/home");
 		})
 		.catch((error) => {
+			posthog.capture("login error", {
+				email: email.value,
+				error: error,
+			});
 			errorMsg.value = "El correo o contraseña son incorrectos.";
 			isValidLogin.value = false;
 		});

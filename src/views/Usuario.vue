@@ -83,7 +83,7 @@ let chartTitle = ref("");
 
 const url = import.meta.env.VITE_API_URL;
 
-const userid = store.userid;
+const userid = store.token;
 
 const cambiarGrafico = (lista, label) => {
 	if (lista === undefined) {
@@ -106,7 +106,11 @@ const cambiarGrafico = (lista, label) => {
 
 // get a db
 onMounted(async () => {
-	if (userid === null) return;
+	if (userid === null) {
+		
+		cambiarGrafico(listaPindaro.value, "Píndaro");
+		return;
+	}
 
 	axios
 		.get(url + "/scores/history/" + String(userid))
@@ -119,6 +123,8 @@ onMounted(async () => {
 			cambiarGrafico(listaPindaro.value, "Píndaro");
 		})
 		.catch((error) => {
+			posthog.capture("history error", { error: error });
+
 			console.error("Error fetching data:", error);
 		});
 });

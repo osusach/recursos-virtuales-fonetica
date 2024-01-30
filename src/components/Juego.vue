@@ -84,6 +84,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { store } from "../store.js";
 import axios from "axios";
+import posthog from "posthog-js";
 
 const props = defineProps({
 	title: String,
@@ -131,6 +132,7 @@ onMounted(async () => {
 		apiResponse = response.data;
 		changeQuestionApi();
 	} catch (error) {
+		posthog.capture("juego start error", { error: error });
 		console.error(error);
 		router.replace("/home");
 	}

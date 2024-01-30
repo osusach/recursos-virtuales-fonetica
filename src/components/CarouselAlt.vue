@@ -34,11 +34,12 @@
 						</div>
 					</div>
 				</div>
-				<button class="py-2 w-full rounded-lg bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800">
-					<router-link class="max-w-full font-usach-helvetica-body w-full" to="/dificultad/1"
-						@click="setJuego(1)">Jugar
-					</router-link>
-				</button>
+				<router-link 
+				class="font-usach-helvetica-body w-full py-2 rounded-lg text-center bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800"
+				to="/dificultad/1"
+				@click="setJuego(1)">
+						Jugar
+				</router-link>
 			</div>
 
 
@@ -83,12 +84,12 @@
 					</div>
 				</div>
 
-				<button class="py-2 w-full rounded-lg bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800">
-					<router-link class="max-w-full font-usach-helvetica-body w-full" to="/dificultad/2"
-						@click="setJuego(2)">
+				<router-link 
+				class="font-usach-helvetica-body w-full py-2 rounded-lg text-center bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800"
+				to="/dificultad/2"
+				@click="setJuego(2)">
 						Jugar
-					</router-link>
-				</button>
+				</router-link>
 			</div>
 
 
@@ -130,11 +131,12 @@
 						</div>
 					</div>
 				</div>
-				<button class="py-2 w-full rounded-lg bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800">
-					<router-link class="max-w-full font-usach-helvetica-body w-full" to="/dificultad/3"
-						@click="setJuego(3)">Jugar
-					</router-link>
-				</button>
+				<router-link 
+				class="font-usach-helvetica-body w-full py-2 rounded-lg text-center bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800"
+				to="/dificultad/3"
+				@click="setJuego(3)">
+						Jugar
+				</router-link>
 			</div>
 			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
 				<a href="#slide2" class="btn btn-circle">❮</a>

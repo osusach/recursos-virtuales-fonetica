@@ -1,5 +1,5 @@
 <template>
-	<div class="carousel w-[1000px] h-[400px] rounded-lg">
+	<div class="carousel w-[1000px] h-[400px] rounded-lg ">
 		<div id="slide1" class="carousel-item relative w-full h-full">
 
 			<div class="bg-usach-aqua-800 h-full w-fit flex flex-col px-20 gap-10 items-center text-white">
@@ -34,17 +34,18 @@
 						</div>
 					</div>
 				</div>
-				<button class="py-2 w-full rounded-lg bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800">
-					<router-link class="max-w-full font-usach-helvetica-body w-full" to="/dificultad/1"
-						@click="setJuego(1)">Jugar
-					</router-link>
-				</button>
+				<router-link 
+				class="font-usach-helvetica-body w-full py-2 rounded-lg text-center bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800"
+				to="/dificultad/1"
+				@click="setJuego(1)">
+						Jugar
+				</router-link>
 			</div>
 
 
 			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide3" class="btn btn-circle">❮</a>
-				<a href="#slide2" class="btn btn-circle">❯</a>
+				<a href="#slide3" class="btn btn-circle" @click="guardarScroll()">❮</a>
+				<a href="#slide2" class="btn btn-circle" @click="guardarScroll()">❯</a>
 			</div>
 		</div>
 		<div id="slide2" class="carousel-item relative w-full h-full">
@@ -83,18 +84,18 @@
 					</div>
 				</div>
 
-				<button class="py-2 w-full rounded-lg bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800">
-					<router-link class="max-w-full font-usach-helvetica-body w-full" to="/dificultad/2"
-						@click="setJuego(2)">
+				<router-link 
+				class="font-usach-helvetica-body w-full py-2 rounded-lg text-center bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800"
+				to="/dificultad/2"
+				@click="setJuego(2)">
 						Jugar
-					</router-link>
-				</button>
+				</router-link>
 			</div>
 
 
 			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide1" class="btn btn-circle">❮</a>
-				<a href="#slide3" class="btn btn-circle">❯</a>
+				<a href="#slide1" class="btn btn-circle" @click="guardarScroll()">❮</a>
+				<a href="#slide3" class="btn btn-circle" @click="guardarScroll()">❯</a>
 			</div>
 		</div>
 		<div id="slide3" class="carousel-item relative w-full h-full">
@@ -130,22 +131,27 @@
 						</div>
 					</div>
 				</div>
-				<button class="py-2 w-full rounded-lg bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800">
-					<router-link class="max-w-full font-usach-helvetica-body w-full" to="/dificultad/3"
-						@click="setJuego(3)">Jugar
-					</router-link>
-				</button>
+				<router-link 
+				class="font-usach-helvetica-body w-full py-2 rounded-lg text-center bg-usach-daisy-700 text-2xl hover:bg-usach-daisy-800"
+				to="/dificultad/3"
+				@click="setJuego(3)">
+						Jugar
+				</router-link>
 			</div>
 			<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide2" class="btn btn-circle">❮</a>
-				<a href="#slide1" class="btn btn-circle">❯</a>
+				<a href="#slide2" class="btn btn-circle" @click="guardarScroll()">❮</a>
+				<a href="#slide1" class="btn btn-circle" @click="guardarScroll()">❯</a>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
+import {store} from "../store.js";
 const setJuego = (num) => {
 	localStorage.setItem("juego", num);
+};
+const guardarScroll = () => {
+	store.scrollY = window.scrollY;
 };
 </script>

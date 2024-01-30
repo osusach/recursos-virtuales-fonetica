@@ -26,8 +26,9 @@ import Leaderboard from "../components/Leaderboard.vue";
 import CarouselAlt from "../components/CarouselAlt.vue";
 import CarUnfolded from "../components/CarUnfolded.vue";
 import Loading from "../components/Loading.vue";
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, onUpdated } from "vue";
 import axios from "axios";
+import { store } from "../store";
 
 const sm = ref(true);
 let loading = ref(true);
@@ -37,10 +38,15 @@ let listaRima = ref(null);
 let listaPindaro = ref(null);
 const url = import.meta.env.VITE_API_URL;
 
+// Evitar el scroll con los <a> del carrusel
+onUpdated(() => {
+	window.scrollTo(0, store.scrollY);
+});
 // get a db
 onMounted(async () => {
 	window.addEventListener("resize", actualizarMostrarElemento);
 	actualizarMostrarElemento();
+
 	try {
 		const response = await axios.get(url + "/scores/leaderboards");
 		apiResponse = response.data.payload;
@@ -54,6 +60,7 @@ onMounted(async () => {
 	}
 });
 
+
 const actualizarMostrarElemento = () => {
 	sm.value = window.innerWidth >= 1000; // Cambia 640 al tamaño deseado
 };
@@ -61,6 +68,7 @@ const actualizarMostrarElemento = () => {
 onBeforeUnmount(() => {
 	window.removeEventListener("resize", actualizarMostrarElemento);
 });
+
 </script>
 
 <style scoped>

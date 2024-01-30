@@ -68,6 +68,7 @@ import Boton from "../components/Boton.vue";
 import axios from "axios";
 import { store } from "../store";
 import { ref } from "vue";
+import posthog from "posthog-js";
 
 const router = useRouter();
 const url = import.meta.env.VITE_API_URL;

@@ -73,6 +73,7 @@ import Historial from "../components/Historial.vue";
 import { store } from "../store.js";
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import posthog from "posthog-js";
 
 let apiResponse;
 let listaAcentual = ref([]);

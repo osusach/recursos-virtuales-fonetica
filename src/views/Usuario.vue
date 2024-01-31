@@ -113,7 +113,7 @@ onMounted(async () => {
 	}
 
 	axios
-		.get(url + "/scores/history/" + String(userid))
+		.post(url + "/scores/history/", { token: String(userid)})
 		.then((response) => {
 			apiResponse = response.data.payload;
 
@@ -123,6 +123,7 @@ onMounted(async () => {
 			cambiarGrafico(listaPindaro.value, "Píndaro");
 		})
 		.catch((error) => {
+			console.log(error);
 			posthog.capture("history error", {
 				name: error.name,
 				message: error.message,

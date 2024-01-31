@@ -14,6 +14,7 @@ import * as directives from "vuetify/directives";
 // public api anyway
 posthog.init("phc_oAdnbupVjpGsZr1qA2aPjB0YB148V7aqu7DTrtjhbpg", {
 	api_host: "https://us.posthog.com",
+	autocapture: false,
 });
 
 const vuetify = createVuetify({

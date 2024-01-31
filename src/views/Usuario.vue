@@ -124,17 +124,14 @@ onMounted(async () => {
 		})
 		.catch((error) => {
 			posthog.capture("history error", {
-				error: {
-					name: error.name,
-					message: error.message,
-					response: error.response,
-					code: error.code,
-					method: error.method,
-					url: error.url,
-					status: error.status,
-				},
+				name: error.name,
+				message: error.message,
+				response: error.response,
+				code: error.code,
+				method: error.method,
+				url: error.url,
+				status: error.status,
 			});
-
 		});
 });
 </script>

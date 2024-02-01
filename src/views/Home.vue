@@ -51,9 +51,9 @@ onMounted(async () => {
 		const response = await axios.get(url + "/scores/leaderboards");
 		apiResponse = response.data.payload;
 
-		listaAcentual.value = apiResponse.acentualLeaderboard.leaderboard;
-		listaRima.value = apiResponse.rimasLeaderboard.leaderboard;
-		listaPindaro.value = apiResponse.silabaLeaderboard.leaderboard;
+		listaAcentual.value = apiResponse.acentualLeaderboard;
+		listaRima.value = apiResponse.rimasLeaderboard;
+		listaPindaro.value = apiResponse.silabaLeaderboard;
 		loading.value = false;
 	} catch (error) {
 		console.error(error);

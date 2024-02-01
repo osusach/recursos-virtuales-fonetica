@@ -113,13 +113,13 @@ onMounted(async () => {
 	}
 
 	axios
-		.post(url + "/scores/history/", { token: String(userid)})
+		.post(url + "/scores/history", { token: String(userid)})
 		.then((response) => {
 			apiResponse = response.data.payload;
 
-			listaPindaro.value = apiResponse.history[0];
-			listaAcentual.value = apiResponse.history[1];
-			listaRima.value = apiResponse.history[2];
+			listaPindaro.value = apiResponse[0];
+			listaAcentual.value = apiResponse[1];
+			listaRima.value = apiResponse[2];
 			cambiarGrafico(listaPindaro.value, "Píndaro");
 		})
 		.catch((error) => {

@@ -77,7 +77,7 @@ function updateChartData(newData, newTitle) {
 	if (myLineChart) {
 		myLineChart.data = newData;
 		myLineChart.options.plugins.title.text =
-			"Últimos 5 Puntajes en " + newTitle;
+			"Últimos puntajes en " + newTitle;
 		myLineChart.update();
 	}
 }

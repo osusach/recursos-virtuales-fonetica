@@ -57,7 +57,7 @@ onMounted(() => {
 				title: {
 					font: { family: "BebasNeuePro Bold", size: 26 },
 					display: true,
-					text: "Últimos 5 Puntajes en " + props.title,
+					text: "Últimos puntajes en " + props.title,
 				},
 				legend: {
 					position: "bottom",

@@ -33,7 +33,7 @@
 						class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl w-64"
 					></Boton>
 				</router-link>
-				<router-link :to="ruta">
+				<router-link :to="'/home'">
 					<Boton
 						label="Volver"
 						type="button"

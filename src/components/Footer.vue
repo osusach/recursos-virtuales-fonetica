@@ -19,29 +19,8 @@
 				<img src="/logo_segic.png" alt="Logo Segic" />
 			</div>
 		</div>
-	<div class="footer bg-inherit px-40 text-base-content">
-    <aside>
-      <img
-        class="h-20"
-        src="/logo_transparent.svg"
-        alt="Open Source Usach logo"
-      />
-      <h1 class="text-3xl font-bold">Open Source USACH</h1>
-    </aside>
-    <nav>
-      <h6 class="footer-title text-xl">osusach</h6>
-      <a href="https://www.osusach.com/" class="link link-hover">Website</a>
-      <a href="https://github.com/osusach/" class="link link-hover">Github</a>
-      <a href="https://github.com/osusach/pegas" class="link link-hover">Source Code Git</a>
-    </nav>
-    <nav>
-      <h6 class="footer-title text-xl">Desarrolladores</h6>
-      <a href="https://github.com/kappita/" class="link link-hover">Ignacio Lara</a>
-      <a href="https://github.com/Skyrdow/" class="link link-hover">Lucas Mesías</a>
-      <a href="https://github.com/Klefur/" class="link link-hover">Joaquín Saldivia</a>
-      <a href="https://github.com/Don-Uldaricio/" class="link link-hover">Nicolás Aguilera</a>
-    </nav>
   </div>
+  <div>
 		<p class="font-usach-helvetica-body">
 			Icons by <a class="underline" href="https://icons8.com">Icons8</a>
 		</p>

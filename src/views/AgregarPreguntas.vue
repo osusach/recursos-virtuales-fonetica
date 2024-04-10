@@ -301,6 +301,7 @@ const loginInfo = reactive({
 	mail: "",
 	password: "",
 	isLogged: false,
+	token: ""
 });
 
 const preguntas = reactive({
@@ -341,8 +342,7 @@ const getAll = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 			}),
 		});
 		const pindaro = await pindaroQuestions.json();
@@ -354,8 +354,7 @@ const getAll = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 			}),
 		});
 		const rimas = await rimasQuestions.json();
@@ -367,8 +366,7 @@ const getAll = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 			}),
 		});
 		const acentual = await acentualQuestions.json();
@@ -423,8 +421,10 @@ const validateLogin = async () => {
 		});
 		const res = await response.json();
 		const success = await res.success;
+		const token = await res.token;
 		if (await success) {
 			loginInfo.isLogged = true;
+			loginInfo.token = token;
 			getAll();
 		} else {
 			alert("Correo o contraseña incorrectos");
@@ -584,8 +584,7 @@ const applyChanges = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 				silabas: questionsToAdd.pindaro.map((question) => {
 					return {
 						word: question.word,
@@ -605,8 +604,7 @@ const applyChanges = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 				ids: questionsToRemove.pindaro,
 			}),
 		});
@@ -620,8 +618,7 @@ const applyChanges = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 				ids: questionsToActivate.pindaro,
 			}),
 		});
@@ -635,8 +632,7 @@ const applyChanges = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 				rimas: questionsToAdd.rima,
 			}),
 		});
@@ -650,8 +646,7 @@ const applyChanges = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 				ids: questionsToRemove.rima,
 			}),
 		});
@@ -665,8 +660,7 @@ const applyChanges = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 				ids: questionsToActivate.rima,
 			}),
 		});
@@ -680,8 +674,7 @@ const applyChanges = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 				acentuales: questionsToAdd.cat_acentual.map((question) => {
 					return {
 						phrase: question.word,
@@ -699,8 +692,7 @@ const applyChanges = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 				ids: questionsToRemove.cat_acentual,
 			}),
 		});
@@ -714,8 +706,7 @@ const applyChanges = async () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				admin_email: loginInfo.mail,
-				admin_password: loginInfo.password,
+				token: loginInfo.token,
 				ids: questionsToActivate.cat_acentual,
 			}),
 		});
@@ -781,7 +772,7 @@ const applyChanges = async () => {
 	if (alertMessage !== "") {
 		alert(alertMessage);
 	}
-	getAll();
+
 	questionsToAdd.pindaro = [];
 	questionsToAdd.rima = [];
 	questionsToAdd.cat_acentual = [];
@@ -791,6 +782,7 @@ const applyChanges = async () => {
 	questionsToActivate.pindaro = [];
 	questionsToActivate.rima = [];
 	questionsToActivate.cat_acentual = [];
+	
 	getAll();
 };
 </script>

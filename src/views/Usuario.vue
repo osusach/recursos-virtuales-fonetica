@@ -7,7 +7,7 @@
 				<img
 					class="invert"
 					width="64"
-					src="https://img.icons8.com/pastel-glyph/64/user-male-circle.png"
+					src="/user_circle.svg"
 					alt="user_icon"
 				/>
 				<div class="flex flex-col">
@@ -25,7 +25,7 @@
 					class="invert"
 					width="24"
 					height="24"
-					src="https://img.icons8.com/material-outlined/24/more.png"
+					src="/more.svg"
 					alt="more"
 				/>
 			</div>

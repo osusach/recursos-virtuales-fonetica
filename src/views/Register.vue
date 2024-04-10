@@ -83,7 +83,7 @@
 					width="24"
 					height="24"
 					class="invert"
-					src="https://img.icons8.com/material-outlined/24/error--v1.png"
+					src="/error.svg"
 					alt="error--v1"
 				/>
 				<p>{{ errorMsg }}</p>

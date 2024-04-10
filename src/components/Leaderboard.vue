@@ -6,8 +6,8 @@
 		<div
 			class="flex flex-row px-5 pt-3 text-white text-xl justify-center items-center gap-3 mb-2"
 		>
-			<img src="/crown_8.svg" class="h-5 invert" alt="Crown" />
-			<h1 class="font-usach-helvetica-bold pt-1">{{ label }}</h1>
+			<img src="/crown.svg" class="h-6 invert" alt="Crown" />
+			<h1 class="font-usach-helvetica-bold">{{ label }}</h1>
 		</div>
 		<ol class="text-white">
 			<li

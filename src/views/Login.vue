@@ -55,7 +55,7 @@
 				class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"
 			/>
 			<p class="font-usach-helvetica-body text-base">
-				<i> Registrate para guardar tus puntajes!</i>
+				<i> Regístrate para guardar tus puntajes!</i>
 			</p>
 		</div>
 	</form>

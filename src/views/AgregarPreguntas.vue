@@ -301,7 +301,7 @@ const loginInfo = reactive({
 	mail: "",
 	password: "",
 	isLogged: false,
-	token: ""
+	token: "",
 });
 
 const preguntas = reactive({
@@ -421,10 +421,11 @@ const validateLogin = async () => {
 		});
 		const res = await response.json();
 		const success = await res.success;
-		const token = await res.token;
+		const token = await res.payload.user.token;
+
 		if (await success) {
-			loginInfo.isLogged = true;
 			loginInfo.token = token;
+			loginInfo.isLogged = true;
 			getAll();
 		} else {
 			alert("Correo o contraseña incorrectos");
@@ -782,7 +783,7 @@ const applyChanges = async () => {
 	questionsToActivate.pindaro = [];
 	questionsToActivate.rima = [];
 	questionsToActivate.cat_acentual = [];
-	
+
 	getAll();
 };
 </script>

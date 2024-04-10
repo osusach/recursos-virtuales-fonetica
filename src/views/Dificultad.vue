@@ -46,7 +46,7 @@
 			v-if="usuario == 'Invitado'"
 			class="flex flex-col p-7 w-full gap-2 text-center bg-usach-aqua-800 font-usach-helvetica-body text-white rounded-lg h-fit"
 		>
-			<h1 class="">Quieres guardar tu puntaje?</h1>
+			<h1 class="">¿Quieres guardar tu puntaje?</h1>
 			<a
 				href="/login"
 				class="font-usach-helvetica-bold hover:bg-usach-rouge-800 transition bg-usach-rouge-700 rounded-lg"

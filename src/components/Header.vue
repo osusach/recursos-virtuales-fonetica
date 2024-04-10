@@ -33,7 +33,7 @@
 					class="invert"
 					width="16"
 					height="16"
-					src="https://img.icons8.com/tiny-glyph/16/user.png"
+					src="/user.svg"
 					alt="user"
 				/>
 				<p class="font-usach-bebas-body text-2xl hidden sm:block">

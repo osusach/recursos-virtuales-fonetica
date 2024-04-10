@@ -25,8 +25,8 @@
 					width="24"
 					height="24"
 					class="invert"
-					src="https://img.icons8.com/material-outlined/24/error--v1.png"
-					alt="error--v1"
+					src="/error.svg"
+					alt="error"
 				/>
 				<p>{{ errorMsg }}</p>
 			</div>
@@ -55,7 +55,7 @@
 				class="bg-usach-ultra-700 hover:bg-usach-ultra-900 text-xl"
 			/>
 			<p class="font-usach-helvetica-body text-base">
-				<i> Registrate para guardar tus puntajes!</i>
+				<i> Regístrate para guardar tus puntajes!</i>
 			</p>
 		</div>
 	</form>

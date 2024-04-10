@@ -20,9 +20,4 @@
 			</div>
 		</div>
   </div>
-  <div>
-		<p class="font-usach-helvetica-body">
-			Icons by <a class="underline" href="https://icons8.com">Icons8</a>
-		</p>
-	</div>
 </template>

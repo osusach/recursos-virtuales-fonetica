@@ -358,7 +358,7 @@ const getAll = async () => {
 			}),
 		});
 		const rimas = await rimasQuestions.json();
-		preguntas.rima = await rimas.payload.silabas;
+		preguntas.rima = await rimas.payload.silabas.data;
 
 		const acentualQuestions = await fetch(`${url}/acentual/allAcentuales`, {
 			method: "POST",

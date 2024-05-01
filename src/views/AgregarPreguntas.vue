@@ -6,14 +6,14 @@
 		<label for="mail" class="pb-4">Correo: </label>
 		<input
 			type="text"
-			class="rounded-md"
+			class="input"
 			v-model="loginInfo.mail"
 			placeholder="Ingrese el correo"
 		/>
 		<label for="password" class="py-4">Contraseña:</label>
 		<input
 			type="password"
-			class="rounded-md"
+			class="input"
 			name="password"
 			v-model="loginInfo.password"
 			placeholder="Ingrese la contraseña"
@@ -35,7 +35,7 @@
 			<div class="flex flex-row gap-5 items-center">
 				<select
 					v-model="selectedGame"
-					class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700"
+					class="font-usach-helvetica-body select select-sm"
 				>
 					<option disabled value="">Selecciona un juego</option>
 					<option value="pindaro">Píndaro</option>
@@ -101,7 +101,7 @@
 									Activo / Inactivo:
 									<input
 										type="checkbox"
-										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
+										class="toggle toggle-info [--tglbg:rgb(220,220,220)]"
 										@change="toggleQuestion(pregunta)"
 										:checked="procIsActive(pregunta)"
 									/>
@@ -120,7 +120,7 @@
 									Activo / Inactivo:
 									<input
 										type="checkbox"
-										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
+										class="toggle toggle-info [--tglbg:rgb(220,220,220)]"
 										@change="toggleQuestion(pregunta)"
 										:checked="procIsActive(pregunta)"
 									/>
@@ -139,7 +139,7 @@
 									Activo / Inactivo:
 									<input
 										type="checkbox"
-										class="relative w-[3.25rem] h-7 p-px bg-usach-rouge-800 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 disabled:opacity-50 disabled:pointer-events-none checked:bg-usach-aqua-800 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 before:inline-block before:w-6 before:h-6 before:bg-usach-rouge-400 checked:before:bg-usach-aqua-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-900 dark:checked:before:bg-blue-200"
+										class="toggle toggle-info [--tglbg:rgb(220,220,220)]"
 										@change="toggleQuestion(pregunta)"
 										:checked="procIsActive(pregunta)"
 									/>
@@ -218,7 +218,7 @@
 					type="text"
 					id="newQuestion"
 					v-model="newQuestion.word"
-					class="rounded-lg"
+					class="input input-sm"
 				/>
 				<div
 					:class="{ hidden: selectedGame !== 'pindaro' }"
@@ -230,11 +230,11 @@
 						type="text"
 						id="solution"
 						v-model="newQuestion.solution"
-						class="rounded-lg"
+						class="input input-sm"
 					/>
 					<select
 						v-model="newQuestion.difficulty"
-						class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700"
+						class="font-usach-helvetica-body select select-sm"
 					>
 						<option disabled value="">Dificultad</option>
 						<option value="0">Fácil</option>
@@ -252,11 +252,11 @@
 						type="text"
 						id="rhyme"
 						v-model="newQuestion.rhyme"
-						class="rounded-lg"
+						class="input input-sm"
 					/>
 					<select
 						v-model="newQuestion.category"
-						class="font-usach-helvetica-body rounded-lg text-usach-industrial-1000 bg-white border-white text-sm focus:ring-usach-terra-700 focus:border-usach-terra-700"
+						class="font-usach-helvetica-body select select-sm"
 					>
 						<option disabled value="">Categoria</option>
 						<option value="a">Aguda</option>
@@ -358,7 +358,7 @@ const getAll = async () => {
 			}),
 		});
 		const rimas = await rimasQuestions.json();
-		preguntas.rima = await rimas.payload.silabas;
+		preguntas.rima = await rimas.payload.silabas.data;
 
 		const acentualQuestions = await fetch(`${url}/acentual/allAcentuales`, {
 			method: "POST",
@@ -421,10 +421,11 @@ const validateLogin = async () => {
 		});
 		const res = await response.json();
 		const success = await res.success;
-		const token = await res.token;
+		const token = await res.payload.user.token;
+    
 		if (await success) {
-			loginInfo.isLogged = true;
 			loginInfo.token = token;
+			loginInfo.isLogged = true;
 			getAll();
 		} else {
 			alert("Correo o contraseña incorrectos");
@@ -486,19 +487,44 @@ const formatearTexto = function (texto) {
 };
 
 const addQuestion = (juego) => {
-	// Contamos cuántas veces aparece la palabra en la lista
-	const ocurrencias = preguntas[selectedGame.value].filter(
-		(obj) => obj.word.toLowerCase() === newQuestion.word.toLowerCase(),
-	).length;
 
-	const ocurrenciasAdd = questionsToAdd[selectedGame.value].filter(
-		(obj) => obj.word.toLowerCase() === newQuestion.word.toLowerCase(),
-	).length;
-
-	// Si hay más de una ocurrencia, muestra un alert
-	if (ocurrencias >= 1 || ocurrenciasAdd >= 1) {
-		alert(`La palabra '${newQuestion.word}' está repetida.`);
-		return;
+	// validamos si la palabra ya existe considerando que en cat_acentual viene con el formato
+	// Mi-1-casa-5-es-1-mágica-6-y-1-azul-4
+	if (juego === "cat_acentual") {
+		const palabras = newQuestion.word.split("-");
+		const palabrasFiltradas = palabras.filter(function (part) {
+			return isNaN(part);
+		});
+		const palabrasUnicas = [...new Set(palabrasFiltradas)];
+		const palabrasUnicasTexto = palabrasUnicas.join(" ");
+		const ocurrencias = preguntas[selectedGame.value].filter(
+			(obj) => obj.acentual_phrase.toLowerCase() === palabrasUnicasTexto.toLowerCase(),
+		).length;
+	
+		const ocurrenciasAdd = questionsToAdd[selectedGame.value].filter(
+			(obj) => obj.acentual_phrase.toLowerCase() === palabrasUnicasTexto.toLowerCase(),
+		).length;
+	
+		// Si hay más de una ocurrencia, muestra un alert
+		if (ocurrencias >= 1 || ocurrenciasAdd >= 1) {
+			alert(`La palabra '${palabrasUnicasTexto}' está repetida.`);
+			return;
+		}	
+	} else {
+		// Contamos cuántas veces aparece la palabra en la lista
+		const ocurrencias = preguntas[selectedGame.value].filter(
+			(obj) => obj.word.toLowerCase() === newQuestion.word.toLowerCase(),
+		).length;
+	
+		const ocurrenciasAdd = questionsToAdd[selectedGame.value].filter(
+			(obj) => obj.word.toLowerCase() === newQuestion.word.toLowerCase(),
+		).length;
+	
+		// Si hay más de una ocurrencia, muestra un alert
+		if (ocurrencias >= 1 || ocurrenciasAdd >= 1) {
+			alert(`La palabra '${newQuestion.word}' está repetida.`);
+			return;
+		}
 	}
 
 	const pregunta = { word: newQuestion.word };

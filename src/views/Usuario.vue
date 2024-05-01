@@ -113,7 +113,7 @@ onMounted(async () => {
 	}
 
 	axios
-		.post(url + "/scores/history", { token: String(userid)})
+		.post(url + "/scores/history", { token: String(userid) })
 		.then((response) => {
 			apiResponse = response.data.payload;
 

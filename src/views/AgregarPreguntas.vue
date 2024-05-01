@@ -301,7 +301,7 @@ const loginInfo = reactive({
 	mail: "",
 	password: "",
 	isLogged: false,
-	token: ""
+	token: "",
 });
 
 const preguntas = reactive({
@@ -782,7 +782,7 @@ const applyChanges = async () => {
 	questionsToActivate.pindaro = [];
 	questionsToActivate.rima = [];
 	questionsToActivate.cat_acentual = [];
-	
+
 	getAll();
 };
 </script>

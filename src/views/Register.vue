@@ -152,6 +152,12 @@ const validateRegister = () => {
 	} else {
 		isValidSS.value = true;
 	}
+	if (password.value.length < 8) {
+		isValidPassword.value = false;
+		isValidRegister.value = false;
+		errorMsg.value = "La contraseña debe tener al menos 8 caracteres";
+		return;
+	}
 	if (password.value !== confirm_password.value) {
 		isValidPassword.value = false;
 		isValidRegister.value = false;
@@ -172,53 +178,29 @@ const registerFunc = async () => {
 		name: user.value,
 	};
 
-	await axios
-		.post(url + "/users/register", data)
-		.then((response) => {
-			posthog.capture("usuario registrado", {
-				course: String(selectedSec.value + selectedFirst.value),
-			});
-			router.push("/login");
-			alert("Registro Exitoso");
-		})
-		.catch((error) => {
-			posthog.capture("register error", {
-				name: error.name,
-				message: error.message,
-				response: error.response,
-				code: error.code,
-				method: error.method,
-				url: error.url,
-				status: error.status,
-			});
-
-			errorMsg.value = "";
-			if (!error.response.data.payload.message.name) {
-				errorMsg.value += error.response.data.payload.message;
-			}
-			if (error.response.data.payload.message.issues) {
-				error.response.data.payload.message.issues.forEach(
-					(element) => {
-						if (element.code == "too_small") {
-							errorMsg.value +=
-								"La contraseña debe tener al menos 8 carácteres.\n";
-							isValidPassword.value = false;
-						}
-						if (element.code == "invalid_string") {
-							isValidEmail.value = false;
-							errorMsg.value += "El correo es inválido.\n";
-						}
-						if (
-							element.code != "invalid_string" &&
-							element.code != "too_small"
-						) {
-							errorMsg.value += element.message + "\n";
-							isValidRegister.value = false;
-						}
-					},
-				);
-			}
-			isValidRegister.value = false;
+	try {
+		const response = await fetch(url + "/users/register", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
 		});
+
+		if (!response.ok) {
+			const errorData = await response.json();
+			throw new Error(JSON.stringify(errorData));
+		}
+
+		posthog.capture("usuario registrado", {
+			course: String(selectedSec.value + selectedFirst.value),
+		});
+		router.push("/login");
+		alert("Registro Exitoso");
+	} catch (error) {
+		posthog.capture("register error", {
+			message: error.message,
+		});
+	}
 };
 </script>

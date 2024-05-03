@@ -46,14 +46,12 @@
 					@click="setAction(true)"
 					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800"
 				>
-					<v-icon icon="mdi-plus"></v-icon>
 					<p class="px-3 w-32">Agregar pregunta</p>
 				</button>
 				<button
 					@click="applyChanges"
 					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800"
 				>
-					<v-icon icon="mdi-check"></v-icon>
 					<p class="px-3 w-32">Aplicar cambios</p>
 				</button>
 				<p>
@@ -98,7 +96,7 @@
 									{{ procDificultad(pregunta) }}
 								</div>
 								<div>
-									Activo / Inactivo:
+									Pregunta Disponible:
 									<input
 										type="checkbox"
 										class="toggle toggle-info [--tglbg:rgb(220,220,220)]"
@@ -117,7 +115,7 @@
 									Categoria: {{ procCategoria(pregunta) }}
 								</div>
 								<div>
-									Activo / Inactivo:
+									Pregunta Disponible:
 									<input
 										type="checkbox"
 										class="toggle toggle-info [--tglbg:rgb(220,220,220)]"
@@ -136,7 +134,7 @@
 									Frase: {{ pregunta.acentual_phrase }}
 								</div>
 								<div>
-									Activo / Inactivo:
+									Pregunta Disponible:
 									<input
 										type="checkbox"
 										class="toggle toggle-info [--tglbg:rgb(220,220,220)]"
@@ -302,6 +300,7 @@ const loginInfo = reactive({
 	password: "",
 	isLogged: false,
 	token: "",
+	token: "",
 });
 
 const preguntas = reactive({
@@ -334,43 +333,25 @@ const procIsActive = (pregunta) => {
 	return pregunta.is_active === 1;
 };
 
+const fetchWords = async (path) => {
+	const response = await fetch(`${url}${path}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			token: loginInfo.token,
+		}),
+	});
+	const res = await response.json();
+	return res.payload.silabas.data || res.payload.silabas;
+};
+
 const getAll = async () => {
 	if (loginInfo.isLogged) {
-		const pindaroQuestions = await fetch(`${url}/silabas/allSilabas`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				token: loginInfo.token,
-			}),
-		});
-		const pindaro = await pindaroQuestions.json();
-		preguntas.pindaro = await pindaro.payload.silabas;
-
-		const rimasQuestions = await fetch(`${url}/rimas/allRimas`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				token: loginInfo.token,
-			}),
-		});
-		const rimas = await rimasQuestions.json();
-		preguntas.rima = await rimas.payload.silabas.data;
-
-		const acentualQuestions = await fetch(`${url}/acentual/allAcentuales`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				token: loginInfo.token,
-			}),
-		});
-		const acentual = await acentualQuestions.json();
-		preguntas.cat_acentual = await acentual.payload.silabas;
+		preguntas.pindaro = await fetchWords("/silabas/allSilabas");
+		preguntas.rima = await fetchWords("/rimas/allRimas");
+		preguntas.cat_acentual = await fetchWords("/acentual/allAcentuales");
 	}
 };
 
@@ -422,7 +403,7 @@ const validateLogin = async () => {
 		const res = await response.json();
 		const success = await res.success;
 		const token = await res.payload.user.token;
-    
+
 		if (await success) {
 			loginInfo.token = token;
 			loginInfo.isLogged = true;
@@ -487,7 +468,6 @@ const formatearTexto = function (texto) {
 };
 
 const addQuestion = (juego) => {
-
 	// validamos si la palabra ya existe considerando que en cat_acentual viene con el formato
 	// Mi-1-casa-5-es-1-mágica-6-y-1-azul-4
 	if (juego === "cat_acentual") {
@@ -498,28 +478,32 @@ const addQuestion = (juego) => {
 		const palabrasUnicas = [...new Set(palabrasFiltradas)];
 		const palabrasUnicasTexto = palabrasUnicas.join(" ");
 		const ocurrencias = preguntas[selectedGame.value].filter(
-			(obj) => obj.acentual_phrase.toLowerCase() === palabrasUnicasTexto.toLowerCase(),
+			(obj) =>
+				obj.acentual_phrase.toLowerCase() ===
+				palabrasUnicasTexto.toLowerCase(),
 		).length;
-	
+
 		const ocurrenciasAdd = questionsToAdd[selectedGame.value].filter(
-			(obj) => obj.acentual_phrase.toLowerCase() === palabrasUnicasTexto.toLowerCase(),
+			(obj) =>
+				obj.acentual_phrase.toLowerCase() ===
+				palabrasUnicasTexto.toLowerCase(),
 		).length;
-	
+
 		// Si hay más de una ocurrencia, muestra un alert
 		if (ocurrencias >= 1 || ocurrenciasAdd >= 1) {
 			alert(`La palabra '${palabrasUnicasTexto}' está repetida.`);
 			return;
-		}	
+		}
 	} else {
 		// Contamos cuántas veces aparece la palabra en la lista
 		const ocurrencias = preguntas[selectedGame.value].filter(
 			(obj) => obj.word.toLowerCase() === newQuestion.word.toLowerCase(),
 		).length;
-	
+
 		const ocurrenciasAdd = questionsToAdd[selectedGame.value].filter(
 			(obj) => obj.word.toLowerCase() === newQuestion.word.toLowerCase(),
 		).length;
-	
+
 		// Si hay más de una ocurrencia, muestra un alert
 		if (ocurrencias >= 1 || ocurrenciasAdd >= 1) {
 			alert(`La palabra '${newQuestion.word}' está repetida.`);
@@ -595,6 +579,22 @@ const toggleQuestion = (pregunta) => {
 	}
 };
 
+const togglePostQuestion = async (route, ids) => {
+	const res = await fetch(`${url}${route}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			token: loginInfo.token,
+			ids,
+		}),
+	});
+
+	const resJson = await res.json();
+	return resJson.success;
+};
+
 const applyChanges = async () => {
 	const resAdd = [null, null, null];
 	const resDelete = [null, null, null];
@@ -624,32 +624,16 @@ const applyChanges = async () => {
 		resAdd[0] = await resAdd[0].success;
 	}
 	if (questionsToRemove.pindaro.length > 0) {
-		resDelete[0] = await fetch(`${url}/silabas/deleteSilabas`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				token: loginInfo.token,
-				ids: questionsToRemove.pindaro,
-			}),
-		});
-		resDelete[0] = await resDelete[0].json();
-		resDelete[0] = await resDelete[0].success;
+		resDelete[0] = togglePostQuestion(
+			"/silabas/deleteSilabas",
+			questionsToRemove.pindaro,
+		);
 	}
 	if (questionsToActivate.pindaro.length > 0) {
-		resActivate[0] = await fetch(`${url}/silabas/activateSilabas`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				token: loginInfo.token,
-				ids: questionsToActivate.pindaro,
-			}),
-		});
-		resActivate[0] = await resActivate[0].json();
-		resActivate[0] = await resActivate[0].success;
+		resActivate[0] = togglePostQuestion(
+			"/silabas/activateSilabas",
+			questionsToActivate.pindaro,
+		);
 	}
 	if (questionsToAdd.rima.length > 0) {
 		resAdd[1] = await fetch(`${url}/rimas/uploadRimas`, {
@@ -666,32 +650,16 @@ const applyChanges = async () => {
 		resAdd[1] = await resAdd[1].success;
 	}
 	if (questionsToRemove.rima.length > 0) {
-		resDelete[1] = await fetch(`${url}/rimas/deleteRimas`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				token: loginInfo.token,
-				ids: questionsToRemove.rima,
-			}),
-		});
-		resDelete[1] = await resDelete[1].json();
-		resDelete[1] = await resDelete[1].success;
+		resDelete[1] = togglePostQuestion(
+			"/rimas/deleteRimas",
+			questionsToRemove.rima,
+		);
 	}
 	if (questionsToActivate.rima.length > 0) {
-		resActivate[1] = await fetch(`${url}/rimas/activateRimas`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				token: loginInfo.token,
-				ids: questionsToActivate.rima,
-			}),
-		});
-		resActivate[1] = await resActivate[1].json();
-		resActivate[1] = await resActivate[1].success;
+		resActivate[1] = togglePostQuestion(
+			"/rimas/activateRimas",
+			questionsToActivate.rima,
+		);
 	}
 	if (questionsToAdd.cat_acentual.length > 0) {
 		resAdd[2] = await fetch(`${url}/acentual/uploadAcentual`, {
@@ -712,104 +680,68 @@ const applyChanges = async () => {
 		resAdd[2] = await resAdd[2].success;
 	}
 	if (questionsToRemove.cat_acentual.length > 0) {
-		resDelete[2] = await fetch(`${url}/acentual/deleteAcentuales`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				token: loginInfo.token,
-				ids: questionsToRemove.cat_acentual,
-			}),
-		});
-		resDelete[2] = await resDelete[2].json();
-		resDelete[2] = await resDelete[2].success;
+		resDelete[2] = togglePostQuestion(
+			"/acentual/deleteAcentual",
+			questionsToRemove.cat_acentual,
+		);
 	}
 	if (questionsToActivate.cat_acentual.length > 0) {
-		resActivate[2] = await fetch(`${url}/acentual/activateAcentuales`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				token: loginInfo.token,
-				ids: questionsToActivate.cat_acentual,
-			}),
-		});
-		resActivate[2] = await resActivate[2].json();
-		resActivate[2] = await resActivate[2].success;
+		resActivate[2] = togglePostQuestion(
+			"/acentual/activateAcentual",
+			questionsToActivate.cat_acentual,
+		);
 	}
 
+	const categories = ["pindaro", "rimas", "cat_acentual"];
+
+	const actions = {
+		add: "agregadas correctamente a",
+		delete: "eliminadas correctamente de",
+		activate: "activadas correctamente en",
+	};
+
 	let alertMessage = "";
-	if (resAdd[0] === true) {
-		alertMessage += "Preguntas agregadas correctamente a pindaro\n";
-	} else if (resAdd[0] !== true && questionsToAdd.pindaro.length > 0) {
-		alertMessage += "Error al agregar preguntas a pindaro\n";
-	}
-	if (resDelete[0] === true) {
-		alertMessage += "Preguntas eliminadas correctamente de pindaro\n";
-	} else if (resDelete[0] !== true && questionsToRemove.pindaro.length > 0) {
-		alertMessage += "Error al eliminar preguntas de pindaro\n";
-	}
-	if (resActivate[0] === true) {
-		alertMessage += "Preguntas activadas correctamente de pindaro\n";
-	} else if (
-		resActivate[0] !== true &&
-		questionsToActivate.pindaro.length > 0
-	) {
-		alertMessage += "Error al activar preguntas de pindaro\n";
-	}
-	if (resAdd[1] === true) {
-		alertMessage += "Preguntas agregadas correctamente a rimas\n";
-	} else if (resAdd[1] !== true && questionsToAdd.rima.length > 0) {
-		alertMessage += "Error al agregar preguntas a rimas\n";
-	}
-	if (resDelete[1] === true) {
-		alertMessage += "Preguntas eliminadas correctamente de rimas\n";
-	} else if (resDelete[1] !== true && questionsToRemove.rima.length > 0) {
-		alertMessage += "Error al eliminar preguntas de rimas\n";
-	}
-	if (resActivate[1] === true) {
-		alertMessage += "Preguntas activadas correctamente de rimas\n";
-	} else if (resActivate[1] !== true && questionsToActivate.rima.length > 0) {
-		alertMessage += "Error al activar preguntas de rimas\n";
-	}
-	if (resAdd[2] === true) {
-		alertMessage += "Preguntas agregadas correctamente a acentual\n";
-	} else if (resAdd[2] !== true && questionsToAdd.cat_acentual.length > 0) {
-		alertMessage += "Error al agregar preguntas a acentual\n";
-	}
-	if (resDelete[2] === true) {
-		alertMessage += "Preguntas eliminadas correctamente de acentual";
-	} else if (
-		resDelete[2] !== true &&
-		questionsToRemove.cat_acentual.length > 0
-	) {
-		alertMessage += "Error al eliminar preguntas de acentual";
-	}
-	if (resActivate[2] === true) {
-		alertMessage += "Preguntas activadas correctamente de acentual";
-	} else if (
-		resActivate[2] !== true &&
-		questionsToActivate.cat_acentual.length > 0
-	) {
-		alertMessage += "Error al activar preguntas de acentual";
-	}
+
+	let success = false;
+
+	categories.forEach((category) => {
+		const index = categories.indexOf(category);
+		const addResult = resAdd[index];
+		const deleteResult = resDelete[index];
+		const activateResult = resActivate[index];
+
+		if (addResult) {
+			alertMessage += `Preguntas ${actions.add} ${category}\n`;
+			questionsToAdd[category] = [];
+			success = true;
+		} else if (!addResult && addResult !== null) {
+			alertMessage += `Error al agregar preguntas a ${category}\n`;
+		}
+
+		if (deleteResult) {
+			alertMessage += `Preguntas ${actions.delete} ${category}\n`;
+			questionsToRemove[category] = [];
+			success = true;
+		} else if (!deleteResult && deleteResult !== null) {
+			alertMessage += `Error al eliminar preguntas de ${category}\n`;
+		}
+
+		if (activateResult) {
+			alertMessage += `Preguntas ${actions.activate} ${category}\n`;
+			questionsToActivate[category] = [];
+			success = true;
+		} else if (!activateResult && activateResult !== null) {
+			alertMessage += `Error al activar preguntas en ${category}\n`;
+		}
+	});
+
 	if (alertMessage !== "") {
 		alert(alertMessage);
 	}
 
-	questionsToAdd.pindaro = [];
-	questionsToAdd.rima = [];
-	questionsToAdd.cat_acentual = [];
-	questionsToRemove.pindaro = [];
-	questionsToRemove.rima = [];
-	questionsToRemove.cat_acentual = [];
-	questionsToActivate.pindaro = [];
-	questionsToActivate.rima = [];
-	questionsToActivate.cat_acentual = [];
-
-	getAll();
+	if (success) {
+		getAll();
+	}
 };
 </script>
 

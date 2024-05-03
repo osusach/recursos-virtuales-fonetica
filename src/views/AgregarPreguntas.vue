@@ -300,6 +300,7 @@ const loginInfo = reactive({
 	password: "",
 	isLogged: false,
 	token: "",
+	token: "",
 });
 
 const preguntas = reactive({

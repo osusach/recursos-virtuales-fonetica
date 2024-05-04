@@ -80,7 +80,7 @@ function getAspectRatio() {
 	if (anchoPagina.value <  640)
 		return 4/3;
 	else
-		return 16/9;
+		return 2/1;
 }
 
 function updateChartData(newData, newTitle) {

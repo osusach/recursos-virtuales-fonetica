@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, watchEffect } from "vue";
+import { ref, onMounted, onUnmounted, defineProps, watchEffect, watch } from "vue";
 import {
 	Chart,
 	CategoryScale,
@@ -24,7 +24,9 @@ const props = defineProps({
 const lineChartCanvas = ref(null);
 let myLineChart;
 
-onMounted(() => {
+onMounted(() => {  
+	window.addEventListener('resize', actualizarAnchoPagina);
+
 	Chart.register(
 		CategoryScale,
 		LinearScale,
@@ -44,6 +46,7 @@ onMounted(() => {
 		options: {
 			responsive: true,
 			maintainAspectRatio: true,
+    		aspectRatio: 4 / 3,
 			scales: {
 				y: {
 					min: 0,
@@ -73,6 +76,13 @@ onMounted(() => {
 	});
 });
 
+function getAspectRatio() {
+	if (anchoPagina.value <  640)
+		return 4/3;
+	else
+		return 16/9;
+}
+
 function updateChartData(newData, newTitle) {
 	if (myLineChart) {
 		myLineChart.data = newData;
@@ -81,6 +91,29 @@ function updateChartData(newData, newTitle) {
 		myLineChart.update();
 	}
 }
+
+
+// Definir una referencia reactiva para el ancho de la página
+const anchoPagina = ref(window.innerWidth);
+
+// Función para actualizar el ancho de la página cuando cambie
+const actualizarAnchoPagina = () => {
+  anchoPagina.value = window.innerWidth;
+};
+
+// Limpiar el evento cuando el componente se desmonta
+onUnmounted(() => {
+  window.removeEventListener('resize', actualizarAnchoPagina);
+});
+
+// Observar cambios en el ancho de la página y ejecutar una acción
+watch(anchoPagina, (nuevoAncho, antiguoAncho) => {
+  console.log(`El ancho de la página cambió de ${antiguoAncho}px a ${nuevoAncho}px`);
+  if (myLineChart) {
+	console.log(getAspectRatio());
+	  myLineChart.options.aspectRatio = getAspectRatio();
+  }
+});
 
 watchEffect(() => {
 	updateChartData(props.data, props.title);

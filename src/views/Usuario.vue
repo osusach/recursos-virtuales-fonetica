@@ -1,7 +1,7 @@
 <template>
-	<div class="flex flex-col gap-16 p-5">
+	<div class="flex flex-col gap-16 p-5 w-full sm:w-3/4">
 		<div
-			class="flex flex-row p-4 px-5 justify-between shadow-md font-usach-helvetica-bold items-center text-white bg-usach-aqua-800 rounded-xl"
+			class="flex flex-row p-4 px-5 gap-4 w-full justify-between shadow-md font-usach-helvetica-bold items-center text-white bg-usach-aqua-800 rounded-xl"
 		>
 			<div class="flex flex-row gap-4 items-center">
 				<img
@@ -30,14 +30,14 @@
 				/>
 			</div>
 		</div>
-		<div class="flex flex-col gap-3 items-center w-[940px]">
+		<div class="flex flex-col gap-3 items-center">
 			<p
 				class="w-full bg-usach-ultra-900 font-usach-bebas-title text-4xl text-white text-center rounded-xl py-1"
 			>
 				Historial de partidas
 			</p>
 			<div
-				class="flex flex-row w-fit justify-between lg:flex-row items-center gap-5"
+				class="flex flex-col lg:flex-row w-fit justify-between items-center gap-5"
 			>
 				<Historial
 					class="w-[300px]"
@@ -59,7 +59,7 @@
 				/>
 			</div>
 			<Graph
-				class="p-4 bg-usach-daisy-600 text-xl rounded-xl"
+				class="p-2 md:p-4 bg-usach-daisy-600 text-xl rounded-xl w-full max-w-full"
 				:data="chartData"
 				:title="chartTitle"
 			></Graph>

@@ -17,7 +17,7 @@
 					<option value="cat_acentual">Acentual</option>
 				</select>
 				<button
-					@click="setAction(true)"
+					@click="setAction"
 					class="flex flex-row w-fit justify-center rounded-lg p-1 font-usach-bebas-body text-lg bg-usach-terra-700 hover:bg-usach-terra-800"
 				>
 					<p class="px-3 w-32">Agregar pregunta</p>
@@ -42,6 +42,9 @@
 			</div>
 			<question-manager
 				:selectedGame="selectedGame"
+				:token="props.token"
+				:activeAction="activeAction"
+				@update:activeAction="activeAction = $event"
 				ref="questionManager"
 			></question-manager>
 		</div>
@@ -52,16 +55,26 @@
 import { ref } from "vue";
 import QuestionManager from "./QuestionManager.vue";
 
-const props = defineProps(["isLogged"]);
+const props = defineProps(["isLogged", "token"]);
 
 const selectedGame = ref("");
 const activeAction = ref(false);
 
-const setAction = (status) => {
-	activeAction.value = status;
+const setAction = () => {
+	if (selectedGame.value === "") {
+		alert("Debe seleccionar un juego");
+	} else {
+		activeAction.value = true;
+	}
 };
 
 const questionManager = ref(null);
+
+const loadWords = () => {
+	questionManager.value.getAll();
+};
+
+defineExpose({ loadWords });
 
 const applyChanges = () => {
 	questionManager.value.applyChanges();

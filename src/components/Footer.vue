@@ -19,7 +19,7 @@
 				<img src="/logo_segic.png" alt="Logo Segic" />
 			</div>
 		</div>
-		<div class="footer bg-inherit px-40 py-5 text-white">
+		<div class="footer w-fit mx-auto bg-inherit py-5 text-white">
 			<aside>
 				<img
 					class="h-20"

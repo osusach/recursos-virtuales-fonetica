@@ -1,5 +1,5 @@
 <template>
-	<header className="bg-usach-aqua-900 flex items-center p-1">
+	<header className="bg-usach-aqua-900 flex items-center p-1 overflow-hidden">
 		<div className="flex-none">
 			<button @click="routeButton()" title="Ir al inicio">
 				<img

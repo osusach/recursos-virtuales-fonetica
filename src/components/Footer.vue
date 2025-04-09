@@ -58,6 +58,11 @@
 					class="link link-hover"
 					>Nicolás Aguilera</a
 				>
+				<a
+					href="https://github.com/Ghox19/"
+					class="link link-hover"
+					>Gonzalo Moncada</a
+				>
 			</nav>
 			<nav>
 				<h6 class="footer-title text-xl">Contenido Académico</h6>

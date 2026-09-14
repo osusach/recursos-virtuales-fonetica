@@ -105,6 +105,13 @@
 						/>
 						Agregar
 					</button>
+					<button
+						@click="openImport"
+						:disabled="importing"
+						class="flex flex-row items-center gap-2 rounded-lg px-4 py-1 font-usach-bebas-body text-lg bg-usach-cloudy-800 hover:bg-usach-cloudy-900 text-white disabled:opacity-60"
+					>
+						{{ importing ? "Importando..." : "Importar" }}
+					</button>
 				</div>
 			</div>
 
@@ -198,6 +205,88 @@
 			@close="formOpen = false"
 			@saved="onSaved"
 		/>
+
+		<div v-if="importOpen" class="overlay" @click="closeImport">
+			<div
+				class="flex flex-col gap-4 bg-usach-aqua-400 p-5 rounded-lg w-[90vw] max-w-2xl max-h-[90vh] overflow-y-auto font-usach-helvetica-body"
+				@click.stop
+			>
+				<p class="font-usach-bebas-title text-2xl">
+					Importar {{ GAMES[selectedGame].label }}
+				</p>
+
+				<div class="text-sm flex flex-col gap-1">
+					<p class="font-semibold">¿Cómo funciona?</p>
+					<ul class="list-disc ms-5 space-y-1">
+						<li>
+							Usa el botón <span class="font-semibold">Exportar</span>
+							de esta pestaña para descargar las preguntas
+							actuales (CSV o JSON).
+						</li>
+						<li>
+							Edita el archivo: cambia valores, agrega filas o
+							marca la columna
+							<span class="font-semibold">activa</span> con
+							<code>si</code>/<code>no</code>.
+						</li>
+						<li>
+							Las filas con un
+							<span class="font-semibold">id</span> ya existente
+							(o con la misma palabra/frase) se
+							<span class="font-semibold">actualizan en el lugar</span>,
+							conservando su historial de respuestas.
+						</li>
+						<li>
+							Las filas nuevas se
+							<span class="font-semibold">agregan</span>.
+						</li>
+						<li>
+							Las palabras que no aparezcan en el archivo
+							<span class="font-semibold"
+								>no se modifican ni eliminan</span
+							>.
+						</li>
+						<li>
+							Antes de aplicar verás un resumen para confirmar.
+						</li>
+					</ul>
+				</div>
+
+				<div
+					class="dropzone"
+					:class="{ 'dropzone-active': dragging }"
+					@click="openFilePicker"
+					@dragover.prevent="dragging = true"
+					@dragenter.prevent="dragging = true"
+					@dragleave.prevent="dragging = false"
+					@drop.prevent="handleDrop"
+				>
+					<p class="text-lg font-semibold">Arrastra el archivo aquí</p>
+					<p class="text-sm">o haz clic para seleccionarlo</p>
+					<p class="text-xs mt-1">
+						Formatos: CSV o JSON · {{ GAMES[selectedGame].label }}
+					</p>
+				</div>
+
+				<input
+					ref="fileInput"
+					type="file"
+					accept=".csv,.json,text/csv,application/json"
+					class="hidden"
+					@change="handleImportFile"
+				/>
+
+				<div class="flex justify-end">
+					<button
+						@click="closeImport"
+						:disabled="importing"
+						class="rounded-lg px-4 py-1 font-usach-bebas-body text-lg bg-usach-cloudy-800 hover:bg-usach-cloudy-900 text-white disabled:opacity-60"
+					>
+						{{ importing ? "Importando..." : "Cancelar" }}
+					</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -215,6 +304,9 @@ import {
 	exportGame,
 	fetchAllQuestions,
 	fetchQuestions,
+	parseImportFile,
+	previewImport,
+	applyImport,
 	setQuestionActive,
 } from "../utils/questions.js";
 
@@ -232,6 +324,10 @@ const exportScope = ref("all");
 const exporting = ref(false);
 const formOpen = ref(false);
 const editing = ref(null);
+const importing = ref(false);
+const importOpen = ref(false);
+const dragging = ref(false);
+const fileInput = ref(null);
 
 const filteredQuestions = computed(() => {
 	const term = search.value.trim().toLowerCase();
@@ -250,6 +346,8 @@ const columns = computed(() => {
 		return [
 			{ header: "Palabra", value: (q) => q.word },
 			{ header: "Sílabas", value: (q) => q.answer },
+			{ header: "N° fonemas", value: (q) => q.fonemas },
+			{ header: "N° grafemas", value: (q) => q.grafemas },
 			{
 				header: "Dificultad",
 				value: (q) => DIFFICULTIES[q.difficulty] ?? q.difficulty,
@@ -323,6 +421,93 @@ async function onSaved() {
 	await loadQuestions();
 }
 
+function openImport() {
+	importOpen.value = true;
+}
+
+function closeImport() {
+	if (!importing.value) importOpen.value = false;
+}
+
+function openFilePicker() {
+	if (!importing.value) fileInput.value?.click();
+}
+
+function importError(response) {
+	const conflicts = response.payload?.conflicts || [];
+	const details = conflicts
+		.slice(0, 10)
+		.map((conflict) => `· Fila ${conflict.row}: ${conflict.message}`)
+		.join("\n");
+	return `${response.message || "Error al importar"}${details ? `\n\n${details}` : ""}`;
+}
+
+async function handleImportFile(event) {
+	const file = event.target.files?.[0];
+	event.target.value = "";
+	if (file) await processImportFile(file);
+}
+
+async function handleDrop(event) {
+	dragging.value = false;
+	const file = event.dataTransfer?.files?.[0];
+	if (file) await processImportFile(file);
+}
+
+async function processImportFile(file) {
+	if (!props.token) return;
+	importing.value = true;
+	try {
+		const rows = parseImportFile(selectedGame.value, await file.text());
+		if (!rows.length) {
+			alert("El archivo no contiene filas");
+			return;
+		}
+		const preview = await previewImport(
+			selectedGame.value,
+			props.token,
+			rows,
+		);
+		if (!preview.success) {
+			alert(importError(preview));
+			return;
+		}
+		const counts = preview.payload;
+		const confirmed = confirm(
+			`Importar ${GAMES[selectedGame.value].label}\n\n` +
+				`Se actualizarán: ${counts.toUpdate}\n` +
+				`Se agregarán: ${counts.toInsert}\n` +
+				`Sin cambios: ${counts.unchanged}\n` +
+				`Ids no encontrados (se emparejan por palabra/frase): ${counts.idNotFound}\n\n` +
+				`Las palabras que no aparezcan en el archivo no se modifican ni se eliminan.\n\n` +
+				`¿Aplicar la importación?`,
+		);
+		if (!confirmed) return;
+		const result = await applyImport(
+			selectedGame.value,
+			props.token,
+			rows,
+		);
+		if (!result.success) {
+			alert(importError(result));
+			return;
+		}
+		const applied = result.payload;
+		alert(
+			`Importación completada\n\n` +
+				`Actualizadas: ${applied.toUpdate}\n` +
+				`Agregadas: ${applied.toInsert}\n` +
+				`Sin cambios: ${applied.unchanged}`,
+		);
+		importOpen.value = false;
+		await loadQuestions();
+	} catch (error) {
+		alert(error.message);
+	} finally {
+		importing.value = false;
+	}
+}
+
 async function handleExport() {
 	exporting.value = true;
 	try {
@@ -348,5 +533,31 @@ defineExpose({ loadQuestions });
 <style scoped>
 .hidden {
 	display: none;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 50;
+}
+
+.dropzone {
+	cursor: pointer;
+	border: 2px dashed rgba(0, 0, 0, 0.35);
+	border-radius: 0.5rem;
+	padding: 1.5rem;
+	text-align: center;
+	transition: background-color 0.15s ease;
+}
+
+.dropzone-active {
+	background-color: rgba(255, 255, 255, 0.45);
 }
 </style>

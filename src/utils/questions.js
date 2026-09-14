@@ -10,6 +10,7 @@ export const GAMES = {
 		edit: "/silabas/editSilaba",
 		remove: "/silabas/deleteSilabas",
 		activate: "/silabas/activateSilabas",
+		import: "/silabas/importSilabas",
 	},
 	rima: {
 		key: "rima",
@@ -20,6 +21,7 @@ export const GAMES = {
 		edit: "/rimas/editRima",
 		remove: "/rimas/deleteRimas",
 		activate: "/rimas/activateRimas",
+		import: "/rimas/importRimas",
 	},
 	cat_acentual: {
 		key: "cat_acentual",
@@ -30,6 +32,7 @@ export const GAMES = {
 		edit: "/acentual/editAcentual",
 		remove: "/acentual/deleteAcentuales",
 		activate: "/acentual/activateAcentuales",
+		import: "/acentual/importAcentual",
 	},
 };
 
@@ -57,6 +60,8 @@ function normalize(game, raw) {
 			word: raw.word,
 			answer: Number(raw.answer),
 			difficulty: Number(raw.difficulty),
+			fonemas: Number(raw.fonemas),
+			grafemas: Number(raw.grafemas),
 			is_active: toActive(raw.is_active),
 		};
 	}
@@ -131,6 +136,8 @@ export async function addQuestion(game, token, data) {
 					word: data.word,
 					answer_value: Number(data.answer),
 					difficulty: Number(data.difficulty),
+					fonemas: Number(data.fonemas),
+					grafemas: Number(data.grafemas),
 				},
 			],
 		};
@@ -160,6 +167,8 @@ export async function editQuestion(game, token, data) {
 				word: data.word,
 				answer_value: Number(data.answer),
 				difficulty: Number(data.difficulty),
+				fonemas: Number(data.fonemas),
+				grafemas: Number(data.grafemas),
 			},
 		};
 	} else if (game === "rima") {
@@ -198,6 +207,8 @@ const CSV_COLUMNS = {
 		{ header: "id", value: (q) => q.id },
 		{ header: "palabra", value: (q) => q.word },
 		{ header: "silabas", value: (q) => q.answer },
+		{ header: "fonemas", value: (q) => q.fonemas },
+		{ header: "grafemas", value: (q) => q.grafemas },
 		{
 			header: "dificultad",
 			value: (q) => DIFFICULTIES[q.difficulty] ?? q.difficulty,
@@ -279,6 +290,8 @@ export function exportAll(format, allQuestions) {
 		{ header: "palabra", value: (row) => row.word ?? "" },
 		{ header: "frase", value: (row) => row.phrase ?? "" },
 		{ header: "silabas", value: (row) => row.answer ?? "" },
+		{ header: "fonemas", value: (row) => row.fonemas ?? "" },
+		{ header: "grafemas", value: (row) => row.grafemas ?? "" },
 		{ header: "rima", value: (row) => row.rhyme ?? "" },
 		{
 			header: "categoria",
@@ -302,4 +315,286 @@ export function exportAll(format, allQuestions) {
 		toCSV(columns, rows),
 		"text/csv;charset=utf-8",
 	);
+}
+
+export function parseCSV(text) {
+	const rows = [];
+	let row = [];
+	let field = "";
+	let inQuotes = false;
+	let i = 0;
+	const pushField = () => {
+		row.push(field);
+		field = "";
+	};
+	const pushRow = () => {
+		pushField();
+		rows.push(row);
+		row = [];
+	};
+	while (i < text.length) {
+		const char = text[i];
+		if (inQuotes) {
+			if (char === '"') {
+				if (text[i + 1] === '"') {
+					field += '"';
+					i += 2;
+					continue;
+				}
+				inQuotes = false;
+				i++;
+				continue;
+			}
+			field += char;
+			i++;
+			continue;
+		}
+		if (char === '"') {
+			inQuotes = true;
+			i++;
+			continue;
+		}
+		if (char === ",") {
+			pushField();
+			i++;
+			continue;
+		}
+		if (char === "\r") {
+			i++;
+			continue;
+		}
+		if (char === "\n") {
+			pushRow();
+			i++;
+			continue;
+		}
+		field += char;
+		i++;
+	}
+	if (field !== "" || row.length) pushRow();
+	return rows;
+}
+
+function normalizeHeader(value) {
+	return String(value)
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "")
+		.trim()
+		.toLowerCase();
+}
+
+const DIFFICULTY_BY_LABEL = { facil: 0, medio: 1, dificil: 2 };
+const CATEGORY_BY_LABEL = { aguda: "a", grave: "g", esdrujula: "e" };
+
+const REQUIRED_HEADERS = {
+	pindaro: ["palabra", "silabas"],
+	rima: ["palabra", "rima"],
+	cat_acentual: ["formato"],
+};
+
+const CSV_HEADER_MAP = {
+	pindaro: {
+		id: "id",
+		palabra: "word",
+		silabas: "answer",
+		fonemas: "fonemas",
+		grafemas: "grafemas",
+		dificultad: "difficulty",
+		activa: "is_active",
+	},
+	rima: {
+		id: "id",
+		palabra: "word",
+		rima: "rhyme",
+		categoria: "category",
+		activa: "is_active",
+	},
+	cat_acentual: {
+		id: "id",
+		formato: "formato",
+		activa: "is_active",
+	},
+};
+
+function toNumberOrUndefined(value) {
+	if (value === undefined || value === null || String(value).trim() === "") {
+		return undefined;
+	}
+	const num = Number(value);
+	return Number.isNaN(num) ? undefined : num;
+}
+
+function toBool(value) {
+	if (value === undefined || value === null || String(value).trim() === "") {
+		return undefined;
+	}
+	if (typeof value === "boolean") return value;
+	const text = normalizeHeader(value);
+	if (["si", "true", "1", "yes", "activo", "activa"].includes(text))
+		return true;
+	if (["no", "false", "0", "inactivo", "inactiva"].includes(text))
+		return false;
+	return undefined;
+}
+
+function toDifficulty(value) {
+	if (value === undefined || value === null || String(value).trim() === "") {
+		return undefined;
+	}
+	const num = Number(value);
+	if (!Number.isNaN(num) && [0, 1, 2].includes(num)) return num;
+	return DIFFICULTY_BY_LABEL[normalizeHeader(value)];
+}
+
+function toCategory(value) {
+	if (value === undefined || value === null) return undefined;
+	const text = normalizeHeader(value);
+	if (["a", "g", "e"].includes(text)) return text;
+	return CATEGORY_BY_LABEL[text];
+}
+
+function requireInteger(value, label, line, min) {
+	if (
+		value === undefined ||
+		!Number.isInteger(value) ||
+		value < min
+	) {
+		throw new Error(`Fila ${line}: "${label}" inválido`);
+	}
+	return value;
+}
+
+function buildImportRow(game, item, line) {
+	const id = toNumberOrUndefined(item.id);
+	if (game === "pindaro") {
+		const word = String(item.word ?? "").trim();
+		if (!word) throw new Error(`Fila ${line}: falta la palabra`);
+		const answer = requireInteger(
+			toNumberOrUndefined(item.answer),
+			"silabas",
+			line,
+			1,
+		);
+		const difficulty = toDifficulty(item.difficulty);
+		if (difficulty === undefined)
+			throw new Error(`Fila ${line}: dificultad inválida`);
+		const fonemas = requireInteger(
+			toNumberOrUndefined(item.fonemas),
+			"fonemas",
+			line,
+			0,
+		);
+		const grafemas = requireInteger(
+			toNumberOrUndefined(item.grafemas),
+			"grafemas",
+			line,
+			0,
+		);
+		return {
+			id,
+			word,
+			answer_value: answer,
+			difficulty,
+			fonemas,
+			grafemas,
+			is_active: toBool(item.is_active),
+		};
+	}
+	if (game === "rima") {
+		const word = String(item.word ?? "").trim();
+		if (!word) throw new Error(`Fila ${line}: falta la palabra`);
+		const rhyme = String(item.rhyme ?? "").trim();
+		if (!rhyme) throw new Error(`Fila ${line}: falta la rima`);
+		const category = toCategory(item.category);
+		if (category === undefined)
+			throw new Error(`Fila ${line}: categoría inválida`);
+		return {
+			id,
+			word,
+			rhyme,
+			category,
+			is_active: toBool(item.is_active),
+		};
+	}
+	let phrase = item.formato;
+	if (!phrase && Array.isArray(item.words) && item.words.length) {
+		phrase = item.words
+			.slice()
+			.sort((a, b) => a.word_pos - b.word_pos)
+			.map((word) => `${word.word}-${word.answer}`)
+			.join("-");
+	}
+	if (!phrase || !parseAcentualPhrase(String(phrase))) {
+		throw new Error(
+			`Fila ${line}: falta el formato de frase (palabra-respuesta-...)`,
+		);
+	}
+	return {
+		id,
+		phrase: String(phrase),
+		is_active: toBool(item.is_active),
+	};
+}
+
+export function parseImportFile(game, text) {
+	const trimmed = String(text ?? "").trim();
+	if (!trimmed) throw new Error("El archivo está vacío");
+
+	let items;
+	if (trimmed.startsWith("[") || trimmed.startsWith("{")) {
+		let parsed;
+		try {
+			parsed = JSON.parse(trimmed);
+		} catch {
+			throw new Error("El archivo JSON no es válido");
+		}
+		if (!Array.isArray(parsed)) {
+			throw new Error("El JSON debe ser una lista de preguntas");
+		}
+		items = parsed;
+	} else {
+		const table = parseCSV(trimmed);
+		if (table.length < 2) throw new Error("El CSV no contiene filas");
+		const headers = table[0].map(normalizeHeader);
+		const missing = REQUIRED_HEADERS[game].filter(
+			(header) => !headers.includes(header),
+		);
+		if (missing.length) {
+			throw new Error(
+				`El archivo no corresponde al juego seleccionado (faltan columnas: ${missing.join(", ")})`,
+			);
+		}
+		const keyMap = CSV_HEADER_MAP[game];
+		items = table
+			.slice(1)
+			.filter((row) => row.some((cell) => String(cell).trim() !== ""))
+			.map((row) => {
+				const item = {};
+				headers.forEach((header, index) => {
+					const key = keyMap[header];
+					if (key) item[key] = row[index];
+				});
+				return item;
+			});
+	}
+
+	return items.map((item, index) => buildImportRow(game, item, index + 1));
+}
+
+export async function previewImport(game, token, rows) {
+	const config = GAMES[game];
+	return post(config.import, {
+		token,
+		preview: true,
+		[config.listKey]: rows,
+	});
+}
+
+export async function applyImport(game, token, rows) {
+	const config = GAMES[game];
+	return post(config.import, {
+		token,
+		preview: false,
+		[config.listKey]: rows,
+	});
 }

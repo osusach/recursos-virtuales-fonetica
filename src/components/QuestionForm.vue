@@ -59,6 +59,30 @@
 						/>
 					</label>
 					<label class="flex flex-col gap-1">
+						<span class="font-semibold"
+							>Número de fonemas</span
+						>
+						<input
+							v-model="form.fonemas"
+							placeholder="Número de fonemas"
+							type="number"
+							min="0"
+							class="input input-sm"
+						/>
+					</label>
+					<label class="flex flex-col gap-1">
+						<span class="font-semibold"
+							>Número de grafemas</span
+						>
+						<input
+							v-model="form.grafemas"
+							placeholder="Número de grafemas"
+							type="number"
+							min="0"
+							class="input input-sm"
+						/>
+					</label>
+					<label class="flex flex-col gap-1">
 						<span class="font-semibold">Dificultad</span>
 						<select
 							v-model="form.difficulty"
@@ -131,6 +155,8 @@ const saving = ref(false);
 const form = reactive({
 	word: props.question?.word ?? "",
 	answer: props.question?.answer ?? "",
+	fonemas: props.question?.fonemas ?? "",
+	grafemas: props.question?.grafemas ?? "",
 	difficulty:
 		props.question?.difficulty !== undefined
 			? String(props.question.difficulty)
@@ -150,7 +176,13 @@ const valid = computed(() => {
 			form.answer !== "" &&
 			Number.isInteger(Number(form.answer)) &&
 			Number(form.answer) > 0 &&
-			form.difficulty !== ""
+			form.difficulty !== "" &&
+			form.fonemas !== "" &&
+			Number.isInteger(Number(form.fonemas)) &&
+			Number(form.fonemas) >= 0 &&
+			form.grafemas !== "" &&
+			Number.isInteger(Number(form.grafemas)) &&
+			Number(form.grafemas) >= 0
 		);
 	}
 	return !!form.rhyme.trim() && form.category !== "";

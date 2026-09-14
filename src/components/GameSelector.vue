@@ -250,6 +250,8 @@ const columns = computed(() => {
 		return [
 			{ header: "Palabra", value: (q) => q.word },
 			{ header: "Sílabas", value: (q) => q.answer },
+			{ header: "N° fonemas", value: (q) => q.fonemas },
+			{ header: "N° grafemas", value: (q) => q.grafemas },
 			{
 				header: "Dificultad",
 				value: (q) => DIFFICULTIES[q.difficulty] ?? q.difficulty,

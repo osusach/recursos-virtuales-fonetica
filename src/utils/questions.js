@@ -57,6 +57,8 @@ function normalize(game, raw) {
 			word: raw.word,
 			answer: Number(raw.answer),
 			difficulty: Number(raw.difficulty),
+			fonemas: Number(raw.fonemas),
+			grafemas: Number(raw.grafemas),
 			is_active: toActive(raw.is_active),
 		};
 	}
@@ -131,6 +133,8 @@ export async function addQuestion(game, token, data) {
 					word: data.word,
 					answer_value: Number(data.answer),
 					difficulty: Number(data.difficulty),
+					fonemas: Number(data.fonemas),
+					grafemas: Number(data.grafemas),
 				},
 			],
 		};
@@ -160,6 +164,8 @@ export async function editQuestion(game, token, data) {
 				word: data.word,
 				answer_value: Number(data.answer),
 				difficulty: Number(data.difficulty),
+				fonemas: Number(data.fonemas),
+				grafemas: Number(data.grafemas),
 			},
 		};
 	} else if (game === "rima") {
@@ -198,6 +204,8 @@ const CSV_COLUMNS = {
 		{ header: "id", value: (q) => q.id },
 		{ header: "palabra", value: (q) => q.word },
 		{ header: "silabas", value: (q) => q.answer },
+		{ header: "fonemas", value: (q) => q.fonemas },
+		{ header: "grafemas", value: (q) => q.grafemas },
 		{
 			header: "dificultad",
 			value: (q) => DIFFICULTIES[q.difficulty] ?? q.difficulty,
@@ -279,6 +287,8 @@ export function exportAll(format, allQuestions) {
 		{ header: "palabra", value: (row) => row.word ?? "" },
 		{ header: "frase", value: (row) => row.phrase ?? "" },
 		{ header: "silabas", value: (row) => row.answer ?? "" },
+		{ header: "fonemas", value: (row) => row.fonemas ?? "" },
+		{ header: "grafemas", value: (row) => row.grafemas ?? "" },
 		{ header: "rima", value: (row) => row.rhyme ?? "" },
 		{
 			header: "categoria",

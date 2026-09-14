@@ -55,12 +55,10 @@ const validateLogin = async () => {
 			}),
 		});
 		const res = await response.json();
-		const success = await res.success;
-		const token = await res.payload.user.token;
 
-		if (await success) {
+		if (res.success) {
 			loginInfo.isLogged = true;
-			emit("login", { isLogged: true, token});
+			emit("login", { isLogged: true, token: res.payload.user.token });
 		} else {
 			alert("Correo o contraseña incorrectos");
 		}

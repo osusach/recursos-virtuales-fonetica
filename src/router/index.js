@@ -58,6 +58,7 @@ export default createRouter({
 			path: "/agregar-preguntas",
 			name: "AgregarPreguntas",
 			component: () => import("../views/AgregarPreguntas.vue"),
+			alias: "/admin",
 		},
 		{
 			path: "/juegos",
